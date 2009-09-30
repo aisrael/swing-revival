@@ -57,7 +57,7 @@ public final class ActivePanelTest extends ComponentTestFixture {
         final JTextField field1TextField = myPanel.field1TextField;
         assertNotNull("field1TextField is null!", field1TextField);
         assertEquals("field1TextField", field1TextField.getName());
-        assertEquals("field1TextField tooltip text", field1TextField.getToolTipText());
+        assertEquals("First field tool-tip text", field1TextField.getToolTipText());
         assertEquals("Tahoma", field1TextField.getFont().getName());
         assertSame("field1Label is not label for field1TextField!", field1TextField,
                 field1Label.getLabelFor());

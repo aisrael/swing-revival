@@ -22,16 +22,19 @@ import swing.revival.util.ResourceBundleHelper;
  *
  * @author Alistair A. Israel
  */
-public class ComponentBuilderContext extends ResourceBundleHelper {
+public class ComponentBuilderContext {
 
     private final FontPostProcessor fontPostProcessor;
+
+    private final ResourceBundleHelper resources;
 
     /**
      * @param component
      *        {@link JComponent}, typically a JPanel
      */
     public ComponentBuilderContext(final JComponent component) {
-        super(component.getClass());
+        final Class<? extends JComponent> componentClass = component.getClass();
+        resources = ResourceBundleHelper.forClass(componentClass);
         fontPostProcessor = new FontPostProcessor(component.getClass());
     }
 
@@ -100,7 +103,7 @@ public class ComponentBuilderContext extends ResourceBundleHelper {
          * @see ResourceBundleHelper#containsKey(java.lang.String)
          */
         public final boolean containsResourceKey(final String key) {
-            return context.containsKey(key);
+            return context.resources.containsKey(key);
         }
 
         /**
@@ -111,7 +114,7 @@ public class ComponentBuilderContext extends ResourceBundleHelper {
          * @see ResourceBundleHelper#getString(java.lang.String)
          */
         public final String getResourceString(final String key) {
-            return context.getString(key);
+            return context.resources.getString(key);
         }
 
     }

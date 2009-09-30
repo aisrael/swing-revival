@@ -52,8 +52,11 @@ public class BeanWrapper<T> {
 
     /**
      * Returns an array of <code>Field</code> objects reflecting all the fields
-     * declared by the class of the underlying bean. This includes public,
-     * protected, default
+     * declared by the class of the underlying object. This includes public,
+     * protected, default (package) access, and private fields, but excludes
+     * inherited fields. The elements in the array returned are not sorted and
+     * are not in any particular order. This method returns an array of length 0
+     * if the class or interface declares no fields.
      *
      * @return the array of <code>Field</code> objects representing all the
      *         declared fields of the underlying bean class
@@ -61,6 +64,43 @@ public class BeanWrapper<T> {
      */
     public final Field[] getDeclaredFields() {
         return clazz.getDeclaredFields();
+    }
+
+    /**
+     * Returns a <code>Field</code> object that reflects the specified declared
+     * field of the underlying object. The <code>name</code> parameter is a
+     * <code>String</code> that specifies the simple name of the desired field.
+     * Note that this method will not reflect the <code>length</code> field of
+     * an array class.
+     *
+     * @param name
+     *        the name of the field
+     * @return the <code>Field</code> object for the specified field in this
+     *         class
+     * @exception NoSuchFieldException
+     *            if a field with the specified name is not found.
+     * @see java.lang.Class#getDeclaredField(java.lang.String)
+     */
+    public final Field getDeclaredField(final String name) throws NoSuchFieldException {
+        return clazz.getDeclaredField(name);
+    }
+
+    /**
+     * Returns a <code>Field</code> object that reflects the specified public
+     * member field of the class of the underlying object. The <code>name</code>
+     * parameter is a <code>String</code> specifying the simple name of the
+     * desired field.
+     *
+     * @param name
+     *        the field name
+     * @return the <code>Field</code> object of this class specified by
+     *         <code>name</code>
+     * @throws NoSuchFieldException
+     *         if a field with the specified name is not found.
+     * @see java.lang.Class#getField(java.lang.String)
+     */
+    public final Field getField(final String name) throws NoSuchFieldException {
+        return clazz.getField(name);
     }
 
     /**

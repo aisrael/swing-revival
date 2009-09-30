@@ -11,7 +11,6 @@
  */
 package swing.revival.util;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +20,6 @@ import java.util.ResourceBundle;
 import org.junit.Test;
 
 import swing.revival.ActivePanelTest;
-import swing.revival.ActivePanelTest.MyPanel;
 
 /**
  * JUnit test for {@link Resources}.
@@ -52,14 +50,4 @@ public final class ResourcesTest {
         assertNull("quietlyGetBundle(\"MyPanel\") should be null!", Resources
                 .quietlyGetBundle("MyPanel"));
     }
-
-    /**
-     * Test for {@link Resources#classToResourceKeyPrefix(java.lang.Class)} .
-     */
-    @Test
-    public void testClassToResourceKeyPrefix() {
-        assertEquals("swing.revival.ActivePanelTest.MyPanel", Resources
-                .classToResourceKeyPrefix(MyPanel.class));
-    }
-
 }

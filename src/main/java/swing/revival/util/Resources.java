@@ -91,14 +91,4 @@ public final class Resources {
         NON_EXISTENT_RESOURCE_BUNDLES.add(baseName);
         return null;
     }
-
-    /**
-     * @param clazz
-     *        {@link Class}
-     * @return the class name as a string, with inner class separators turned
-     *         into dots (<code>'.'</code>)
-     */
-    public static String classToResourceKeyPrefix(final Class<?> clazz) {
-        return clazz.getName().replace('$', '.');
-    }
 }

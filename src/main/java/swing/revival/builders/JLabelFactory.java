@@ -31,8 +31,8 @@ public class JLabelFactory implements ComponentFactory<JLabel> {
      *      java.lang.reflect.Field)
      */
     @Override
-    public final swing.revival.builders.ComponentBuilder<JLabel> build(final ComponentBuilderContext context,
-            final Field field) {
+    public final swing.revival.builders.ComponentBuilder<JLabel> build(
+            final ComponentBuilderContext context, final Field field) {
         return new JLabelBuilder(context, field);
     }
 
@@ -62,7 +62,7 @@ public class JLabelFactory implements ComponentFactory<JLabel> {
             final JLabel label = new JLabel();
             final String name = getField().getName();
             label.setName(name);
-            final String text = getContext().getString(name + ".text");
+            final String text = getResourceString(name + ".text");
             if (StringUtils.hasLength(text)) {
                 label.setText(text);
             } else {

@@ -41,12 +41,18 @@ public class ResourceBundleHelper {
         }
     }
 
+
     /**
      * @param clazz
      *        a Class
+     * @return {@link ResourceBundleHelper}
      */
-    public ResourceBundleHelper(final Class<?> clazz) {
-        this(Resources.find(clazz), Resources.classToResourceKeyPrefix(clazz));
+    public static ResourceBundleHelper forClass(final Class<?> clazz) {
+        final ResourceBundle resourceBundle = Resources.find(clazz);
+        if (resourceBundle != null) {
+            return new ResourceBundleHelper(resourceBundle, classToResourceKeyPrefix(clazz));
+        }
+        return null;
     }
 
     /**
@@ -92,6 +98,16 @@ public class ResourceBundleHelper {
             return resourceBundle.getString(prefix + key);
         }
         return def;
+    }
+
+    /**
+     * @param clazz
+     *        {@link Class}
+     * @return the class name as a string, with inner class separators turned
+     *         into dots (<code>'.'</code>)
+     */
+    public static String classToResourceKeyPrefix(final Class<?> clazz) {
+        return clazz.getName().replace('$', '.');
     }
 
 }

@@ -17,15 +17,18 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import swing.revival.annotations.Border;
 import swing.revival.builders.ComponentBuilder;
 import swing.revival.builders.JLabelFactory;
 import swing.revival.builders.JPasswordFieldFactory;
 import swing.revival.builders.JTextFieldFactory;
+import swing.revival.enums.BorderType;
 import swing.revival.util.BeanWrapper;
 
 /**
@@ -63,6 +66,26 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
     */
     public final void build() {
         final ComponentBuilderContext context = new ComponentBuilderContext(activePanel);
+        final Border borderAnnotation = getAnnotation(Border.class);
+        if (borderAnnotation != null) {
+            final BorderType borderType = borderAnnotation.value();
+            javax.swing.border.Border border = null;
+            switch (borderType) {
+            case TITLE:
+                if (context.getResources().containsKey("title")) {
+                    final String title = context.getResources().getString("title");
+                    border = BorderFactory.createTitledBorder(title);
+                } else {
+                    border = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder());
+                }
+                break;
+            default:
+                // noop
+            }
+            if (border != null) {
+                activePanel.setBorder(border);
+            }
+        }
         for (final Field field : getDeclaredFields()) {
             if (!Modifier.isStatic(field.getModifiers())) {
                 final Object value = get(field);
@@ -87,8 +110,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
      *        the {@link Field} we're building for
      * @return the built component
      */
-    private JComponent createComponent(final ComponentBuilderContext context,
-            final Field field) {
+    private JComponent createComponent(final ComponentBuilderContext context, final Field field) {
         final String name = field.getName();
         JComponent component = null;
         String baseName = name;

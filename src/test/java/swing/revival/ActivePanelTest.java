@@ -61,7 +61,6 @@ public final class ActivePanelTest extends ComponentTestFixture {
         assertEquals("Tahoma", field1TextField.getFont().getName());
         assertSame("field1Label is not label for field1TextField!", field1TextField,
                 field1Label.getLabelFor());
-        showFrame(myPanel);
     }
 
 }

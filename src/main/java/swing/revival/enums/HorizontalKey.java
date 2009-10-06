@@ -9,7 +9,7 @@
  *
  * Created Sep 30, 2009
  */
-package swing.revival.annotations;
+package swing.revival.enums;
 
 import javax.swing.SwingConstants;
 

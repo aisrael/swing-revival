@@ -68,6 +68,13 @@ public final class Resources {
                 bundle = quietlyGetBundle(baseName);
                 if (bundle == null) {
                     bundle = quietlyGetBundle(DEFAULT_RESOURCE_BUNDLE_NAME);
+                    if (bundle != null) {
+                        LOGGER.finest("Using default resources from \""
+                                + DEFAULT_RESOURCE_BUNDLE_NAME + "\"");
+                    } else {
+                        LOGGER.warning("Unable to find any suitable resource bundle for "
+                                + clazz);
+                    }
                 }
             }
         }

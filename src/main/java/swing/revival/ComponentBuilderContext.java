@@ -54,6 +54,13 @@ public class ComponentBuilderContext {
     }
 
     /**
+     * @return the resources
+     */
+    public final ResourceBundleHelper getResources() {
+        return resources;
+    }
+
+    /**
      * ComponentBuilderContext.Aware is basically just a base class for
      * subclasses that need ComponentBuilderContext awareness.
      *

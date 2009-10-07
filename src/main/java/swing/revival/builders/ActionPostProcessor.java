@@ -13,21 +13,19 @@ package swing.revival.builders;
 
 import static javax.swing.Action.NAME;
 import static javax.swing.Action.SHORT_DESCRIPTION;
-import static swing.revival.util.CollectionUtils.list;
 import static swing.revival.util.StringUtils.chomp;
 import static swing.revival.util.StringUtils.isNullOrEmpty;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.Action;
 
 import swing.revival.ComponentBuilderContext;
+import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
-import swing.revival.util.StringUtils;
 
 /**
  * Initializes a pre-constructed {@link Action} object based on its field
@@ -47,12 +45,11 @@ public class ActionPostProcessor extends ComponentBuilderContext.Aware {
         super(context);
     }
 
-    private static final Map<String, List<String>> KEY_MAP =
-            new Hashtable<String, List<String>>();
+    private static final Map<String, String[]> KEY_MAP = new Hashtable<String, String[]>();
     static {
-        KEY_MAP.put(NAME, list(NAME, "name", "text"));
-        KEY_MAP.put(SHORT_DESCRIPTION, list(SHORT_DESCRIPTION, "shortDescription",
-                "toolTipText"));
+        KEY_MAP.put(NAME, new String[] { NAME, "name", "text" });
+        KEY_MAP.put(SHORT_DESCRIPTION, new String[] { SHORT_DESCRIPTION, "shortDescription",
+                "toolTipText" });
     }
 
     /**
@@ -62,34 +59,38 @@ public class ActionPostProcessor extends ComponentBuilderContext.Aware {
      *        the {@link Action} to post-process
      */
     public final void process(final Field field, final Action action) {
-        String name = null;
-        final RadioButton annotation = field.getAnnotation(RadioButton.class);
-        if (annotation != null) {
-            name = annotation.name();
-        }
+        String name = determineNameFromAnnotation(field);
         if (isNullOrEmpty(name)) {
             name = chomp(field.getName(), "Action");
         }
-        if (StringUtils.hasLength(name)) {
-            for (final Map.Entry<String, List<String>> keyMapEntry : KEY_MAP.entrySet()) {
-                final String propertyKey = keyMapEntry.getKey();
-                final List<String> suffixes = keyMapEntry.getValue();
-                String value = null;
-                for (final String suffix : suffixes) {
-                    final String resourceKey = name + "." + suffix;
-                    if (containsResourceKey(resourceKey)) {
-                        value = getResourceString(resourceKey);
-                        break;
-                    }
-                }
-                if (value != null) {
-                    action.putValue(propertyKey, value);
-                } else {
-                    LOGGER.warning("Unable to find resource for \"" + name + "." + propertyKey
-                            + "\"");
-                }
+        for (final Map.Entry<String, String[]> keyMapEntry : KEY_MAP.entrySet()) {
+            final String propertyKey = keyMapEntry.getKey();
+
+            final String[] suffixes = keyMapEntry.getValue();
+            final String value = getContext().getResources().findString(name, suffixes);
+            if (value != null) {
+                action.putValue(propertyKey, value);
+            } else {
+                LOGGER.warning("Unable to find resource for \"" + name + "." + propertyKey
+                        + "\"");
             }
         }
     }
 
+    /**
+     * @param field
+     *        the Field to inspect
+     * @return the name determined from any compatible annotations
+     */
+    private String determineNameFromAnnotation(final Field field) {
+        String name = null;
+        final Button buttonAnnotation = field.getAnnotation(Button.class);
+        if (buttonAnnotation != null) {
+            name = buttonAnnotation.name();
+        } else {
+            final RadioButton radioButtonAnnotation = field.getAnnotation(RadioButton.class);
+            name = radioButtonAnnotation.name();
+        }
+        return name;
+    }
 }

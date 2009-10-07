@@ -41,7 +41,6 @@ public class ResourceBundleHelper {
         }
     }
 
-
     /**
      * @param clazz
      *        a Class
@@ -83,6 +82,23 @@ public class ResourceBundleHelper {
      */
     public final String getString(final String key) {
         return resourceBundle.getString(prefix(key));
+    }
+
+    /**
+     * @param base
+     *        the base key
+     * @param suffixes
+     *        a set of suffixes to try
+     * @return the found resource string
+     */
+    public final String findString(final String base, final String... suffixes) {
+        for (final String suffix : suffixes) {
+            final String key = base + "." + suffix;
+            if (containsKey(key)) {
+                return getString(key);
+            }
+        }
+        return null;
     }
 
     /**

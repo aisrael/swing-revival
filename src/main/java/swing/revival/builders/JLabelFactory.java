@@ -61,7 +61,6 @@ public class JLabelFactory implements ComponentFactory<JLabel> {
         protected final JLabel constructComponent() {
             final JLabel label = new JLabel();
             final String name = getField().getName();
-            label.setName(name);
             final String text = getResourceString(name + ".text");
             if (StringUtils.hasLength(text)) {
                 label.setText(text);

@@ -16,13 +16,14 @@ import java.lang.reflect.Modifier;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 
+import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
 import swing.revival.builders.ActionPostProcessor;
 import swing.revival.util.BeanWrapper;
-
 
 /**
  *
@@ -59,7 +60,8 @@ public class ActivePanel extends GroupLayoutJPanel {
                 if (Action.class.isAssignableFrom(type) && value != null) {
                     final Action action = (Action) value;
                     actionPostProcessor.process(field, action);
-                    final AbstractButton button = createButtonForActionField(context, field);
+                    final AbstractButton button =
+                            createButtonForActionField(context, field, action);
                     if (button != null) {
                         button.setAction(action);
                         componentContext.addComponentFor(action, button);
@@ -85,20 +87,23 @@ public class ActivePanel extends GroupLayoutJPanel {
      *        the {@link ComponentBuilderContext}
      * @param actionField
      *        the {@link Field} we're building for
+     * @param action
+     *        the {@link Action} we're building for
      * @return the built component
      */
     private static AbstractButton createButtonForActionField(
-            final ComponentBuilderContext context, final Field actionField) {
+            final ComponentBuilderContext context, final Field actionField, final Action action) {
         AbstractButton button = null;
         final RadioButton radioButtonAnnotation = actionField.getAnnotation(RadioButton.class);
         if (radioButtonAnnotation != null) {
-            final String name;
-            if (radioButtonAnnotation.name().isEmpty()) {
-                name = actionField.getName();
-            } else {
-                name = radioButtonAnnotation.name();
-            }
             button = new JRadioButton();
+        }
+        final Button buttonAnnotation = actionField.getAnnotation(Button.class);
+        if (buttonAnnotation != null) {
+            button = new JButton();
+        }
+        if (button != null) {
+            final String name = (String) action.getValue(Action.NAME);
             button.setName(name);
             context.getFontPostProcessor().setFontOn(actionField, button);
         }

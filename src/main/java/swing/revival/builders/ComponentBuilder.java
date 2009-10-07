@@ -12,6 +12,7 @@
 package swing.revival.builders;
 
 import java.lang.reflect.Field;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
@@ -21,7 +22,10 @@ import swing.revival.ComponentBuilderContext;
  * @param <C>
  * @author Alistair A. Israel
  */
-public abstract class ComponentBuilder<C extends JComponent> extends ComponentBuilderContext.Aware {
+public abstract class ComponentBuilder<C extends JComponent> extends
+        ComponentBuilderContext.Aware {
+
+    private static final Logger LOGGER = Logger.getLogger(ComponentBuilder.class.getName());
 
     /**
      *
@@ -63,7 +67,9 @@ public abstract class ComponentBuilder<C extends JComponent> extends ComponentBu
      */
     public final C build() {
         final C component = constructComponent();
-        component.setName(getField().getName());
+        final String name = getField().getName();
+        LOGGER.finest("Setting component name to \"" + name + "\"...");
+        component.setName(name);
         getFontPostProcessor().setFontOn(getField(), component);
         setToolTipTextOn(component);
         return component;

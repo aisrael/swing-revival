@@ -18,7 +18,6 @@ import junit.extensions.abbot.ComponentTestFixture;
 
 import org.junit.Test;
 
-import swing.revival.annotations.Component;
 import swing.revival.annotations.Font;
 
 /**
@@ -37,7 +36,6 @@ public final class ActivePanelTest extends ComponentTestFixture {
 
         private JLabel field1Label;
 
-        @Component
         private JTextField field1TextField;
 
     }

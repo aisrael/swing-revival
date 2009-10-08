@@ -32,13 +32,19 @@ public class ResourceBundleHelper {
      *        a prefix for all strings to be returned by this helper
      */
     public ResourceBundleHelper(final ResourceBundle resourceBundle, final String prefix) {
-        super();
         this.resourceBundle = resourceBundle;
-        if (prefix.endsWith(".")) {
+        if (prefix.isEmpty() || prefix.endsWith(".")) {
             this.prefix = prefix;
         } else {
             this.prefix = prefix + ".";
         }
+    }
+
+    /**
+     * @return the prefix
+     */
+    public final String getPrefix() {
+        return prefix;
     }
 
     /**
@@ -47,11 +53,7 @@ public class ResourceBundleHelper {
      * @return {@link ResourceBundleHelper}
      */
     public static ResourceBundleHelper forClass(final Class<?> clazz) {
-        final ResourceBundle resourceBundle = Resources.find(clazz);
-        if (resourceBundle != null) {
-            return new ResourceBundleHelper(resourceBundle, classToResourceKeyPrefix(clazz));
-        }
-        return null;
+        return Resources.find(clazz);
     }
 
     /**
@@ -71,7 +73,7 @@ public class ResourceBundleHelper {
      *         parent bundles; <code>false</code> otherwise.
      */
     public final boolean containsKey(final String key) {
-        return resourceBundle.containsKey(prefix + key);
+        return resourceBundle.containsKey(prefix(key));
     }
 
     /**
@@ -110,8 +112,8 @@ public class ResourceBundleHelper {
      * @see java.util.ResourceBundle#getString(java.lang.String)
      */
     public final String get(final String key, final String def) {
-        if (resourceBundle.containsKey(prefix + key)) {
-            return resourceBundle.getString(prefix + key);
+        if (resourceBundle.containsKey(prefix(key))) {
+            return resourceBundle.getString(prefix(key));
         }
         return def;
     }

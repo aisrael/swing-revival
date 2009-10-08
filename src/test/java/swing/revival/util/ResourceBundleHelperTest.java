@@ -51,6 +51,7 @@ public final class ResourceBundleHelperTest {
      */
     @Test
     public void testContainsKey() {
+        System.out.println(helper.getPrefix());
         assertTrue(helper.containsKey("field1Label.text"));
         assertFalse(helper.containsKey("not a key"));
     }

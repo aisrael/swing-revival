@@ -15,11 +15,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ResourceBundle;
-
 import org.junit.Test;
 
-import swing.revival.ActivePanelTest;
+import com.example.ui.ExamplePanel;
 
 /**
  * JUnit test for {@link Resources}.
@@ -33,11 +31,9 @@ public final class ResourcesTest {
      */
     @Test
     public void testFind() {
-        final ResourceBundle bundle = Resources.find(ActivePanelTest.MyPanel.class);
-        assertNotNull("Resources.find(ActivePanelTest.MyPanel.class) returned null!", bundle);
-        assertTrue(bundle.containsKey("swing.revival.ActivePanelTest.MyPanel.field1Label.text"));
-        assertNull("Resources.find(ResourcesTest.class) should be null!", Resources
-                .find(ResourcesTest.class));
+        final ResourceBundleHelper resources = Resources.find(ExamplePanel.class);
+        assertNotNull("Resources.find(ExamplePanel.class) returned null!", resources);
+        assertTrue(resources.getPrefix().isEmpty());
     }
 
     /**

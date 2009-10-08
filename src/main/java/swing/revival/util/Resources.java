@@ -46,13 +46,13 @@ public final class Resources {
      *        the class to find the {@link ResourceBundle} for
      * @return ResourceBundle if found, or <code>null</code>
      */
-    public static ResourceBundle find(final Class<?> clazz) {
-        ResourceBundle bundle;
-        String baseName = clazz.getName();
+    public static ResourceBundleHelper find(final Class<?> clazz) {
+        final String className = ResourceBundleHelper.classToResourceKeyPrefix(clazz);
+        String baseName = className;
 
-        bundle = quietlyGetBundle(baseName);
+        ResourceBundle bundle = quietlyGetBundle(baseName);
         if (bundle == null) {
-            int x = baseName.lastIndexOf('$');
+            int x = baseName.lastIndexOf('.');
             if (x > 0) {
                 while (bundle == null && x > 0) {
                     baseName = baseName.substring(0, x);
@@ -60,7 +60,7 @@ public final class Resources {
                     if (bundle != null) {
                         break;
                     }
-                    x = baseName.lastIndexOf('$');
+                    x = baseName.lastIndexOf('.');
                 }
             }
             if (bundle == null) {
@@ -78,7 +78,13 @@ public final class Resources {
                 }
             }
         }
-        return bundle;
+        final String prefix;
+        if (baseName.length() < className.length()) {
+            prefix = className.substring(baseName.length() + 1);
+        } else {
+            prefix = className.substring(baseName.length());
+        }
+        return new ResourceBundleHelper(bundle, prefix);
     }
 
     /**

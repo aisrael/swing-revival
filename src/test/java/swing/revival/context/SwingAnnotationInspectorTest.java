@@ -43,6 +43,7 @@ public final class SwingAnnotationInspectorTest {
         final ComponentField usernameField = swair.getField("usernameField");
         assertNotNull(usernameField);
         assertEquals(JTextField.class, usernameField.getType());
+        assertEquals("Username", usernameField.getString("label.text"));
 
         final ComponentField passwordField = swair.getField("passwordField");
         assertNotNull(passwordField);

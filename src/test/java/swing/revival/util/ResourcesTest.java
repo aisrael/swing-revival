@@ -11,6 +11,7 @@
  */
 package swing.revival.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -18,6 +19,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.example.ui.ExamplePanel;
+import com.example.ui.FullyQualifiedPanel;
+import com.example.ui.SomeContainer;
 
 /**
  * JUnit test for {@link Resources}.
@@ -27,13 +30,38 @@ import com.example.ui.ExamplePanel;
 public final class ResourcesTest {
 
     /**
-     * Test for {@link Resources#find(java.lang.Class)}.
+     * Test {@link Resources#find(Class)} on fully qualified
+     * "com.example.ClassName" from "messages.properties".
      */
     @Test
-    public void testFind() {
+    public void testFindFullyQualified() {
+        final ResourceBundleHelper resources = Resources.find(FullyQualifiedPanel.class);
+        assertNotNull("Resources.find(FullyQualifiedPanel.class) returned null!", resources);
+        assertEquals(FullyQualifiedPanel.class.getName() + ".", resources.getPrefix());
+        assertEquals("Fully qualified panel", resources.getString("title"));
+    }
+
+    /**
+     * Test {@link Resources#find(Class)} on direct "ClassName.properties"
+     */
+    @Test
+    public void testFindDirect() {
         final ResourceBundleHelper resources = Resources.find(ExamplePanel.class);
         assertNotNull("Resources.find(ExamplePanel.class) returned null!", resources);
         assertTrue(resources.getPrefix().isEmpty());
+    }
+
+    /**
+     * Test {@link Resources#find(Class)} on embedded "Container$Embedded.class"
+     * finds "Container.properties"
+     */
+    @Test
+    public void testFindEmbedded() {
+        final ResourceBundleHelper resources =
+                Resources.find(SomeContainer.EmbeddedPanel.class);
+        assertNotNull("Resources.find(SomeContainer.EmbeddedPanel.class) returned null!",
+                resources);
+        assertEquals("EmbeddedPanel.", resources.getPrefix());
     }
 
     /**

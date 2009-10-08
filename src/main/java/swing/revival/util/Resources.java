@@ -69,6 +69,7 @@ public final class Resources {
                 if (bundle == null) {
                     bundle = quietlyGetBundle(DEFAULT_RESOURCE_BUNDLE_NAME);
                     if (bundle != null) {
+                        baseName = "";
                         LOGGER.finest("Using default resources from \""
                                 + DEFAULT_RESOURCE_BUNDLE_NAME + "\"");
                     } else {
@@ -79,7 +80,9 @@ public final class Resources {
             }
         }
         final String prefix;
-        if (baseName.length() < className.length()) {
+        if (baseName.isEmpty()) {
+            prefix = className;
+        } else if (baseName.length() < className.length()) {
             prefix = className.substring(baseName.length() + 1);
         } else {
             prefix = className.substring(baseName.length());

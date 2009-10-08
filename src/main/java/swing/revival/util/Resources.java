@@ -47,12 +47,13 @@ public final class Resources {
      * @return ResourceBundle if found, or <code>null</code>
      */
     public static ResourceBundleHelper find(final Class<?> clazz) {
-        final String className = ResourceBundleHelper.classToResourceKeyPrefix(clazz);
+        final String className = clazz.getName();
+        String prefix = "";
         String baseName = className;
 
         ResourceBundle bundle = quietlyGetBundle(baseName);
         if (bundle == null) {
-            int x = baseName.lastIndexOf('.');
+            int x = baseName.lastIndexOf('$');
             if (x > 0) {
                 while (bundle == null && x > 0) {
                     baseName = baseName.substring(0, x);
@@ -60,16 +61,16 @@ public final class Resources {
                     if (bundle != null) {
                         break;
                     }
-                    x = baseName.lastIndexOf('.');
+                    x = baseName.lastIndexOf('$');
                 }
             }
             if (bundle == null) {
-                baseName = baseName.substring(baseName.lastIndexOf('.') + 1);
+                baseName = baseName.substring(clazz.getPackage().getName().length() + 1);
                 bundle = quietlyGetBundle(baseName);
                 if (bundle == null) {
                     bundle = quietlyGetBundle(DEFAULT_RESOURCE_BUNDLE_NAME);
                     if (bundle != null) {
-                        baseName = "";
+                        prefix = className;
                         LOGGER.finest("Using default resources from \""
                                 + DEFAULT_RESOURCE_BUNDLE_NAME + "\"");
                     } else {
@@ -77,15 +78,9 @@ public final class Resources {
                                 + clazz);
                     }
                 }
+            } else {
+                prefix = className.substring(baseName.length() + 1);
             }
-        }
-        final String prefix;
-        if (baseName.isEmpty()) {
-            prefix = className;
-        } else if (baseName.length() < className.length()) {
-            prefix = className.substring(baseName.length() + 1);
-        } else {
-            prefix = className.substring(baseName.length());
         }
         return new ResourceBundleHelper(bundle, prefix);
     }

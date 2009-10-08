@@ -36,13 +36,30 @@ public class ActivePanel extends GroupLayoutJPanel {
      */
     private static final long serialVersionUID = 161401078114379749L;
 
-    private ComponentContext componentContext = new ComponentContext();
+    private final ComponentContext componentContext = new ComponentContext();
 
     /**
      *
      */
     public ActivePanel() {
+        createComponents();
         new ActivePanelInitializer(this).build();
+        postProcess();
+        layoutComponents();
+    }
+
+    /**
+     *
+     */
+    protected void createComponents() {
+
+    }
+
+    /**
+     *
+     */
+    protected void layoutComponents() {
+
     }
 
     /**
@@ -80,6 +97,13 @@ public class ActivePanel extends GroupLayoutJPanel {
      */
     public final JComponent componentFor(final Action action) {
         return componentContext.componentFor(action);
+    }
+
+    /**
+     * @return the componentContext
+     */
+    public final ComponentContext getComponentContext() {
+        return componentContext;
     }
 
     /**

@@ -27,6 +27,11 @@ import java.lang.annotation.Target;
 public @interface TextField {
 
     /**
+     * The name of the text field.
+     */
+    String name() default "";
+
+    /**
      * The columns argument to the JTextField constructor
      */
     int columns() default -1;

@@ -13,7 +13,6 @@ package swing.revival;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -45,10 +44,6 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY =
             new JPasswordFieldFactory();
-
-    private final Map<String, JLabel> labels = new Hashtable<String, JLabel>();
-
-    private final Map<String, JComponent> components = new Hashtable<String, JComponent>();
 
     private final ActivePanel activePanel;
 
@@ -111,6 +106,9 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
      * @return the built component
      */
     private JComponent createComponent(final ComponentBuilderContext context, final Field field) {
+        final Map<String, JLabel> labels = activePanel.getComponentContext().getLabels();
+        final Map<String, JComponent> components = activePanel.getComponentContext().getComponents();
+
         final String name = field.getName();
         JComponent component = null;
         String baseName = name;

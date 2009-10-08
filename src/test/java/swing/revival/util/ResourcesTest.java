@@ -20,6 +20,7 @@ import org.junit.Test;
 
 import com.example.ui.ExamplePanel;
 import com.example.ui.FullyQualifiedPanel;
+import com.example.ui.ShortPanel;
 import com.example.ui.SomeContainer;
 
 /**
@@ -28,6 +29,34 @@ import com.example.ui.SomeContainer;
  * @author Alistair A. Israel
  */
 public final class ResourcesTest {
+
+    /**
+     *
+     */
+    @Test
+    public void testFind() {
+        final Class<?>[] classes = {
+                ExamplePanel.class,
+                ShortPanel.class,
+                SomeContainer.EmbeddedPanel.Independent.class,
+                SomeContainer.EmbeddedPanel.class,
+                SomeContainer.EmbeddedPanel.Embedded.class,
+                FullyQualifiedPanel.class
+        };
+        final String[] expectedPrefixes = {
+                "",
+                "",
+                "",
+                "EmbeddedPanel.",
+                "EmbeddedPanel.Embedded.",
+                FullyQualifiedPanel.class.getName() + "."
+        };
+        for (int i = 0; i < expectedPrefixes.length; ++i) {
+            final Class<?> clazz = classes[i];
+            final ResourceBundleHelper helper = Resources.find(clazz);
+            assertEquals(expectedPrefixes[i], helper.getPrefix());
+        }
+    }
 
     /**
      * Test {@link Resources#find(Class)} on fully qualified

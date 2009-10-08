@@ -47,42 +47,52 @@ public final class Resources {
      * @return ResourceBundle if found, or <code>null</code>
      */
     public static ResourceBundleHelper find(final Class<?> clazz) {
-        final String className = clazz.getName();
-        String prefix = "";
-        String baseName = className;
-
-        ResourceBundle bundle = quietlyGetBundle(baseName);
-        if (bundle == null) {
-            int x = baseName.lastIndexOf('$');
-            if (x > 0) {
-                while (bundle == null && x > 0) {
-                    baseName = baseName.substring(0, x);
-                    bundle = quietlyGetBundle(baseName);
-                    if (bundle != null) {
-                        break;
-                    }
-                    x = baseName.lastIndexOf('$');
+        final String packageName = clazz.getPackage().getName();
+        final String withoutPackageName = clazz.getName().substring(packageName.length() + 1);
+        String name = withoutPackageName;
+        ResourceBundle bundle = findLongOrShort(packageName, name);
+        if (bundle != null) {
+            return new ResourceBundleHelper(bundle, "");
+        }
+        if (clazz.isMemberClass()) {
+            int x = name.lastIndexOf('$');
+            while (x > 0) {
+                name = name.substring(0, x);
+                x = name.lastIndexOf('$');
+                bundle = findLongOrShort(packageName, name);
+                if (bundle != null) {
+                    final String prefix =
+                            withoutPackageName.substring(name.length() + 1).replace('$', '.');
+                    return new ResourceBundleHelper(bundle, prefix);
                 }
-            }
-            if (bundle == null) {
-                baseName = baseName.substring(clazz.getPackage().getName().length() + 1);
-                bundle = quietlyGetBundle(baseName);
-                if (bundle == null) {
-                    bundle = quietlyGetBundle(DEFAULT_RESOURCE_BUNDLE_NAME);
-                    if (bundle != null) {
-                        prefix = className;
-                        LOGGER.finest("Using default resources from \""
-                                + DEFAULT_RESOURCE_BUNDLE_NAME + "\"");
-                    } else {
-                        LOGGER.warning("Unable to find any suitable resource bundle for "
-                                + clazz);
-                    }
-                }
-            } else {
-                prefix = className.substring(baseName.length() + 1);
             }
         }
+        final String prefix = clazz.getName().replace('$', '.');
+        bundle = quietlyGetBundle(DEFAULT_RESOURCE_BUNDLE_NAME);
+        if (bundle != null) {
+            LOGGER.finest("Using default resources from \""
+                    + DEFAULT_RESOURCE_BUNDLE_NAME + "\"");
+        } else {
+            LOGGER.warning("Unable to find any suitable resource bundle for "
+                    + clazz);
+        }
         return new ResourceBundleHelper(bundle, prefix);
+    }
+
+    /**
+     * @param packageName
+     *        the package name
+     * @param className
+     *        the class name
+     * @return the ResourceBundle
+     */
+    private static ResourceBundle findLongOrShort(final String packageName,
+            final String className) {
+        ResourceBundle bundle = quietlyGetBundle(packageName + "." + className);
+        if (bundle == null) {
+            bundle = quietlyGetBundle(className);
+        }
+        return bundle;
     }
 
     /**
@@ -91,15 +101,16 @@ public final class Resources {
      * @return ResourceBundle if found, or <code>null</code>
      */
     public static ResourceBundle quietlyGetBundle(final String baseName) {
-        if (NON_EXISTENT_RESOURCE_BUNDLES.contains(baseName)) {
+        final String name = baseName.replace('$', '.');
+        if (NON_EXISTENT_RESOURCE_BUNDLES.contains(name)) {
             return null;
         }
         try {
-            return ResourceBundle.getBundle(baseName);
+            return ResourceBundle.getBundle(name);
         } catch (final MissingResourceException e) {
             LOGGER.finest(e.getMessage());
         }
-        NON_EXISTENT_RESOURCE_BUNDLES.add(baseName);
+        NON_EXISTENT_RESOURCE_BUNDLES.add(name);
         return null;
     }
 }

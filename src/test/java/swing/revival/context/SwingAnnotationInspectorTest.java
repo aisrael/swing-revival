@@ -11,8 +11,10 @@
  */
 package swing.revival.context;
 
+import static java.awt.Font.BOLD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Set;
 
@@ -37,6 +39,7 @@ public final class SwingAnnotationInspectorTest {
     public void testInspectClass() {
         final SwingAnnotationInspectionResults swair =
                 SwingAnnotationInspector.inspect(ExamplePanel.class);
+
         final Set<String> fieldNames = swair.listFieldNames();
         assertEquals(2, fieldNames.size());
 
@@ -44,10 +47,20 @@ public final class SwingAnnotationInspectorTest {
         assertNotNull(usernameField);
         assertEquals(JTextField.class, usernameField.getType());
         assertEquals("Username", usernameField.getString("label.text"));
+        final FontInfo fontInfo = usernameField.getFontInfo();
+        assertNotNull(fontInfo);
+        assertEquals(BOLD, fontInfo.getStyle());
+        assertNull(fontInfo.getSize());
 
         final ComponentField passwordField = swair.getField("passwordField");
         assertNotNull(passwordField);
         assertEquals(JPasswordField.class, passwordField.getType());
+
+        final FontInfo defaultFontInfo = swair.getDefaultFontInfo();
+        assertNotNull(defaultFontInfo);
+        assertEquals("Tahoma", defaultFontInfo.getName());
+        assertNotNull(defaultFontInfo.getSize());
+        assertEquals(11, defaultFontInfo.getSize().intValue());
     }
 
 }

@@ -17,6 +17,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import swing.revival.enums.FontStyle;
+
 /**
  *
  * @author Alistair A. Israel
@@ -29,12 +31,12 @@ public @interface Font {
     /**
      * The font name
      */
-    String name();
+    String name() default "";
 
     /**
      * The font style
      */
-    int style() default java.awt.Font.PLAIN;
+    FontStyle style() default FontStyle.PLAIN;
 
     /**
      * The font size

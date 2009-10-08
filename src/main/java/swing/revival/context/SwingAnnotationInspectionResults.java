@@ -23,8 +23,17 @@ import java.util.Set;
  */
 public class SwingAnnotationInspectionResults {
 
+    private FontInfo defaultFontInfo;
+
     private final Map<String, ComponentField> componentFields =
             new Hashtable<String, ComponentField>();
+
+    /**
+     * @return the defaultFontInfo
+     */
+    public final FontInfo getDefaultFontInfo() {
+        return defaultFontInfo;
+    }
 
     /**
      * @return Set of field names
@@ -51,6 +60,14 @@ public class SwingAnnotationInspectionResults {
 
         private final SwingAnnotationInspectionResults results =
                 new SwingAnnotationInspectionResults();
+
+        /**
+         * @param fontInfo
+         *        the default {@link FontInfo}
+         */
+        public final void setDefaultFontInfo(final FontInfo fontInfo) {
+            results.defaultFontInfo = fontInfo;
+        }
 
         /**
          * @param field

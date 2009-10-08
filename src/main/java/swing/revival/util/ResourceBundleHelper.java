@@ -11,6 +11,8 @@
  */
 package swing.revival.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -116,6 +118,22 @@ public class ResourceBundleHelper {
             return resourceBundle.getString(prefix(key));
         }
         return def;
+    }
+
+    /**
+     * @param root
+     *        the root 'short' key
+     * @return list of keys
+     */
+    public final String[] listKeysStartingWith(final String root) {
+        final List<String> keys = new ArrayList<String>();
+        for (final String key : resourceBundle.keySet()) {
+            final String pref = prefix(root + ".");
+            if (key.startsWith(pref)) {
+                keys.add(key);
+            }
+        }
+        return keys.toArray(new String[keys.size()]);
     }
 
     /**

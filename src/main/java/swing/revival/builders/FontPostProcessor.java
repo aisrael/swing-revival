@@ -57,7 +57,7 @@ public class FontPostProcessor {
             if (size == -1) {
                 size = component.getFont().getSize();
             }
-            font = new java.awt.Font(fontAnnotation.name(), fontAnnotation.style(), size);
+            font = new java.awt.Font(fontAnnotation.name(), fontAnnotation.style().intValue(), size);
         }
         return font;
     }

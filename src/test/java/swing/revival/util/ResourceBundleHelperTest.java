@@ -51,7 +51,6 @@ public final class ResourceBundleHelperTest {
      */
     @Test
     public void testContainsKey() {
-        System.out.println(helper.getPrefix());
         assertTrue(helper.containsKey("field1Label.text"));
         assertFalse(helper.containsKey("not a key"));
     }
@@ -85,4 +84,12 @@ public final class ResourceBundleHelperTest {
                 .classToResourceKeyPrefix(MyPanel.class));
     }
 
+    /**
+     * Test for {@link ResourceBundleHelper#listKeysStartingWith(String)}
+     */
+    @Test
+    public void testListKeysStartingWith() {
+        final String[] keys = helper.listKeysStartingWith("test");
+        assertEquals(2, keys.length);
+    }
 }

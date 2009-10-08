@@ -11,6 +11,8 @@
  */
 package com.example.ui;
 
+import static swing.revival.enums.FontStyle.BOLD;
+
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -27,6 +29,7 @@ import swing.revival.annotations.TextField;
 public class ExamplePanel extends JPanel {
 
     @TextField(columns = 10)
+    @Font(style = BOLD)
     private JTextField usernameField;
 
     @TextField(columns = 10)

@@ -27,6 +27,8 @@ public class ComponentField {
 
     private final Map<String, String> properties = new Hashtable<String, String>();
 
+    private FontInfo fontInfo;
+
     /**
      * @param name
      *        the component name
@@ -50,6 +52,13 @@ public class ComponentField {
      */
     public final Field getField() {
         return field;
+    }
+
+    /**
+     * @return the fontInfo
+     */
+    public final FontInfo getFontInfo() {
+        return fontInfo;
     }
 
     /**
@@ -83,4 +92,46 @@ public class ComponentField {
         return properties.get(key);
     }
 
+    /**
+     *
+     */
+    public static class Builder {
+
+        private final ComponentField componentField;
+
+        /**
+         * @param name
+         *        the component name
+         * @param field
+         *        the actual {@link Field}
+         */
+        public Builder(final String name, final Field field) {
+            componentField = new ComponentField(name, field);
+        }
+
+        /**
+         * @param fontInfo
+         *        the {@link FontInfo} to set
+         */
+        public final void setFontInfo(final FontInfo fontInfo) {
+            componentField.fontInfo = fontInfo;
+        }
+
+        /**
+         * @param key
+         *        the property key
+         * @param value
+         *        the value
+         */
+        public final void addProperty(final String key, final String value) {
+            componentField.properties.put(key, value);
+        }
+
+        /**
+         * @return the {@link ComponentField}
+         */
+        public final ComponentField build() {
+            return componentField;
+        }
+    }
 }

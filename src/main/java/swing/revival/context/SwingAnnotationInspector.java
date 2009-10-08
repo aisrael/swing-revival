@@ -129,7 +129,8 @@ public class SwingAnnotationInspector {
     }
 
     /**
-     * @param field the {@link Field}
+     * @param field
+     *        the {@link Field}
      * @return {@link FontInfo}
      */
     private FontInfo determineFontInfo(final Field field) {

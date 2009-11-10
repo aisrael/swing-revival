@@ -15,10 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import swing.revival.SwingRevivalException;
 import swing.revival.builders.ComponentBuilderFactory;
+import swing.revival.builders.JLabelBuilder;
+import swing.revival.builders.JPasswordFieldBuilder;
 import swing.revival.builders.JTextFieldBuilder;
 
 /**
@@ -56,6 +60,8 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
      */
     private DefaultComponentBuilderFactoryRegistry() {
         addFactoryClass(JTextField.class, JTextFieldBuilder.Factory.class);
+        addFactoryClass(JPasswordField.class, JPasswordFieldBuilder.Factory.class);
+        addFactoryClass(JLabel.class, JLabelBuilder.Factory.class);
     }
 
     /**

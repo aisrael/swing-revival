@@ -11,7 +11,7 @@
  */
 package swing.revival.context;
 
-import javax.swing.JComponent;
+import java.awt.Container;
 
 import swing.revival.builders.FontPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
@@ -26,13 +26,13 @@ public class ComponentBuilderContext {
     private final ResourceBundleHelper resources;
 
     /**
-     * @param component
-     *        {@link JComponent}, typically a JPanel
+     * @param container
+     *        {@link java.awt.Container}, typically a JPanel or a JFrame
      */
-    public ComponentBuilderContext(final JComponent component) {
-        final Class<? extends JComponent> componentClass = component.getClass();
-        resources = ResourceBundleHelper.forClass(componentClass);
-        fontPostProcessor = new FontPostProcessor(component.getClass());
+    public ComponentBuilderContext(final Container container) {
+        final Class<? extends Container> containerClass = container.getClass();
+        resources = ResourceBundleHelper.forClass(containerClass);
+        fontPostProcessor = new FontPostProcessor(container.getClass());
     }
 
     /**
@@ -60,7 +60,7 @@ public class ComponentBuilderContext {
     /**
      * ComponentBuilderContext.Aware is basically just a base class for subclasses that need ComponentBuilderContext
      * awareness.
-     * 
+     *
      * @author Alistair A. Israel
      */
     public static class Aware {

@@ -35,7 +35,7 @@ public final class StringUtilsTest {
     }
 
     /**
-     * Test method for {@link StringUtils#hasLength(String)}.
+     * Test for {@link StringUtils#hasLength(String)}.
      */
     @Test
     public void testHasLength() {
@@ -47,7 +47,21 @@ public final class StringUtilsTest {
     }
 
     /**
-     * Test method for {@link StringUtils#chomp(String, String)} .
+     * Test for {@link StringUtils#unfix(String, String)}.
+     */
+    @Test
+    public void testUnfix() {
+        final String[] s = { null, "", "abc.def", "abc.def", "testUnfix" };
+        final String[] prefixes = { "abc.", "abc.", "", "abc.", "test" };
+        final String[] expected = { null, "", "abc.def", "def", "Unfix" };
+        for (int i = 0; i < expected.length; ++i) {
+            assertEquals(expected[i], StringUtils.unfix(prefixes[i], s[i]));
+        }
+
+    }
+
+    /**
+     * Test for {@link StringUtils#chomp(String, String)}.
      */
     @Test
     public void testChomp() {

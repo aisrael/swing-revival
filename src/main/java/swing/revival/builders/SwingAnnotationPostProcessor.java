@@ -27,6 +27,7 @@ import swing.revival.context.ComponentFieldInfo;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
 import swing.revival.context.FontInfo;
 import swing.revival.context.InspectionResult;
+import swing.revival.util.BeanWrapper;
 import swing.revival.util.ResourceBundleHelper;
 import swing.revival.util.Resources;
 import swing.revival.util.reflect.ClassWrapper;
@@ -67,15 +68,16 @@ public final class SwingAnnotationPostProcessor {
      *        the {@link Container}-derived object
      */
     public void process(final Container container) {
-        final ComponentBuilderContext context = new ComponentBuilderContext((JComponent) container);
+        final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
+        final ComponentBuilderContext context = new ComponentBuilderContext(container);
         final InspectionResult swair = inspect(container.getClass());
         for (final ComponentFieldInfo componentFieldInfo : swair.listComponentFieldInfos()) {
             final Class<? extends JComponent> type = componentFieldInfo.getType();
             final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
                     .getFactory(type);
-            if (factory != null) {
-                factory.getBuilder(context, componentFieldInfo).build();
-            }
+            final JComponent component = factory.getBuilder(context, componentFieldInfo).build();
+            container.add(component);
+            beanWrapper.set(componentFieldInfo.getField(), component);
         }
     }
 
@@ -121,10 +123,14 @@ public final class SwingAnnotationPostProcessor {
         /**
          * @return {@link InspectionResult}
          */
+        @SuppressWarnings("unchecked")
         public final InspectionResult inspect() {
             inspectClass();
             for (final FieldWrapper field : clazz.listAllInstanceFields()) {
-                inspectInstanceField(field);
+                final Class<?> fieldType = field.getType();
+                if (JComponent.class.isAssignableFrom(fieldType)) {
+                    inspectComponentField(field, (Class<? extends JComponent>) fieldType);
+                }
             }
             return results.build();
         }
@@ -136,19 +142,6 @@ public final class SwingAnnotationPostProcessor {
             final Font fontAnnotation = clazz.getAnnotation(Font.class);
             if (fontAnnotation != null) {
                 results.setDefaultFontInfo(FontInfo.fromAnnotation(fontAnnotation));
-            }
-        }
-
-        /**
-         * @param field
-         *        the {@link FieldWrapper} to inspect
-         */
-        @SuppressWarnings("unchecked")
-        private void inspectInstanceField(final FieldWrapper field) {
-            final Class<?> fieldType = field.getType();
-            if (JComponent.class.isAssignableFrom(fieldType)) {
-                final Class<? extends JComponent> componentType = (Class<? extends JComponent>) fieldType;
-                inspectComponentField(field, componentType);
             }
         }
 

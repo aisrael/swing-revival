@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 
 import swing.revival.annotations.Border;
 import swing.revival.builders.ComponentBuilder;
-import swing.revival.builders.JLabelFactory;
-import swing.revival.builders.JPasswordFieldFactory;
+import swing.revival.builders.JLabelBuilder;
+import swing.revival.builders.JPasswordFieldBuilder;
 import swing.revival.builders.JTextFieldBuilder;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentFieldInfo;
@@ -39,11 +39,11 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final Logger LOGGER = Logger.getLogger(ActivePanel.class.getName());
 
-    private static final JLabelFactory LABEL_FACTORY = new JLabelFactory();
+    private static final JLabelBuilder.Factory LABEL_FACTORY = new JLabelBuilder.Factory();
 
     private static final JTextFieldBuilder.Factory TEXT_FIELD_FACTORY = new JTextFieldBuilder.Factory();
 
-    private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY = new JPasswordFieldFactory();
+    private static final JPasswordFieldBuilder.Factory PASSWORD_FIELD_FACTORY = new JPasswordFieldBuilder.Factory();
 
     private final ActivePanel activePanel;
 
@@ -129,7 +129,8 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
                     baseName = builder.getBaseName();
                     component = builder.build();
                 } else if (field.getType() == JPasswordField.class) {
-                    final ComponentBuilder<JPasswordField> builder = PASSWORD_FIELD_FACTORY.getBuilder(context, fieldInfo);
+                    final ComponentBuilder<JPasswordField> builder = PASSWORD_FIELD_FACTORY.getBuilder(context,
+                            fieldInfo);
                     baseName = builder.getBaseName();
                     component = builder.build();
                 }

@@ -28,7 +28,7 @@ public class ResourceBundleHelper {
 
     private final ResourceBundle resourceBundle;
 
-    private final String prefix;
+    private final String root;
 
     /**
      * @param resourceBundle
@@ -37,31 +37,31 @@ public class ResourceBundleHelper {
     public ResourceBundleHelper(final ResourceBundle resourceBundle) {
         Assert.notNull(resourceBundle, "'resourceBundle' cannot be null!");
         this.resourceBundle = resourceBundle;
-        this.prefix = EMPTY_PREFIX;
+        this.root = EMPTY_PREFIX;
     }
 
     /**
      * @param resourceBundle
      *        the underlying {@link ResourceBundle} to wrap
-     * @param prefix
-     *        a prefix for all strings to be returned by this helper
+     * @param root
+     *        a root for all strings to be returned by this helper
      */
-    public ResourceBundleHelper(final ResourceBundle resourceBundle, final String prefix) {
+    public ResourceBundleHelper(final ResourceBundle resourceBundle, final String root) {
         Assert.notNull(resourceBundle, "'resourceBundle' cannot be null!");
-        Assert.hasLength(prefix, "'prefix' cannot be null or empty!");
+        Assert.hasLength(root, "'root' cannot be null or empty!");
         this.resourceBundle = resourceBundle;
-        if (prefix.isEmpty() || prefix.endsWith(".")) {
-            this.prefix = prefix;
+        if (root.isEmpty() || root.endsWith(".")) {
+            this.root = root;
         } else {
-            this.prefix = prefix + ".";
+            this.root = root + ".";
         }
     }
 
     /**
-     * @return the prefix
+     * @return the root
      */
     public final String getPrefix() {
-        return prefix;
+        return root;
     }
 
     /**
@@ -79,13 +79,13 @@ public class ResourceBundleHelper {
      * @return the prefixed key
      */
     protected final String prefix(final String key) {
-        return prefix + key;
+        return root + key;
     }
 
     /**
      * @param key
      *        the 'short' key for the desired string
-     * @return <code>true</code> if the <code>prefix</code>.<code>key</code> is contained in the underlying
+     * @return <code>true</code> if the <code>root</code>.<code>key</code> is contained in the underlying
      *         <code>ResourceBundle</code> or its parent bundles; <code>false</code> otherwise.
      */
     public final boolean containsKey(final String key) {
@@ -135,19 +135,28 @@ public class ResourceBundleHelper {
     }
 
     /**
-     * @param root
-     *        the root 'short' key
+     * @param prefix
+     *        the 'short' key prefix
      * @return list of keys
      */
-    public final String[] listKeysStartingWith(final String root) {
+    public final String[] listKeysStartingWith(final String prefix) {
         final List<String> keys = new ArrayList<String>();
+        final String rootedPrefix = prefix(prefix + ".");
         for (final String key : resourceBundle.keySet()) {
-            final String pref = prefix(root + ".");
-            if (key.startsWith(pref)) {
-                keys.add(key);
+            if (key.startsWith(rootedPrefix)) {
+                keys.add(removePrefix(key));
             }
         }
         return keys.toArray(new String[keys.size()]);
+    }
+
+    /**
+     * @param key
+     *        the key
+     * @return the key with this helper's root removed
+     */
+    private String removePrefix(final String key) {
+        return StringUtils.unfix(root, key);
     }
 
     /**

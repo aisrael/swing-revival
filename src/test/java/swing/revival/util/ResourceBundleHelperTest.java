@@ -65,8 +65,7 @@ public final class ResourceBundleHelperTest {
     }
 
     /**
-     * Test for
-     * {@link ResourceBundleHelper#get(java.lang.String, java.lang.String)}
+     * Test for {@link ResourceBundleHelper#get(java.lang.String, java.lang.String)}
      */
     @Test
     public void testGet() {
@@ -75,8 +74,7 @@ public final class ResourceBundleHelperTest {
     }
 
     /**
-     * Test for
-     * {@link ResourceBundleHelper#classToResourceKeyPrefix(java.lang.Class)}
+     * Test for {@link ResourceBundleHelper#classToResourceKeyPrefix(java.lang.Class)}
      */
     @Test
     public void testClassToResourceKeyPrefix() {
@@ -91,5 +89,7 @@ public final class ResourceBundleHelperTest {
     public void testListKeysStartingWith() {
         final String[] keys = helper.listKeysStartingWith("test");
         assertEquals(2, keys.length);
+        assertEquals("test.x", keys[0]);
+        assertEquals("test.y", keys[1]);
     }
 }

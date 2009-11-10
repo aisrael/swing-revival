@@ -12,7 +12,6 @@
 package swing.revival.util;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public final class StringUtils {
@@ -43,18 +42,35 @@ public final class StringUtils {
     }
 
     /**
+     * Remove the given prefix from the given string, if present.
+     *
+     * @param prefix
+     *        the prefix to remove, if present
+     * @param s
+     *        the string
+     * @return if the string begins with the given prefix, the string with the prefix removed. Otherwise, returns the
+     *         original string
+     */
+    public static String unfix(final String prefix, final String s) {
+        if (hasLength(s) && hasLength(prefix) && s.startsWith(prefix)) {
+            return s.substring(prefix.length());
+        }
+        return s;
+    }
+
+    /**
      * Remove the given suffix from the given string, if present.
      *
      * @param s
      *        the string
      * @param suffix
      *        the suffix to remove, if present
-     * @return if the string ends with the given suffix, the string with the
-     *         suffix removed. Otherwise, return the original string
+     * @return if the string ends with the given suffix, the string with the suffix removed. Otherwise, return the
+     *         original string
      */
     public static String chomp(final String s, final String suffix) {
         if (hasLength(s) && hasLength(suffix) && s.endsWith(suffix)) {
-            return s.substring(0, s.lastIndexOf(suffix));
+            return s.substring(0, s.length() - suffix.length());
         }
         return s;
     }

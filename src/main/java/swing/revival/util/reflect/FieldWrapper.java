@@ -44,7 +44,7 @@ public class FieldWrapper {
     /**
      * Returns the underlying <code>Field</code>'s annotation for the specified type if such an annotation is present,
      * else <code>null</code>.
-     * 
+     *
      * @param <T>
      *        the annotation type
      * @param annotationClass
@@ -60,7 +60,7 @@ public class FieldWrapper {
     /**
      * Returns all annotations present on the underlying <code>Field</code>. (Returns an array of length zero if the
      * <code>Field</code> element has no annotations.)
-     * 
+     *
      * @return all annotations present on the underlying <code>Field</code>
      * @see java.lang.reflect.AccessibleObject#getAnnotations()
      */
@@ -71,7 +71,7 @@ public class FieldWrapper {
     /**
      * Returns the Java language modifiers for the field wrapped by this <code>FieldWrapper</code> object, as an
      * integer. The <code>Modifier</code> class should be used to decode the modifiers.
-     * 
+     *
      * @return the field modifiers
      * @see java.lang.reflect.Field#getModifiers()
      */
@@ -81,7 +81,7 @@ public class FieldWrapper {
 
     /**
      * Returns the name of the field wrapped by this <code>FieldWrapper</code> object.
-     * 
+     *
      * @return the name of the underlying field
      * @see java.lang.reflect.Field#getName()
      */
@@ -92,7 +92,7 @@ public class FieldWrapper {
     /**
      * Returns a <code>Class</code> object that identifies the declared type for the underlying field wrapped by this
      * <code>FieldWrapper</code> object.
-     * 
+     *
      * @return a <code>Class</code> object identifying the declared type of the underlying field
      * @see java.lang.reflect.Field#getType()
      */
@@ -102,7 +102,7 @@ public class FieldWrapper {
 
     /**
      * Get the value of the accessible flag for the underlying field.
-     * 
+     *
      * @return the value of the object's <code>accessible</code> flag
      * @see java.lang.reflect.AccessibleObject#isAccessible()
      */
@@ -113,7 +113,7 @@ public class FieldWrapper {
     /**
      * Returns true if an annotation for the specified type is present on the underlying <code>Field</code>, else
      * <code>false</code>. This method is designed primarily for convenient access to marker annotations.
-     * 
+     *
      * @param annotationClass
      *        the Class object corresponding to the annotation type
      * @return <code>true</code> true if an annotation for the specified annotation type is present on the underlying
@@ -127,7 +127,7 @@ public class FieldWrapper {
     /**
      * Returns <code>true</code> if the underlying field represents an element of an enumerated type; returns
      * <code>false</code> otherwise.
-     * 
+     *
      * @return <code>true</code> if and only if the underlying field represents an element of an enumerated type.
      * @see java.lang.reflect.Field#isEnumConstant()
      */
@@ -137,7 +137,7 @@ public class FieldWrapper {
 
     /**
      * Returns <code>true</code> if the underlying field is a synthetic field; returns <code>false</code> otherwise.
-     * 
+     *
      * @return true if and only if the underlying field is a synthetic field as defined by the Java Language
      *         Specification.
      * @see java.lang.reflect.Field#isSynthetic()
@@ -151,7 +151,7 @@ public class FieldWrapper {
      * <code>true</code> indicates that the reflected object should suppress Java language access checking when it is
      * used. A value of <code>false</code> indicates that the reflected object should enforce Java language access
      * checks.
-     * 
+     *
      * @param flag
      *        the new value for the <code>accessible</code> flag
      * @throws SecurityException
@@ -174,5 +174,15 @@ public class FieldWrapper {
      */
     public final boolean isPublic() {
         return Modifier.isPublic(mod);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public final String toString() {
+        return field.toString();
     }
 }

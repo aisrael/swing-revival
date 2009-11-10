@@ -17,7 +17,6 @@ import javax.swing.JComponent;
 
 import swing.revival.builders.FontPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
-import swing.revival.util.Resources;
 
 /**
  *
@@ -35,7 +34,7 @@ public class ComponentBuilderContext {
      */
     public ComponentBuilderContext(final JComponent component) {
         final Class<? extends JComponent> componentClass = component.getClass();
-        resources = Resources.forClass(componentClass);
+        resources = ResourceBundleHelper.forClass(componentClass);
         fontPostProcessor = new FontPostProcessor(component.getClass());
     }
 

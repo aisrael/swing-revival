@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 
 import swing.revival.util.ClassUtils;
 import swing.revival.util.ResourceBundleHelper;
-import swing.revival.util.Resources;
 
 /**
  * @author Alistair A. Israel
@@ -48,7 +47,7 @@ public class ActiveFrame extends JFrame {
      */
     public ActiveFrame(final String title) {
         final Class<? extends ActiveFrame> clazz = getClass();
-        resourceHelper = Resources.forClass(clazz);
+        resourceHelper = ResourceBundleHelper.forClass(clazz);
         final String t;
         if (hasLength(title)) {
             t = title;

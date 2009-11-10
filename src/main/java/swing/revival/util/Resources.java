@@ -113,13 +113,4 @@ public final class Resources {
         NON_EXISTENT_RESOURCE_BUNDLES.add(name);
         return null;
     }
-
-    /**
-     * @param clazz
-     *        a Class
-     * @return {@link ResourceBundleHelper}
-     */
-    public static ResourceBundleHelper forClass(final Class<?> clazz) {
-        return find(clazz);
-    }
 }

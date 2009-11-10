@@ -35,7 +35,7 @@ public final class ResourceBundleHelperTest {
      */
     @Before
     public void setUp() {
-        helper = Resources.forClass(MyPanel.class);
+        helper = ResourceBundleHelper.forClass(MyPanel.class);
     }
 
     /**

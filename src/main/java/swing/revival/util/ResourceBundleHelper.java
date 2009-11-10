@@ -50,6 +50,15 @@ public class ResourceBundleHelper {
     }
 
     /**
+     * @param clazz
+     *        a Class
+     * @return {@link ResourceBundleHelper}
+     */
+    public static ResourceBundleHelper forClass(final Class<?> clazz) {
+        return Resources.find(clazz);
+    }
+
+    /**
      * @param key
      *        the 'short' key for the desired string
      * @return the prefixed key

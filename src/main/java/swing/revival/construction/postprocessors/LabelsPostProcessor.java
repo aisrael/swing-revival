@@ -9,7 +9,7 @@
  *
  * Created Nov 10, 2009
  */
-package swing.revival.builders;
+package swing.revival.construction.postprocessors;
 
 import static swing.revival.util.StringUtils.chomp;
 
@@ -19,7 +19,6 @@ import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import swing.revival.construction.postprocessors.AssemblyPostProcessor;
 import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.ClassUtils;

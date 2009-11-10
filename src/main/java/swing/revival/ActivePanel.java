@@ -50,10 +50,6 @@ public class ActivePanel extends GroupLayoutJPanel {
         layoutComponents();
     }
 
-    protected ActivePanel(final InspectionResult swair) {
-        createComponents();
-    }
-
     /**
      *
      */

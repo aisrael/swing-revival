@@ -57,6 +57,7 @@ public final class SwingAnnotationPostProcessor {
         final InspectionResult swair = inspect(container.getClass());
         for (final ComponentField componentField : swair.listComponentFields()) {
             final Class<?> type = componentField.getType();
+            
         }
     }
 

@@ -15,9 +15,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 import swing.revival.SwingRevivalException;
 import swing.revival.builders.ComponentBuilderFactory;
+import swing.revival.builders.JTextFieldBuilder;
 
 /**
  * @author Alistair A. Israel
@@ -53,6 +55,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
      * Hidden constructor. Initializes the component builder registry with the most common component builders.
      */
     private DefaultComponentBuilderFactoryRegistry() {
+        addFactoryClass(JTextField.class, JTextFieldBuilder.Factory.class);
     }
 
     /**
@@ -64,7 +67,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
      *        the factory class
      */
     public <T extends JComponent> void addFactoryClass(final Class<T> type,
-            final Class<ComponentBuilderFactory<T>> factoryClass) {
+            final Class<? extends ComponentBuilderFactory<T>> factoryClass) {
         try {
             final ComponentBuilderFactory<T> factory = factoryClass.newInstance();
             componentBuilderFactoryMap.put(type, factory);

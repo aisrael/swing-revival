@@ -25,11 +25,11 @@ public class JLabelFactory implements ComponentBuilderFactory<JLabel> {
     /**
      * {@inheritDoc}
      * 
-     * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
+     * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override
-    public final ComponentBuilder<JLabel> build(final ComponentBuilderContext context,
+    public final ComponentBuilder<JLabel> getBuilder(final ComponentBuilderContext context,
             final ComponentFieldInfo fieldInfo) {
         return new JLabelBuilder(context, fieldInfo);
     }

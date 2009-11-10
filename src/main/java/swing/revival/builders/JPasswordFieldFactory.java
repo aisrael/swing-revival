@@ -25,11 +25,11 @@ public class JPasswordFieldFactory implements ComponentBuilderFactory<JPasswordF
     /**
      * {@inheritDoc}
      * 
-     * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
+     * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override
-    public final ComponentBuilder<JPasswordField> build(final ComponentBuilderContext context,
+    public final ComponentBuilder<JPasswordField> getBuilder(final ComponentBuilderContext context,
             final ComponentFieldInfo fieldInfo) {
         return new JPasswordFieldBuilder(context, fieldInfo);
     }

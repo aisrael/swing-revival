@@ -30,5 +30,5 @@ public interface ComponentBuilderFactory<C extends JComponent> {
      *        the {@link ComponentFieldInfo} to return a builder for
      * @return the field {@link ComponentBuilder}
      */
-    ComponentBuilder<C> build(ComponentBuilderContext context, ComponentFieldInfo fieldInfo);
+    ComponentBuilder<C> getBuilder(ComponentBuilderContext context, ComponentFieldInfo fieldInfo);
 }

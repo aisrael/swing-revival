@@ -73,7 +73,9 @@ public final class SwingAnnotationPostProcessor {
             final Class<? extends JComponent> type = componentFieldInfo.getType();
             final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
                     .getFactory(type);
-            factory.build(context, componentFieldInfo);
+            if (factory != null) {
+                factory.getBuilder(context, componentFieldInfo).build();
+            }
         }
     }
 
@@ -96,7 +98,7 @@ public final class SwingAnnotationPostProcessor {
 
     /**
      * Inspects the given {@link Container} subclass (typically, a JPanel or JFrame) for Swing Revival annotations.
-     * 
+     *
      * @author Alistair A. Israel
      */
     public class Inspector {

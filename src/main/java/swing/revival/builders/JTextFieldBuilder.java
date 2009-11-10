@@ -35,7 +35,7 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see swing.revival.builders.ComponentBuilder#build()
      */
     @Override
@@ -55,7 +55,7 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see swing.revival.builders.ComponentBuilder#getBaseName()
      */
     @Override
@@ -65,6 +65,25 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
             return name.substring(0, name.length() - "TextField".length());
         }
         return name;
+    }
+
+    /**
+     *
+     */
+    public static class Factory implements ComponentBuilderFactory<JTextField> {
+
+        /**
+         * {@inheritDoc}
+         *
+         * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.ComponentBuilderContext,
+         *      java.lang.reflect.Field)
+         */
+        @Override
+        public final ComponentBuilder<JTextField> getBuilder(final ComponentBuilderContext context,
+                final ComponentFieldInfo fieldInfo) {
+            return new JTextFieldBuilder(context, fieldInfo);
+        }
+
     }
 
 }

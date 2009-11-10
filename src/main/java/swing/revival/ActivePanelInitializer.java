@@ -26,7 +26,7 @@ import swing.revival.annotations.Border;
 import swing.revival.builders.ComponentBuilder;
 import swing.revival.builders.JLabelFactory;
 import swing.revival.builders.JPasswordFieldFactory;
-import swing.revival.builders.JTextFieldBuilderFactory;
+import swing.revival.builders.JTextFieldBuilder;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentFieldInfo;
 import swing.revival.enums.BorderType;
@@ -41,7 +41,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final JLabelFactory LABEL_FACTORY = new JLabelFactory();
 
-    private static final JTextFieldBuilderFactory TEXT_FIELD_FACTORY = new JTextFieldBuilderFactory();
+    private static final JTextFieldBuilder.Factory TEXT_FIELD_FACTORY = new JTextFieldBuilder.Factory();
 
     private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY = new JPasswordFieldFactory();
 
@@ -113,7 +113,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
         String baseName = name;
         final ComponentFieldInfo fieldInfo = ComponentFieldInfo.wrap(field);
         if (JLabel.class.isAssignableFrom(field.getType())) {
-            final ComponentBuilder<JLabel> builder = LABEL_FACTORY.build(context, fieldInfo);
+            final ComponentBuilder<JLabel> builder = LABEL_FACTORY.getBuilder(context, fieldInfo);
             final JLabel label = builder.build();
             baseName = builder.getBaseName();
             if (components.containsKey(baseName)) {
@@ -125,11 +125,11 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
         } else {
             if (JTextField.class.isAssignableFrom(field.getType())) {
                 if (field.getType() == JTextField.class) {
-                    final ComponentBuilder<JTextField> builder = TEXT_FIELD_FACTORY.build(context, fieldInfo);
+                    final ComponentBuilder<JTextField> builder = TEXT_FIELD_FACTORY.getBuilder(context, fieldInfo);
                     baseName = builder.getBaseName();
                     component = builder.build();
                 } else if (field.getType() == JPasswordField.class) {
-                    final ComponentBuilder<JPasswordField> builder = PASSWORD_FIELD_FACTORY.build(context, fieldInfo);
+                    final ComponentBuilder<JPasswordField> builder = PASSWORD_FIELD_FACTORY.getBuilder(context, fieldInfo);
                     baseName = builder.getBaseName();
                     component = builder.build();
                 }

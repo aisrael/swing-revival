@@ -11,11 +11,10 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JComponent;
 
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
  * @param <C>
@@ -27,9 +26,9 @@ public interface ComponentBuilderFactory<C extends JComponent> {
     /**
      * @param context
      *        the {@link ComponentBuilderContext} we're building in
-     * @param field
-     *        the {@link Field} to return a builder for
+     * @param fieldInfo
+     *        the {@link ComponentFieldInfo} to return a builder for
      * @return the field {@link ComponentBuilder}
      */
-    ComponentBuilder<C> build(ComponentBuilderContext context, Field field);
+    ComponentBuilder<C> build(ComponentBuilderContext context, ComponentFieldInfo fieldInfo);
 }

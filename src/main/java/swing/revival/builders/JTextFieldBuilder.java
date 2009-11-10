@@ -11,15 +11,13 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JTextField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
- *
  * @author Alistair A. Israel
  * @since 0.1
  */
@@ -28,21 +26,21 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
     /**
      * @param context
      *        the {@link ComponentBuilderContext} we're building in
-     * @param field
+     * @param fieldInfo
      *        the field we're building for
      */
-    public JTextFieldBuilder(final ComponentBuilderContext context, final Field field) {
-        super(context, field);
+    public JTextFieldBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+        super(context, fieldInfo);
     }
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see swing.revival.builders.ComponentBuilder#build()
      */
     @Override
     protected final JTextField constructComponent() {
-        final TextField textFieldAnnotation = getField().getAnnotation(TextField.class);
+        final TextField textFieldAnnotation = getFieldInfo().getField().getAnnotation(TextField.class);
         int columns = -1;
         if (textFieldAnnotation != null) {
             columns = textFieldAnnotation.columns();
@@ -57,12 +55,12 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see swing.revival.builders.ComponentBuilder#getBaseName()
      */
     @Override
     public final String getBaseName() {
-        final String name = getField().getName();
+        final String name = getFieldInfo().getName();
         if (name.endsWith("TextField")) {
             return name.substring(0, name.length() - "TextField".length());
         }

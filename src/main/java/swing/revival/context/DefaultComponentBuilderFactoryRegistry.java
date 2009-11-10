@@ -57,21 +57,21 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
     /**
      * {@inheritDoc}
      * 
-     * @see swing.revival.context.ComponentBuilderFactoryRegistry#hasFactoryFor(java.lang.Class)
+     * @see swing.revival.context.ComponentBuilderFactoryRegistry#hasFactory(java.lang.Class)
      */
     @Override
-    public boolean hasFactoryFor(final Class<? extends JComponent> type) {
+    public boolean hasFactory(final Class<? extends JComponent> type) {
         return componentBuilderFactoryMap.containsKey(type);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see swing.revival.context.ComponentBuilderFactoryRegistry#getFactoryFor(java.lang.Class)
+     * @see swing.revival.context.ComponentBuilderFactoryRegistry#getFactory(java.lang.Class)
      */
     @Override
     @SuppressWarnings("unchecked")
-    public <C extends JComponent> ComponentBuilderFactory<C> getFactoryFor(final Class<C> type) {
+    public <C extends JComponent> ComponentBuilderFactory<C> getFactory(final Class<C> type) {
         return (ComponentBuilderFactory<C>) componentBuilderFactoryMap.get(type);
     }
 

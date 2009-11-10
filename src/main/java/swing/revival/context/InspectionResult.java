@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import swing.revival.builders.SwingAnnotationPostProcessor.Inspector;
+
 
 /**
  * Results of performing reflection on a Container class looking for Swing

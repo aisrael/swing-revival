@@ -11,11 +11,10 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JTextField;
 
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
  * @author Alistair A. Israel
@@ -29,8 +28,9 @@ public class JTextFieldBuilderFactory implements ComponentBuilderFactory<JTextFi
      *      java.lang.reflect.Field)
      */
     @Override
-    public final ComponentBuilder<JTextField> build(final ComponentBuilderContext context, final Field field) {
-        return new JTextFieldBuilder(context, field);
+    public final ComponentBuilder<JTextField> build(final ComponentBuilderContext context,
+            final ComponentFieldInfo fieldInfo) {
+        return new JTextFieldBuilder(context, fieldInfo);
     }
 
 }

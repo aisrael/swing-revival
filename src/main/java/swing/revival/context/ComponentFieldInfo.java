@@ -17,6 +17,10 @@ import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.swing.JComponent;
+
+import swing.revival.util.Assert;
+
 /**
  * Holds meta-data about a component field.
  * 
@@ -39,6 +43,7 @@ public class ComponentFieldInfo {
      *        the actual {@link Field}
      */
     public ComponentFieldInfo(final String name, final Field field) {
+        Assert.isAssignable(JComponent.class, field.getType(), "'field' must represent a JComponent-derived type!");
         this.name = name;
         this.field = field;
     }
@@ -68,8 +73,9 @@ public class ComponentFieldInfo {
      * @return the component field type
      * @see java.lang.reflect.Field#getType()
      */
-    public final Class<?> getType() {
-        return field.getType();
+    @SuppressWarnings("unchecked")
+    public final Class<? extends JComponent> getType() {
+        return (Class<? extends JComponent>) field.getType();
     }
 
     /**
@@ -103,6 +109,15 @@ public class ComponentFieldInfo {
     @Override
     public final String toString() {
         return name + " (" + getShortName(field.getType()) + ")";
+    }
+
+    /**
+     * @param field
+     *        a {@link Field}
+     * @return {@link ComponentFieldInfo}
+     */
+    public static ComponentFieldInfo wrap(final Field field) {
+        return new ComponentFieldInfo.Builder(field.getName(), field).build();
     }
 
     /**

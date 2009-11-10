@@ -27,7 +27,6 @@ import swing.revival.context.ComponentFieldInfo;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
 import swing.revival.context.FontInfo;
 import swing.revival.context.InspectionResult;
-import swing.revival.context.ComponentFieldInfo.Builder;
 import swing.revival.util.ResourceBundleHelper;
 import swing.revival.util.Resources;
 import swing.revival.util.reflect.ClassWrapper;
@@ -38,7 +37,8 @@ import swing.revival.util.reflect.FieldWrapper;
  */
 public final class SwingAnnotationPostProcessor {
 
-    private ComponentBuilderFactoryRegistry componentBuilderFactoryRegistry = DefaultComponentBuilderFactoryRegistry.getInstance();
+    private ComponentBuilderFactoryRegistry componentBuilderFactoryRegistry = DefaultComponentBuilderFactoryRegistry
+            .getInstance();
 
     /**
      *
@@ -70,7 +70,10 @@ public final class SwingAnnotationPostProcessor {
         final ComponentBuilderContext context = new ComponentBuilderContext((JComponent) container);
         final InspectionResult swair = inspect(container.getClass());
         for (final ComponentFieldInfo componentFieldInfo : swair.listComponentFieldInfos()) {
-            final Class<?> type = componentFieldInfo.getType();
+            final Class<? extends JComponent> type = componentFieldInfo.getType();
+            final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
+                    .getFactory(type);
+            factory.build(context, componentFieldInfo);
         }
     }
 
@@ -154,22 +157,22 @@ public final class SwingAnnotationPostProcessor {
          *        a <code>Class</code> object that extends <code>JComponent</code>
          */
         private void inspectComponentField(final FieldWrapper field, final Class<? extends JComponent> componentType) {
-            if (componentBuilderFactoryRegistry.hasFactoryFor(componentType)) {
+            if (componentBuilderFactoryRegistry.hasFactory(componentType)) {
                 final String name = determineFieldName(field);
 
-                final ComponentFieldInfo.Builder builder = new ComponentFieldInfo.Builder(name, field.getField());
+                final ComponentFieldInfo.Builder info = new ComponentFieldInfo.Builder(name, field.getField());
                 final String[] keys = helper.listKeysStartingWith(name);
                 for (final String key : keys) {
                     final String value = helper.getString(key);
                     final String subkey = key.substring(name.length() + 1);
-                    builder.addProperty(subkey, value);
+                    info.addProperty(subkey, value);
                 }
 
                 final FontInfo fontInfo = determineFontInfo(field);
                 if (fontInfo != null) {
-                    builder.setFontInfo(fontInfo);
+                    info.setFontInfo(fontInfo);
                 }
-                results.addComponentFieldInfo(builder.build());
+                results.addComponentFieldInfo(info.build());
             }
         }
 

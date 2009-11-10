@@ -11,73 +11,72 @@
  */
 package swing.revival.builders;
 
-import java.awt.Font;
-import java.lang.reflect.Field;
+import static swing.revival.util.SyntaticSugar.ifNull;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+
+import swing.revival.context.ComponentFieldInfo;
+import swing.revival.context.FontInfo;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class FontPostProcessor {
 
-    private final Font defaultFont;
+    private final FontInfo defaultFontInfo;
 
     /**
      * @param clazz
      *        the component class
      */
     public FontPostProcessor(final Class<?> clazz) {
-        final swing.revival.annotations.Font fontAnnotation =
-                clazz.getAnnotation(swing.revival.annotations.Font.class);
-        defaultFont = createFont(fontAnnotation, new JLabel());
+        if (clazz.isAnnotationPresent(swing.revival.annotations.Font.class)) {
+            defaultFontInfo = FontInfo.fromAnnotation(clazz.getAnnotation(swing.revival.annotations.Font.class));
+        } else {
+            defaultFontInfo = null;
+        }
     }
 
     /**
      * @return the defaultFont
      */
-    public final Font getDefaultFont() {
-        return defaultFont;
+    public final FontInfo getDefaultFontInfo() {
+        return defaultFontInfo;
     }
 
     /**
-     * @param fontAnnotation
-     *        the font annotation to process
-     * @param component
-     *        the component we're processing
-     * @return the {@link Font}
-     */
-    private static java.awt.Font createFont(
-            final swing.revival.annotations.Font fontAnnotation, final JComponent component) {
-        java.awt.Font font = null;
-        if (fontAnnotation != null) {
-            int size = fontAnnotation.size();
-            if (size == -1) {
-                size = component.getFont().getSize();
-            }
-            font = new java.awt.Font(fontAnnotation.name(), fontAnnotation.style().intValue(), size);
-        }
-        return font;
-    }
-
-    /**
-     * @param field
-     *        the {@link Field} we're post-processing for
+     * @param fieldInfo
+     *        the {@link ComponentFieldInfo} we're post-processing for
      * @param component
      *        the component to set the font on
      */
-    public final void setFontOn(final Field field, final JComponent component) {
-        java.awt.Font font = defaultFont;
-        final swing.revival.annotations.Font fontAnnotation =
-                field.getAnnotation(swing.revival.annotations.Font.class);
-        if (fontAnnotation != null) {
-            font = createFont(fontAnnotation, component);
-        }
-        if (font != null) {
-            component.setFont(font);
+    public final void setFontOn(final ComponentFieldInfo fieldInfo, final JComponent component) {
+        final FontInfo fontInfo = ifNull(fieldInfo.getFontInfo(), defaultFontInfo);
+        if (fontInfo != null) {
+            final java.awt.Font font = createFont(fontInfo, component);
+            if (font != null) {
+                component.setFont(font);
+            }
         }
     }
 
+    /**
+     * @param fontInfo
+     *        the font annotation to process
+     * @param component
+     *        the component we're processing
+     * @return the {@link java.awt.Font}
+     */
+    private static java.awt.Font createFont(final FontInfo fontInfo, final JComponent component) {
+        if (fontInfo != null) {
+            final int size;
+            if (fontInfo.getSize() != null) {
+                size = fontInfo.getSize().intValue();
+            } else {
+                size = component.getFont().getSize();
+            }
+            return new java.awt.Font(fontInfo.getName(), fontInfo.getStyle(), size);
+        }
+        return null;
+    }
 }

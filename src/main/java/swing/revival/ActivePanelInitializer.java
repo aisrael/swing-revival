@@ -28,11 +28,11 @@ import swing.revival.builders.JLabelFactory;
 import swing.revival.builders.JPasswordFieldFactory;
 import swing.revival.builders.JTextFieldBuilderFactory;
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 import swing.revival.enums.BorderType;
 import swing.revival.util.BeanWrapper;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
@@ -43,8 +43,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final JTextFieldBuilderFactory TEXT_FIELD_FACTORY = new JTextFieldBuilderFactory();
 
-    private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY =
-            new JPasswordFieldFactory();
+    private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY = new JPasswordFieldFactory();
 
     private final ActivePanel activePanel;
 
@@ -86,8 +85,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
             if (!Modifier.isStatic(field.getModifiers())) {
                 final Object value = get(field);
                 final Class<?> type = field.getType();
-                LOGGER.finest("Got field \"" + field.getName() + "\" of declared type "
-                        + type.getName());
+                LOGGER.finest("Got field \"" + field.getName() + "\" of declared type " + type.getName());
                 if (JComponent.class.isAssignableFrom(type) && value == null) {
                     final JComponent component = createComponent(context, field);
                     if (component != null) {
@@ -113,8 +111,9 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
         final String name = field.getName();
         JComponent component = null;
         String baseName = name;
+        final ComponentFieldInfo fieldInfo = ComponentFieldInfo.wrap(field);
         if (JLabel.class.isAssignableFrom(field.getType())) {
-            final ComponentBuilder<JLabel> builder = LABEL_FACTORY.build(context, field);
+            final ComponentBuilder<JLabel> builder = LABEL_FACTORY.build(context, fieldInfo);
             final JLabel label = builder.build();
             baseName = builder.getBaseName();
             if (components.containsKey(baseName)) {
@@ -126,13 +125,11 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
         } else {
             if (JTextField.class.isAssignableFrom(field.getType())) {
                 if (field.getType() == JTextField.class) {
-                    final ComponentBuilder<JTextField> builder =
-                            TEXT_FIELD_FACTORY.build(context, field);
+                    final ComponentBuilder<JTextField> builder = TEXT_FIELD_FACTORY.build(context, fieldInfo);
                     baseName = builder.getBaseName();
                     component = builder.build();
                 } else if (field.getType() == JPasswordField.class) {
-                    final ComponentBuilder<JPasswordField> builder =
-                            PASSWORD_FIELD_FACTORY.build(context, field);
+                    final ComponentBuilder<JPasswordField> builder = PASSWORD_FIELD_FACTORY.build(context, fieldInfo);
                     baseName = builder.getBaseName();
                     component = builder.build();
                 }

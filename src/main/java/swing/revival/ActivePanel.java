@@ -25,7 +25,7 @@ import swing.revival.annotations.RadioButton;
 import swing.revival.builders.ActionPostProcessor;
 import swing.revival.builders.SwingAnnotationPostProcessor;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.context.InspectionResult;
+import swing.revival.context.ComponentFieldInfo;
 import swing.revival.util.BeanWrapper;
 
 /**
@@ -132,7 +132,8 @@ public class ActivePanel extends GroupLayoutJPanel {
         if (button != null) {
             final String name = (String) action.getValue(Action.NAME);
             button.setName(name);
-            context.getFontPostProcessor().setFontOn(actionField, button);
+            final ComponentFieldInfo actionFieldInfo = ComponentFieldInfo.wrap(actionField);
+            context.getFontPostProcessor().setFontOn(actionFieldInfo, button);
         }
         return button;
     }

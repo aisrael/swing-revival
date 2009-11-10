@@ -11,19 +11,18 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
 import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
  * @param <C>
  * @author Alistair A. Israel
  */
-public abstract class ComponentBuilder<C extends JComponent> extends
-        ComponentBuilderContext.Aware {
+public abstract class ComponentBuilder<C extends JComponent> extends ComponentBuilderContext.Aware {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentBuilder.class.getName());
 
@@ -32,24 +31,24 @@ public abstract class ComponentBuilder<C extends JComponent> extends
      */
     private static final String TOOL_TIP_TEXT = ".toolTipText";
 
-    private final Field field;
+    private final ComponentFieldInfo fieldInfo;
 
     /**
      * @param context
      *        the {@link ComponentBuilderContext} we're building in
-     * @param field
-     *        the field we're building for
+     * @param fieldInfo
+     *        the fieldInfo we're building for
      */
-    public ComponentBuilder(final ComponentBuilderContext context, final Field field) {
+    public ComponentBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
         super(context);
-        this.field = field;
+        this.fieldInfo = fieldInfo;
     }
 
     /**
-     * @return the field
+     * @return the fieldInfo
      */
-    public final Field getField() {
-        return field;
+    public final ComponentFieldInfo getFieldInfo() {
+        return fieldInfo;
     }
 
     /**
@@ -67,10 +66,10 @@ public abstract class ComponentBuilder<C extends JComponent> extends
      */
     public final C build() {
         final C component = constructComponent();
-        final String name = getField().getName();
+        final String name = getFieldInfo().getName();
         LOGGER.finest("Setting component name to \"" + name + "\"...");
         component.setName(name);
-        getFontPostProcessor().setFontOn(getField(), component);
+        getFontPostProcessor().setFontOn(getFieldInfo(), component);
         setToolTipTextOn(component);
         return component;
     }

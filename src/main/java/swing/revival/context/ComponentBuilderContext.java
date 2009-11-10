@@ -11,15 +11,12 @@
  */
 package swing.revival.context;
 
-import java.awt.Font;
-
 import javax.swing.JComponent;
 
 import swing.revival.builders.FontPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class ComponentBuilderContext {
@@ -46,11 +43,11 @@ public class ComponentBuilderContext {
     }
 
     /**
-     * @return the default font
-     * @see swing.revival.builders.FontPostProcessor#getDefaultFont()
+     * @return the default {@link FontInfo}
+     * @see swing.revival.builders.FontPostProcessor#getDefaultFontInfo()
      */
-    public final Font getDefaultFont() {
-        return fontPostProcessor.getDefaultFont();
+    public final FontInfo getDefaultFontInfo() {
+        return fontPostProcessor.getDefaultFontInfo();
     }
 
     /**
@@ -61,9 +58,9 @@ public class ComponentBuilderContext {
     }
 
     /**
-     * ComponentBuilderContext.Aware is basically just a base class for
-     * subclasses that need ComponentBuilderContext awareness.
-     *
+     * ComponentBuilderContext.Aware is basically just a base class for subclasses that need ComponentBuilderContext
+     * awareness.
+     * 
      * @author Alistair A. Israel
      */
     public static class Aware {
@@ -94,19 +91,18 @@ public class ComponentBuilderContext {
         }
 
         /**
-         * @return the defaultFont
-         * @see swing.revival.context.ComponentBuilderContext#getDefaultFont()
+         * @return the default FontInfo
+         * @see swing.revival.context.ComponentBuilderContext#getDefaultFontInfo()
          */
-        public final Font getDefaultFont() {
-            return context.getDefaultFont();
+        public final FontInfo getDefaultFontInfo() {
+            return context.getDefaultFontInfo();
         }
 
         /**
          * @param key
          *        the 'short' key for the desired string
-         * @return <code>true</code> if the <code>prefix</code>.<code>key</code>
-         *         is contained in the underlying <code>ResourceBundle</code> or
-         *         its parent bundles; <code>false</code> otherwise.
+         * @return <code>true</code> if the <code>prefix</code>.<code>key</code> is contained in the underlying
+         *         <code>ResourceBundle</code> or its parent bundles; <code>false</code> otherwise.
          * @see ResourceBundleHelper#containsKey(java.lang.String)
          */
         public final boolean containsResourceKey(final String key) {

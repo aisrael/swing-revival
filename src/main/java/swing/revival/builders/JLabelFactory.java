@@ -11,33 +11,30 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JLabel;
 
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 import swing.revival.util.StringUtils;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class JLabelFactory implements ComponentBuilderFactory<JLabel> {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override
-    public final swing.revival.builders.ComponentBuilder<JLabel> build(
-            final ComponentBuilderContext context, final Field field) {
-        return new JLabelBuilder(context, field);
+    public final ComponentBuilder<JLabel> build(final ComponentBuilderContext context,
+            final ComponentFieldInfo fieldInfo) {
+        return new JLabelBuilder(context, fieldInfo);
     }
 
     /**
-     *
      * @author Alistair A. Israel
      */
     public static class JLabelBuilder extends ComponentBuilder<JLabel> {
@@ -45,22 +42,22 @@ public class JLabelFactory implements ComponentBuilderFactory<JLabel> {
         /**
          * @param context
          *        the {@link ComponentBuilderContext} we're building in
-         * @param field
+         * @param fieldInfo
          *        the field we're building for
          */
-        public JLabelBuilder(final ComponentBuilderContext context, final Field field) {
-            super(context, field);
+        public JLabelBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+            super(context, fieldInfo);
         }
 
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see swing.revival.builders.ComponentBuilder#constructComponent()
          */
         @Override
         protected final JLabel constructComponent() {
             final JLabel label = new JLabel();
-            final String name = getField().getName();
+            final String name = getFieldInfo().getName();
             final String text = getResourceString(name + ".text");
             if (StringUtils.hasLength(text)) {
                 label.setText(text);
@@ -72,12 +69,12 @@ public class JLabelFactory implements ComponentBuilderFactory<JLabel> {
 
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see swing.revival.builders.ComponentBuilder#getBaseName()
          */
         @Override
         public final String getBaseName() {
-            final String name = getField().getName();
+            final String name = getFieldInfo().getName();
             if (name.endsWith("Label")) {
                 return name.substring(0, name.length() - "Label".length());
             }

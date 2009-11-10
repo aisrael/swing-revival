@@ -25,7 +25,7 @@ public interface ComponentBuilderFactoryRegistry {
      *        the class object representing the component type
      * @return <code>true</code> if the registry contains a builder for the specified component type
      */
-    boolean hasFactoryFor(final Class<? extends JComponent> type);
+    boolean hasFactory(final Class<? extends JComponent> type);
 
     /**
      * @param <C>
@@ -34,5 +34,5 @@ public interface ComponentBuilderFactoryRegistry {
      *        the class object representing the component type
      * @return the ComponentBuilder for the specified type
      */
-    <C extends JComponent> ComponentBuilderFactory<C> getFactoryFor(final Class<C> type);
+    <C extends JComponent> ComponentBuilderFactory<C> getFactory(final Class<C> type);
 }

@@ -11,33 +11,30 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JPasswordField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class JPasswordFieldFactory implements ComponentBuilderFactory<JPasswordField> {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override
-    public final swing.revival.builders.ComponentBuilder<JPasswordField> build(
-            final ComponentBuilderContext context, final Field field) {
-        return new JPasswordFieldBuilder(context, field);
+    public final ComponentBuilder<JPasswordField> build(final ComponentBuilderContext context,
+            final ComponentFieldInfo fieldInfo) {
+        return new JPasswordFieldBuilder(context, fieldInfo);
     }
 
     /**
-     *
      * @author Alistair A. Israel
      */
     public static class JPasswordFieldBuilder extends ComponentBuilder<JPasswordField> {
@@ -45,21 +42,21 @@ public class JPasswordFieldFactory implements ComponentBuilderFactory<JPasswordF
         /**
          * @param context
          *        the {@link ComponentBuilderContext} we're building in
-         * @param field
+         * @param fieldInfo
          *        the field we're building for
          */
-        public JPasswordFieldBuilder(final ComponentBuilderContext context, final Field field) {
-            super(context, field);
+        public JPasswordFieldBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+            super(context, fieldInfo);
         }
 
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see swing.revival.builders.ComponentBuilder#build()
          */
         @Override
         protected final JPasswordField constructComponent() {
-            final TextField textFieldAnnotation = getField().getAnnotation(TextField.class);
+            final TextField textFieldAnnotation = getFieldInfo().getField().getAnnotation(TextField.class);
             int columns = -1;
             if (textFieldAnnotation != null) {
                 columns = textFieldAnnotation.columns();
@@ -74,12 +71,12 @@ public class JPasswordFieldFactory implements ComponentBuilderFactory<JPasswordF
 
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see swing.revival.builders.ComponentBuilder#getBaseName()
          */
         @Override
         public final String getBaseName() {
-            final String name = getField().getName();
+            final String name = getFieldInfo().getName();
             if (name.endsWith("PasswordField")) {
                 return name.substring(0, name.length() - "PasswordField".length());
             }

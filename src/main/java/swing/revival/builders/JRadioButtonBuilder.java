@@ -11,11 +11,10 @@
  */
 package swing.revival.builders;
 
-import java.lang.reflect.Field;
-
 import javax.swing.JRadioButton;
 
 import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.ComponentFieldInfo;
 
 /**
  *
@@ -29,7 +28,7 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
      * @param field
      *        the field we're building for
      */
-    public JRadioButtonBuilder(final ComponentBuilderContext context, final Field field) {
+    public JRadioButtonBuilder(final ComponentBuilderContext context, final ComponentFieldInfo field) {
         super(context, field);
     }
 
@@ -50,7 +49,7 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
      */
     @Override
     public final String getBaseName() {
-        final String name = getField().getName();
+        final String name = getFieldInfo().getName();
         final String baseName;
         if (name.endsWith("RadioButton")) {
             baseName = name.substring(0, name.length() - "RadioButton".length());

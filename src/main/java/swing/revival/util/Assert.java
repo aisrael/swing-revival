@@ -25,6 +25,30 @@ public final class Assert {
     }
 
     /**
+     * @param condition
+     *        the boolean expression to check
+     * @param message
+     *        the exception message
+     */
+    public static void isTrue(final boolean condition, final String message) {
+        if (!condition) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * @param superType
+     *        the super type to check
+     * @param subType
+     *        the sub type to check
+     * @param message
+     *        the exception message
+     */
+    public static void isAssignable(final Class<?> superType, final Class<?> subType, final String message) {
+        isTrue(superType.isAssignableFrom(subType), message);
+    }
+
+    /**
      * @param obj
      *        an object
      */

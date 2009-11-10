@@ -11,22 +11,34 @@
  */
 package swing.revival.context;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 /**
  * Results of performing reflection on a Container class looking for Swing
- * Revival annotations, performed by {@link SwingAnnotationInspector}.
+ * Revival annotations, performed by {@link Inspector}.
  *
  * @author Alistair A. Israel
  */
-public class SwingAnnotationInspectionResults {
+public class InspectionResult {
 
     private FontInfo defaultFontInfo;
 
-    private final Map<String, ComponentField> componentFields =
+    private final List<ComponentField> componentFields = new ArrayList<ComponentField>();
+
+    private final Map<String, ComponentField> fieldMap =
             new Hashtable<String, ComponentField>();
+
+    /**
+     * @return List of {@link ComponentField}
+     */
+    public final List<ComponentField> listComponentFields() {
+        return this.componentFields;
+    }
 
     /**
      * @return the defaultFontInfo
@@ -39,7 +51,7 @@ public class SwingAnnotationInspectionResults {
      * @return Set of field names
      */
     public final Set<String> listFieldNames() {
-        return componentFields.keySet();
+        return fieldMap.keySet();
     }
 
     /**
@@ -48,7 +60,7 @@ public class SwingAnnotationInspectionResults {
      * @return the component field
      */
     public final ComponentField getField(final String name) {
-        return componentFields.get(name);
+        return fieldMap.get(name);
     }
 
     /**
@@ -58,8 +70,7 @@ public class SwingAnnotationInspectionResults {
      */
     public static class Builder {
 
-        private final SwingAnnotationInspectionResults results =
-                new SwingAnnotationInspectionResults();
+        private final InspectionResult results = new InspectionResult();
 
         /**
          * @param fontInfo
@@ -74,13 +85,14 @@ public class SwingAnnotationInspectionResults {
          *        the {@link ComponentField} to add
          */
         public final void addComponentField(final ComponentField field) {
-            results.componentFields.put(field.getName(), field);
+            results.componentFields.add(field);
+            results.fieldMap.put(field.getName(), field);
         }
 
         /**
-         * @return the {@link SwingAnnotationInspectionResults}
+         * @return the {@link InspectionResult}
          */
-        public final SwingAnnotationInspectionResults build() {
+        public final InspectionResult build() {
             return results;
         }
     }

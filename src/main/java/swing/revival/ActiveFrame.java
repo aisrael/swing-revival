@@ -11,16 +11,18 @@
  */
 package swing.revival;
 
+import static swing.revival.util.StringUtils.hasLength;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
+import swing.revival.util.ClassUtils;
 import swing.revival.util.ResourceBundleHelper;
 
 /**
- *
  * @author Alistair A. Israel
  */
 public class ActiveFrame extends JFrame {
@@ -30,7 +32,7 @@ public class ActiveFrame extends JFrame {
     private final WindowListener windowListener = new WindowAdapter() {
         /**
          * {@inheritDoc}
-         *
+         * 
          * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
          */
         @Override
@@ -44,20 +46,25 @@ public class ActiveFrame extends JFrame {
      *        the title for the frame
      */
     public ActiveFrame(final String title) {
-        this();
-        setTitle(title);
+        final Class<? extends ActiveFrame> clazz = getClass();
+        resourceHelper = ResourceBundleHelper.forClass(clazz);
+        final String t;
+        if (hasLength(title)) {
+            t = title;
+        } else {
+            t = resourceHelper.get("title", ClassUtils.getShortName(getClass()));
+        }
+        setTitle(t);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(windowListener);
+        initializeComponents();
     }
 
     /**
      *
      */
     public ActiveFrame() {
-        super();
-        resourceHelper = ResourceBundleHelper.forClass(getClass());
-        setTitle(resourceHelper.getString("title"));
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(windowListener);
-        initializeComponents();
+        this(null);
     }
 
     /**

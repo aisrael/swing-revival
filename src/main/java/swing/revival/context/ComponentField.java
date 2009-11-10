@@ -15,8 +15,9 @@ import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.Map;
 
+import swing.revival.util.ClassUtils;
+
 /**
- *
  * @author Alistair A. Israel
  */
 public class ComponentField {
@@ -90,6 +91,16 @@ public class ComponentField {
      */
     public final String getString(final String key) {
         return properties.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public final String toString() {
+        return name + " (" + ClassUtils.getShortName(field.getType()) + ")";
     }
 
     /**

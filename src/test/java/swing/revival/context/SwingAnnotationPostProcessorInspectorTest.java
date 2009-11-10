@@ -23,22 +23,24 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
+import swing.revival.builders.SwingAnnotationPostProcessor;
+
 import com.example.ui.ExamplePanel;
 
 /**
- * JUnit test for {@link SwingAnnotationInspector}.
+ * JUnit test for {@link SwingAnnotationPostProcessor.Inspector}
  *
  * @author Alistair A. Israel
  */
-public final class SwingAnnotationInspectorTest {
+public final class SwingAnnotationPostProcessorInspectorTest {
 
     /**
-     * Test for {@link SwingAnnotationInspector#inspect(java.lang.Class)} .
+     * Test for {@link SwingAnnotationPostProcessor#inspect(Class)}
      */
     @Test
     public void testInspectClass() {
-        final SwingAnnotationInspectionResults swair =
-                SwingAnnotationInspector.inspect(ExamplePanel.class);
+        final SwingAnnotationPostProcessor swapp = new SwingAnnotationPostProcessor();
+        final InspectionResult swair = swapp.inspect(ExamplePanel.class);
 
         final Set<String> fieldNames = swair.listFieldNames();
         assertEquals(2, fieldNames.size());

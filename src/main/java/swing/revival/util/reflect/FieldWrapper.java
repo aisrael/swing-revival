@@ -49,7 +49,7 @@ public class FieldWrapper {
      *        the annotation type
      * @param annotationClass
      *        the Class object corresponding to the annotation type
-     * @return the underlying <code>Field</code>'ss annotation for the specified annotation type if present on this
+     * @return the underlying <code>Field</code>'s annotation for the specified annotation type if present on this
      *         element, else <code>null</code>
      * @see java.lang.reflect.Field#getAnnotation(java.lang.Class)
      */
@@ -111,13 +111,13 @@ public class FieldWrapper {
     }
 
     /**
-     * Returns true if an annotation for the specified type is present on the underlying field, else false. This method
-     * is designed primarily for convenient access to marker annotations.
+     * Returns true if an annotation for the specified type is present on the underlying <code>Field</code>, else
+     * <code>false</code>. This method is designed primarily for convenient access to marker annotations.
      * 
      * @param annotationClass
      *        the Class object corresponding to the annotation type
-     * @return <code>true</code> true if an annotation for the specified annotation type is present on this element,
-     *         else <code>false</code>
+     * @return <code>true</code> true if an annotation for the specified annotation type is present on the underlying
+     *         <code>Field</code>, else <code>false</code>
      * @see java.lang.reflect.AccessibleObject#isAnnotationPresent(java.lang.Class)
      */
     public final boolean isAnnotationPresent(final Class<? extends Annotation> annotationClass) {

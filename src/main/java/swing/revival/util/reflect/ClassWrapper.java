@@ -11,6 +11,7 @@
  */
 package swing.revival.util.reflect;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,47 @@ public class ClassWrapper {
      */
     public final Class<?> getWrappedClass() {
         return wrappedClass;
+    }
+
+    /**
+     * Returns the underlying <code>Class</code>'s annotation for the specified type if such an annotation is present,
+     * else <code>null</code>.
+     * 
+     * @param <A>
+     *        the annotation type
+     * @param annotationClass
+     *        the Class object corresponding to the annotation type
+     * @return the underlying <code>Class</code>'s annotation for the specified annotation type if present on this
+     *         element, else <code>null</code>
+     * @see java.lang.Class#getAnnotation(java.lang.Class)
+     */
+    public final <A extends Annotation> A getAnnotation(final Class<A> annotationClass) {
+        return wrappedClass.getAnnotation(annotationClass);
+    }
+
+    /**
+     * Returns all annotations present on the underlying <code>Class</code>. (Returns an array of length zero if the
+     * <code>Field</code> element has no annotations.)
+     * 
+     * @return all annotations present on the underlying <code>Class</code>
+     * @see java.lang.Class#getAnnotations()
+     */
+    public final Annotation[] getAnnotations() {
+        return wrappedClass.getAnnotations();
+    }
+
+    /**
+     * Returns true if an annotation for the specified type is present on the underlying <code>Class</code>, else
+     * <code>false</code>. This method is designed primarily for convenient access to marker annotations.
+     * 
+     * @param annotationClass
+     *        the Class object corresponding to the annotation type
+     * @return <code>true</code> true if an annotation for the specified annotation type is present on the underlying
+     *         <code>Class</code>, else <code>false</code>
+     * @see java.lang.Class#isAnnotationPresent(java.lang.Class)
+     */
+    public final boolean isAnnotationPresent(final Class<? extends Annotation> annotationClass) {
+        return wrappedClass.isAnnotationPresent(annotationClass);
     }
 
     /**

@@ -15,14 +15,14 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @param <C>
  * @author Alistair A. Israel
  */
-public abstract class ComponentBuilder<C extends JComponent> extends ComponentBuilderContext.Aware {
+public abstract class ComponentBuilder<C extends JComponent> extends AssemblyContext.Aware {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentBuilder.class.getName());
 
@@ -35,11 +35,11 @@ public abstract class ComponentBuilder<C extends JComponent> extends ComponentBu
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext} we're building in
+     *        the {@link AssemblyContext} we're building in
      * @param fieldInfo
      *        the fieldInfo we're building for
      */
-    public ComponentBuilder(final ComponentBuilderContext context, final ComponentDefinition fieldInfo) {
+    public ComponentBuilder(final AssemblyContext context, final ComponentDefinition fieldInfo) {
         super(context);
         this.fieldInfo = fieldInfo;
     }

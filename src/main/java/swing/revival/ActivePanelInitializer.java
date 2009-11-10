@@ -27,7 +27,7 @@ import swing.revival.builders.ComponentBuilder;
 import swing.revival.builders.JLabelBuilder;
 import swing.revival.builders.JPasswordFieldBuilder;
 import swing.revival.builders.JTextFieldBuilder;
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 import swing.revival.enums.BorderType;
 import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.BeanWrapper;
@@ -61,7 +61,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
     *
     */
     public final void build() {
-        final ComponentBuilderContext context = new ComponentBuilderContext(activePanel);
+        final AssemblyContext context = new AssemblyContext(activePanel);
         final Border borderAnnotation = getAnnotation(Border.class);
         if (borderAnnotation != null) {
             final BorderType borderType = borderAnnotation.value();
@@ -100,12 +100,12 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext}
+     *        the {@link AssemblyContext}
      * @param field
      *        the {@link Field} we're building for
      * @return the built component
      */
-    private JComponent createComponent(final ComponentBuilderContext context, final Field field) {
+    private JComponent createComponent(final AssemblyContext context, final Field field) {
         final Map<String, JLabel> labels = activePanel.getComponentContext().getLabels();
         final Map<String, JComponent> components = activePanel.getComponentContext().getComponents();
 

@@ -13,7 +13,7 @@ package swing.revival.builders;
 
 import javax.swing.JLabel;
 
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.StringUtils;
 
@@ -24,11 +24,11 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext} we're building in
+     *        the {@link AssemblyContext} we're building in
      * @param fieldInfo
      *        the field we're building for
      */
-    public JLabelBuilder(final ComponentBuilderContext context, final ComponentDefinition fieldInfo) {
+    public JLabelBuilder(final AssemblyContext context, final ComponentDefinition fieldInfo) {
         super(context, fieldInfo);
     }
 
@@ -72,11 +72,11 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.ComponentBuilderContext,
+         * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override
-        public final ComponentBuilder<JLabel> getBuilder(final ComponentBuilderContext context,
+        public final ComponentBuilder<JLabel> getBuilder(final AssemblyContext context,
                 final ComponentDefinition fieldInfo) {
             return new JLabelBuilder(context, fieldInfo);
         }

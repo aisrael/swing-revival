@@ -25,22 +25,22 @@ import javax.swing.Action;
 
 import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 
 /**
  * Initializes a pre-constructed {@link Action} object based on its field annotations.
  *
  * @author Alistair A. Israel
  */
-public class ActionPostProcessor extends ComponentBuilderContext.Aware {
+public class ActionPostProcessor extends AssemblyContext.Aware {
 
     private static final Logger LOGGER = Logger.getLogger(ActionPostProcessor.class.getName());
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext}
+     *        the {@link AssemblyContext}
      */
-    public ActionPostProcessor(final ComponentBuilderContext context) {
+    public ActionPostProcessor(final AssemblyContext context) {
         super(context);
     }
 

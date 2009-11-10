@@ -24,7 +24,7 @@ import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
 import swing.revival.builders.ActionPostProcessor;
 import swing.revival.builders.SwingAnnotationPostProcessor;
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.BeanWrapper;
 
@@ -70,7 +70,7 @@ public class ActivePanel extends GroupLayoutJPanel {
      */
     protected final void postProcess() {
         final BeanWrapper<ActivePanel> bean = BeanWrapper.wrap(this);
-        final ComponentBuilderContext context = new ComponentBuilderContext(this);
+        final AssemblyContext context = new AssemblyContext(this);
         final ActionPostProcessor actionPostProcessor = new ActionPostProcessor(context);
 
         for (final Field field : bean.getDeclaredFields()) {
@@ -111,7 +111,7 @@ public class ActivePanel extends GroupLayoutJPanel {
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext}
+     *        the {@link AssemblyContext}
      * @param actionField
      *        the {@link Field} we're building for
      * @param action
@@ -119,7 +119,7 @@ public class ActivePanel extends GroupLayoutJPanel {
      * @return the built component
      */
     private static AbstractButton createButtonForActionField(
-            final ComponentBuilderContext context, final Field actionField, final Action action) {
+            final AssemblyContext context, final Field actionField, final Action action) {
         AbstractButton button = null;
         final RadioButton radioButtonAnnotation = actionField.getAnnotation(RadioButton.class);
         if (radioButtonAnnotation != null) {

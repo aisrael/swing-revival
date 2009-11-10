@@ -21,8 +21,8 @@ import swing.revival.annotations.Button;
 import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
-import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.construction.postprocessors.AssemblyPostProcessor;
+import swing.revival.context.AssemblyContext;
 import swing.revival.context.ComponentBuilderFactoryRegistry;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
 import swing.revival.metadata.ComponentDefinition;
@@ -79,7 +79,7 @@ public final class SwingAnnotationPostProcessor {
      *        the {@code ContainerDefinition}
      */
     private void assemble(final Container container, final ContainerDefinition definition) {
-        final ComponentBuilderContext context = new ComponentBuilderContext(container);
+        final AssemblyContext context = new AssemblyContext(container);
         final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
         for (final ComponentDefinition componentDefinition : definition.listComponentDefinitions()) {
             final Class<? extends JComponent> type = componentDefinition.getType();
@@ -88,8 +88,8 @@ public final class SwingAnnotationPostProcessor {
             final JComponent component = factory.getBuilder(context, componentDefinition).build();
             container.add(component);
             beanWrapper.set(componentDefinition.getField(), component);
-            for (final JComponentFieldPostProcessor postProcessor : context.getPostProcessors()) {
-                postProcessor.postProcess(container, context, componentDefinition, component);
+            for (final AssemblyPostProcessor postProcessor : context.getPostProcessors()) {
+                postProcessor.postProcess(context, componentDefinition, component);
             }
         }
     }

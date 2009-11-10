@@ -13,15 +13,14 @@ package swing.revival.builders;
 
 import static swing.revival.util.StringUtils.chomp;
 
-import java.awt.Container;
 import java.util.Hashtable;
 import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.construction.postprocessors.AssemblyPostProcessor;
+import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.ClassUtils;
 
@@ -29,19 +28,18 @@ import swing.revival.util.ClassUtils;
  * @author Alistair A. Israel
  * @since 0.1
  */
-public class LabelsPostProcessor implements JComponentFieldPostProcessor {
+public class LabelsPostProcessor implements AssemblyPostProcessor {
 
     private final Map<String, JComponent> baseNameComponentMap = new Hashtable<String, JComponent>();
 
     /**
      * {@inheritDoc}
      *
-     * @see JComponentFieldPostProcessor#postProcess(Container, ComponentBuilderContext, ComponentDefinition,
-     *      JComponent)
+     * @see AssemblyPostProcessor#postProcess(AssemblyContext, ComponentDefinition, JComponent)
      */
     @Override
-    public final void postProcess(final Container container, final ComponentBuilderContext context,
-            final ComponentDefinition definition, final JComponent component) {
+    public final void postProcess(final AssemblyContext context, final ComponentDefinition definition,
+            final JComponent component) {
         final String componentName = definition.getName();
         if (component instanceof JLabel) {
             final JLabel label = (JLabel) component;

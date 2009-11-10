@@ -13,7 +13,7 @@ package swing.revival.builders;
 
 import javax.swing.JRadioButton;
 
-import swing.revival.context.ComponentBuilderContext;
+import swing.revival.context.AssemblyContext;
 import swing.revival.metadata.ComponentDefinition;
 
 /**
@@ -24,11 +24,11 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
 
     /**
      * @param context
-     *        the {@link ComponentBuilderContext} we're building in
+     *        the {@link AssemblyContext} we're building in
      * @param field
      *        the field we're building for
      */
-    public JRadioButtonBuilder(final ComponentBuilderContext context, final ComponentDefinition field) {
+    public JRadioButtonBuilder(final AssemblyContext context, final ComponentDefinition field) {
         super(context, field);
     }
 

@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.swing.JComponent;
 
+import swing.revival.SwingRevivalException;
 import swing.revival.builders.ComponentBuilderFactory;
 
 /**
@@ -29,7 +30,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
 
     /**
      * Initialization on demand holder idiom
-     * 
+     *
      * @see <a href="http://en.wikipedia.org/wiki/Initialization_on_demand_holder_idiom">Wikipedia: Initialization on
      *      demand holder idiom</a>
      */
@@ -41,7 +42,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
 
     /**
      * Static factory method that returns the {@link DefaultComponentBuilderFactoryRegistry} singleton.
-     * 
+     *
      * @return the {@link DefaultComponentBuilderFactoryRegistry} instance
      */
     public static DefaultComponentBuilderFactoryRegistry getInstance() {
@@ -55,8 +56,28 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
     }
 
     /**
+     * @param <T>
+     *        a JComponent-derived type
+     * @param type
+     *        the class representing the type
+     * @param factoryClass
+     *        the factory class
+     */
+    public <T extends JComponent> void addFactoryClass(final Class<T> type,
+            final Class<ComponentBuilderFactory<T>> factoryClass) {
+        try {
+            final ComponentBuilderFactory<T> factory = factoryClass.newInstance();
+            componentBuilderFactoryMap.put(type, factory);
+        } catch (final InstantiationException e) {
+            throw new SwingRevivalException(e);
+        } catch (final IllegalAccessException e) {
+            throw new SwingRevivalException(e);
+        }
+    }
+
+    /**
      * {@inheritDoc}
-     * 
+     *
      * @see swing.revival.context.ComponentBuilderFactoryRegistry#hasFactory(java.lang.Class)
      */
     @Override
@@ -66,7 +87,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see swing.revival.context.ComponentBuilderFactoryRegistry#getFactory(java.lang.Class)
      */
     @Override

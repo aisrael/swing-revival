@@ -17,14 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import swing.revival.builders.SwingAnnotationPostProcessor.Inspector;
-
-
 /**
- * Results of performing reflection on a Container class looking for Swing
- * Revival annotations, performed by {@link Inspector}.
+ * Results of performing reflection on a Container class looking for Swing Revival annotations, performed by
+ * {@link swing.revival.builders.SwingAnnotationPostProcessor.Inspector}.
  *
  * @author Alistair A. Israel
+ * @see swing.revival.builders.SwingAnnotationPostProcessor.Inspector
  */
 public class InspectionResult {
 
@@ -32,8 +30,7 @@ public class InspectionResult {
 
     private final List<ComponentFieldInfo> componentFieldInfos = new ArrayList<ComponentFieldInfo>();
 
-    private final Map<String, ComponentFieldInfo> fieldMap =
-            new Hashtable<String, ComponentFieldInfo>();
+    private final Map<String, ComponentFieldInfo> fieldMap = new Hashtable<String, ComponentFieldInfo>();
 
     /**
      * @return List of {@link ComponentFieldInfo}

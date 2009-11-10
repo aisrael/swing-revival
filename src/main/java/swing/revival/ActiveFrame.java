@@ -27,12 +27,17 @@ import swing.revival.util.ResourceBundleHelper;
  */
 public class ActiveFrame extends JFrame {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6114370243517639606L;
+
     private final ResourceBundleHelper resourceHelper;
 
     private final WindowListener windowListener = new WindowAdapter() {
         /**
          * {@inheritDoc}
-         * 
+         *
          * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
          */
         @Override

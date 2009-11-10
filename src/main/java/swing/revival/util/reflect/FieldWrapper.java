@@ -163,9 +163,16 @@ public class FieldWrapper {
     }
 
     /**
-     * @return true if the underlying <code>Field</code> is declared static
+     * @return true if the underlying <code>Field</code> was declared <code>static</code>
      */
     public final boolean isStatic() {
         return Modifier.isStatic(mod);
+    }
+
+    /**
+     * @return true if the underlying <code>Field</code> was declared <code>public</code>
+     */
+    public final boolean isPublic() {
+        return Modifier.isPublic(mod);
     }
 }

@@ -18,6 +18,7 @@ import java.util.List;
 import swing.revival.builders.FontPostProcessor;
 import swing.revival.builders.LabelsPostProcessor;
 import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
+import swing.revival.metadata.FontInfo;
 import swing.revival.util.ResourceBundleHelper;
 
 /**

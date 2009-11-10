@@ -28,8 +28,8 @@ import swing.revival.builders.JLabelBuilder;
 import swing.revival.builders.JPasswordFieldBuilder;
 import swing.revival.builders.JTextFieldBuilder;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.context.ComponentFieldInfo;
 import swing.revival.enums.BorderType;
+import swing.revival.metadata.ComponentFieldInfo;
 import swing.revival.util.BeanWrapper;
 
 /**

@@ -14,7 +14,7 @@ package swing.revival.builders;
 import javax.swing.JRadioButton;
 
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.context.ComponentFieldInfo;
+import swing.revival.metadata.ComponentFieldInfo;
 
 /**
  *

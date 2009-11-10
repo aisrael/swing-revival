@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.context;
+package swing.revival.metadata;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,7 +24,7 @@ import java.util.Set;
  * @author Alistair A. Israel
  * @see swing.revival.builders.SwingAnnotationPostProcessor.Inspector
  */
-public class InspectionResult {
+public class ContainerInfo {
 
     private FontInfo defaultFontInfo;
 
@@ -67,7 +67,7 @@ public class InspectionResult {
      */
     public static class Builder {
 
-        private final InspectionResult results = new InspectionResult();
+        private final ContainerInfo results = new ContainerInfo();
 
         /**
          * @param fontInfo
@@ -86,9 +86,9 @@ public class InspectionResult {
         }
 
         /**
-         * @return the {@link InspectionResult}
+         * @return the {@link ContainerInfo}
          */
-        public final InspectionResult build() {
+        public final ContainerInfo build() {
             return results;
         }
     }

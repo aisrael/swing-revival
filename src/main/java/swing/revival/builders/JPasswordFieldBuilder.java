@@ -15,7 +15,7 @@ import javax.swing.JPasswordField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.context.ComponentFieldInfo;
+import swing.revival.metadata.ComponentFieldInfo;
 
 /**
  * @author Alistair A. Israel

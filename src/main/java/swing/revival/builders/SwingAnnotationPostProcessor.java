@@ -23,10 +23,10 @@ import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentBuilderFactoryRegistry;
-import swing.revival.context.ComponentFieldInfo;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
-import swing.revival.context.FontInfo;
-import swing.revival.context.InspectionResult;
+import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ContainerInfo;
+import swing.revival.metadata.FontInfo;
 import swing.revival.util.BeanWrapper;
 import swing.revival.util.ResourceBundleHelper;
 import swing.revival.util.Resources;
@@ -69,7 +69,7 @@ public final class SwingAnnotationPostProcessor {
     public void process(final Container container) {
         final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
         final ComponentBuilderContext context = new ComponentBuilderContext(container);
-        final InspectionResult swair = inspect(container.getClass());
+        final ContainerInfo swair = inspect(container.getClass());
         for (final ComponentFieldInfo componentFieldInfo : swair.listComponentFieldInfos()) {
             final Class<? extends JComponent> type = componentFieldInfo.getType();
             final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
@@ -91,9 +91,9 @@ public final class SwingAnnotationPostProcessor {
     /**
      * @param clazz
      *        {@link Container} class
-     * @return {@link InspectionResult}
+     * @return {@link ContainerInfo}
      */
-    public InspectionResult inspect(final Class<? extends Container> clazz) {
+    public ContainerInfo inspect(final Class<? extends Container> clazz) {
         return new Inspector(clazz).inspect();
     }
 
@@ -108,7 +108,7 @@ public final class SwingAnnotationPostProcessor {
 
         private final ResourceBundleHelper helper;
 
-        private final InspectionResult.Builder results = new InspectionResult.Builder();
+        private final ContainerInfo.Builder results = new ContainerInfo.Builder();
 
         /**
          * @param clazz
@@ -120,10 +120,10 @@ public final class SwingAnnotationPostProcessor {
         }
 
         /**
-         * @return {@link InspectionResult}
+         * @return {@link ContainerInfo}
          */
         @SuppressWarnings("unchecked")
-        public final InspectionResult inspect() {
+        public final ContainerInfo inspect() {
             inspectClass();
             for (final FieldWrapper field : clazz.listAllInstanceFields()) {
                 final Class<?> fieldType = field.getType();

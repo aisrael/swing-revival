@@ -24,6 +24,9 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import swing.revival.builders.SwingAnnotationPostProcessor;
+import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ContainerInfo;
+import swing.revival.metadata.FontInfo;
 
 import com.example.ui.ExamplePanel;
 
@@ -40,7 +43,7 @@ public final class SwingAnnotationPostProcessorInspectorTest {
     @Test
     public void testInspectClass() {
         final SwingAnnotationPostProcessor swapp = new SwingAnnotationPostProcessor();
-        final InspectionResult swair = swapp.inspect(ExamplePanel.class);
+        final ContainerInfo swair = swapp.inspect(ExamplePanel.class);
 
         final Set<String> fieldNames = swair.listFieldNames();
         assertEquals(2, fieldNames.size());

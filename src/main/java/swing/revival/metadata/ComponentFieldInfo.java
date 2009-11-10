@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.context;
+package swing.revival.metadata;
 
 import static swing.revival.util.ClassUtils.getShortName;
 

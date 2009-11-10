@@ -29,7 +29,7 @@ import swing.revival.builders.JPasswordFieldBuilder;
 import swing.revival.builders.JTextFieldBuilder;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.enums.BorderType;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.BeanWrapper;
 
 /**
@@ -112,7 +112,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
         final String name = field.getName();
         JComponent component = null;
         String baseName = name;
-        final ComponentFieldInfo fieldInfo = ComponentFieldInfo.wrap(field);
+        final ComponentDefinition fieldInfo = ComponentDefinition.wrap(field);
         if (JLabel.class.isAssignableFrom(field.getType())) {
             final ComponentBuilder<JLabel> builder = LABEL_FACTORY.getBuilder(context, fieldInfo);
             final JLabel label = builder.build();

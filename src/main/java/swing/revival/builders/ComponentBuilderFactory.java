@@ -14,7 +14,7 @@ package swing.revival.builders;
 import javax.swing.JComponent;
 
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @param <C>
@@ -27,8 +27,8 @@ public interface ComponentBuilderFactory<C extends JComponent> {
      * @param context
      *        the {@link ComponentBuilderContext} we're building in
      * @param fieldInfo
-     *        the {@link ComponentFieldInfo} to return a builder for
+     *        the {@link ComponentDefinition} to return a builder for
      * @return the field {@link ComponentBuilder}
      */
-    ComponentBuilder<C> getBuilder(ComponentBuilderContext context, ComponentFieldInfo fieldInfo);
+    ComponentBuilder<C> getBuilder(ComponentBuilderContext context, ComponentDefinition fieldInfo);
 }

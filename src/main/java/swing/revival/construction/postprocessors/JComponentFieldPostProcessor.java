@@ -13,7 +13,7 @@ package swing.revival.construction.postprocessors;
 
 import javax.swing.JComponent;
 
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @author Alistair A. Israel
@@ -23,8 +23,8 @@ public interface JComponentFieldPostProcessor {
 
     /**
      * @param fieldInfo
-     *        the {@link ComponentFieldInfo}
+     *        the {@link ComponentDefinition}
      * @param component the {@link JComponent}F
      */
-    void postProcess(final ComponentFieldInfo fieldInfo, final JComponent component);
+    void postProcess(final ComponentDefinition fieldInfo, final JComponent component);
 }

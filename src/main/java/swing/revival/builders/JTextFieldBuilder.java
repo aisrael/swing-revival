@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @author Alistair A. Israel
@@ -29,7 +29,7 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
      * @param fieldInfo
      *        the field we're building for
      */
-    public JTextFieldBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+    public JTextFieldBuilder(final ComponentBuilderContext context, final ComponentDefinition fieldInfo) {
         super(context, fieldInfo);
     }
 
@@ -80,7 +80,7 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
          */
         @Override
         public final ComponentBuilder<JTextField> getBuilder(final ComponentBuilderContext context,
-                final ComponentFieldInfo fieldInfo) {
+                final ComponentDefinition fieldInfo) {
             return new JTextFieldBuilder(context, fieldInfo);
         }
 

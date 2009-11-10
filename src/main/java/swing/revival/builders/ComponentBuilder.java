@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JComponent;
 
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @param <C>
@@ -31,7 +31,7 @@ public abstract class ComponentBuilder<C extends JComponent> extends ComponentBu
      */
     private static final String TOOL_TIP_TEXT = ".toolTipText";
 
-    private final ComponentFieldInfo fieldInfo;
+    private final ComponentDefinition fieldInfo;
 
     /**
      * @param context
@@ -39,7 +39,7 @@ public abstract class ComponentBuilder<C extends JComponent> extends ComponentBu
      * @param fieldInfo
      *        the fieldInfo we're building for
      */
-    public ComponentBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+    public ComponentBuilder(final ComponentBuilderContext context, final ComponentDefinition fieldInfo) {
         super(context);
         this.fieldInfo = fieldInfo;
     }
@@ -47,7 +47,7 @@ public abstract class ComponentBuilder<C extends JComponent> extends ComponentBu
     /**
      * @return the fieldInfo
      */
-    public final ComponentFieldInfo getFieldInfo() {
+    public final ComponentDefinition getFieldInfo() {
         return fieldInfo;
     }
 

@@ -24,8 +24,8 @@ import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentBuilderFactoryRegistry;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
-import swing.revival.metadata.ComponentFieldInfo;
-import swing.revival.metadata.ContainerInfo;
+import swing.revival.metadata.ComponentDefinition;
+import swing.revival.metadata.ContainerDefinition;
 import swing.revival.metadata.FontInfo;
 import swing.revival.util.BeanWrapper;
 import swing.revival.util.ResourceBundleHelper;
@@ -69,14 +69,14 @@ public final class SwingAnnotationPostProcessor {
     public void process(final Container container) {
         final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
         final ComponentBuilderContext context = new ComponentBuilderContext(container);
-        final ContainerInfo swair = inspect(container.getClass());
-        for (final ComponentFieldInfo componentFieldInfo : swair.listComponentFieldInfos()) {
-            final Class<? extends JComponent> type = componentFieldInfo.getType();
+        final ContainerDefinition swair = inspect(container.getClass());
+        for (final ComponentDefinition componentDefinition : swair.listComponentDefinitions()) {
+            final Class<? extends JComponent> type = componentDefinition.getType();
             final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
                     .getFactory(type);
-            final JComponent component = factory.getBuilder(context, componentFieldInfo).build();
+            final JComponent component = factory.getBuilder(context, componentDefinition).build();
             container.add(component);
-            beanWrapper.set(componentFieldInfo.getField(), component);
+            beanWrapper.set(componentDefinition.getField(), component);
         }
     }
 
@@ -91,9 +91,9 @@ public final class SwingAnnotationPostProcessor {
     /**
      * @param clazz
      *        {@link Container} class
-     * @return {@link ContainerInfo}
+     * @return {@link ContainerDefinition}
      */
-    public ContainerInfo inspect(final Class<? extends Container> clazz) {
+    public ContainerDefinition inspect(final Class<? extends Container> clazz) {
         return new Inspector(clazz).inspect();
     }
 
@@ -108,7 +108,7 @@ public final class SwingAnnotationPostProcessor {
 
         private final ResourceBundleHelper helper;
 
-        private final ContainerInfo.Builder results = new ContainerInfo.Builder();
+        private final ContainerDefinition.Builder results = new ContainerDefinition.Builder();
 
         /**
          * @param clazz
@@ -120,10 +120,10 @@ public final class SwingAnnotationPostProcessor {
         }
 
         /**
-         * @return {@link ContainerInfo}
+         * @return {@link ContainerDefinition}
          */
         @SuppressWarnings("unchecked")
-        public final ContainerInfo inspect() {
+        public final ContainerDefinition inspect() {
             inspectClass();
             for (final FieldWrapper field : clazz.listAllInstanceFields()) {
                 final Class<?> fieldType = field.getType();
@@ -154,19 +154,19 @@ public final class SwingAnnotationPostProcessor {
             if (componentBuilderFactoryRegistry.hasFactory(componentType)) {
                 final String name = determineFieldName(field);
 
-                final ComponentFieldInfo.Builder info = new ComponentFieldInfo.Builder(name, field.getField());
+                final ComponentDefinition definition = new ComponentDefinition(name, field.getField());
                 final String[] keys = helper.listKeysStartingWith(name);
                 for (final String key : keys) {
                     final String value = helper.getString(key);
                     final String subkey = key.substring(name.length() + 1);
-                    info.addProperty(subkey, value);
+                    definition.addProperty(subkey, value);
                 }
 
                 final FontInfo fontInfo = determineFontInfo(field);
                 if (fontInfo != null) {
-                    info.setFontInfo(fontInfo);
+                    definition.setFontInfo(fontInfo);
                 }
-                results.addComponentFieldInfo(info.build());
+                results.addComponentDefinition(definition);
             }
         }
 

@@ -15,7 +15,7 @@ import static swing.revival.util.SyntaticSugar.ifNull;
 
 import javax.swing.JComponent;
 
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 import swing.revival.metadata.FontInfo;
 
 /**
@@ -46,11 +46,11 @@ public class FontPostProcessor {
 
     /**
      * @param fieldInfo
-     *        the {@link ComponentFieldInfo} we're post-processing for
+     *        the {@link ComponentDefinition} we're post-processing for
      * @param component
      *        the component to set the font on
      */
-    public final void setFontOn(final ComponentFieldInfo fieldInfo, final JComponent component) {
+    public final void setFontOn(final ComponentDefinition fieldInfo, final JComponent component) {
         final FontInfo fontInfo = ifNull(fieldInfo.getFontInfo(), defaultFontInfo);
         if (fontInfo != null) {
             final java.awt.Font font = createFont(fontInfo, component);

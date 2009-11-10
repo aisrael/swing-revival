@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 
 import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @author Alistair A. Israel
@@ -34,10 +34,10 @@ public class LabelsPostProcessor extends ComponentBuilderContext.Aware implement
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.construction.postprocessors.JComponentFieldPostProcessor#postProcess(swing.revival.metadata.ComponentFieldInfo)
+     * @see swing.revival.construction.postprocessors.JComponentFieldPostProcessor#postProcess(swing.revival.metadata.ComponentDefinition)
      */
     @Override
-    public void postProcess(final ComponentFieldInfo fieldInfo, final JComponent component) {
+    public void postProcess(final ComponentDefinition fieldInfo, final JComponent component) {
 
     }
 

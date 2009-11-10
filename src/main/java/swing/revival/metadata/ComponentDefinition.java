@@ -23,10 +23,10 @@ import swing.revival.util.Assert;
 
 /**
  * Holds meta-data about a component field.
- * 
+ *
  * @author Alistair A. Israel
  */
-public class ComponentFieldInfo {
+public class ComponentDefinition {
 
     private final String name;
 
@@ -42,7 +42,7 @@ public class ComponentFieldInfo {
      * @param field
      *        the actual {@link Field}
      */
-    public ComponentFieldInfo(final String name, final Field field) {
+    public ComponentDefinition(final String name, final Field field) {
         Assert.isAssignable(JComponent.class, field.getType(), "'field' must represent a JComponent-derived type!");
         this.name = name;
         this.field = field;
@@ -70,12 +70,30 @@ public class ComponentFieldInfo {
     }
 
     /**
+     * @param fontInfo
+     *        the fontInfo to set
+     */
+    public final void setFontInfo(final FontInfo fontInfo) {
+        this.fontInfo = fontInfo;
+    }
+
+    /**
      * @return the component field type
      * @see java.lang.reflect.Field#getType()
      */
     @SuppressWarnings("unchecked")
     public final Class<? extends JComponent> getType() {
         return (Class<? extends JComponent>) field.getType();
+    }
+
+    /**
+     * @param key
+     *        the key to set
+     * @param value
+     *        the value
+     */
+    public final void addProperty(final String key, final String value) {
+        properties.put(key, value);
     }
 
     /**
@@ -103,7 +121,7 @@ public class ComponentFieldInfo {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -114,52 +132,9 @@ public class ComponentFieldInfo {
     /**
      * @param field
      *        a {@link Field}
-     * @return {@link ComponentFieldInfo}
+     * @return {@link ComponentDefinition}
      */
-    public static ComponentFieldInfo wrap(final Field field) {
-        return new ComponentFieldInfo.Builder(field.getName(), field).build();
-    }
-
-    /**
-     *
-     */
-    public static class Builder {
-
-        private final ComponentFieldInfo componentFieldInfo;
-
-        /**
-         * @param name
-         *        the component name
-         * @param field
-         *        the actual {@link Field}
-         */
-        public Builder(final String name, final Field field) {
-            componentFieldInfo = new ComponentFieldInfo(name, field);
-        }
-
-        /**
-         * @param fontInfo
-         *        the {@link FontInfo} to set
-         */
-        public final void setFontInfo(final FontInfo fontInfo) {
-            componentFieldInfo.fontInfo = fontInfo;
-        }
-
-        /**
-         * @param key
-         *        the property key
-         * @param value
-         *        the value
-         */
-        public final void addProperty(final String key, final String value) {
-            componentFieldInfo.properties.put(key, value);
-        }
-
-        /**
-         * @return the {@link ComponentFieldInfo}
-         */
-        public final ComponentFieldInfo build() {
-            return componentFieldInfo;
-        }
+    public static ComponentDefinition wrap(final Field field) {
+        return new ComponentDefinition(field.getName(), field);
     }
 }

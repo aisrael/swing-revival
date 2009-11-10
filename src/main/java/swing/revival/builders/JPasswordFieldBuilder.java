@@ -15,7 +15,7 @@ import javax.swing.JPasswordField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @author Alistair A. Israel
@@ -28,7 +28,7 @@ public class JPasswordFieldBuilder extends ComponentBuilder<JPasswordField> {
      * @param fieldInfo
      *        the field we're building for
      */
-    public JPasswordFieldBuilder(final ComponentBuilderContext context, final ComponentFieldInfo fieldInfo) {
+    public JPasswordFieldBuilder(final ComponentBuilderContext context, final ComponentDefinition fieldInfo) {
         super(context, fieldInfo);
     }
 
@@ -79,7 +79,7 @@ public class JPasswordFieldBuilder extends ComponentBuilder<JPasswordField> {
          */
         @Override
         public final ComponentBuilder<JPasswordField> getBuilder(final ComponentBuilderContext context,
-                final ComponentFieldInfo fieldInfo) {
+                final ComponentDefinition fieldInfo) {
             return new JPasswordFieldBuilder(context, fieldInfo);
         }
 

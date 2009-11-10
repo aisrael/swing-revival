@@ -24,17 +24,19 @@ import java.util.Set;
  * @author Alistair A. Israel
  * @see swing.revival.builders.SwingAnnotationPostProcessor.Inspector
  */
-public class ContainerInfo {
+public class ContainerDefinition {
 
     private FontInfo defaultFontInfo;
 
-    private final Map<String, ComponentFieldInfo> fieldMap = new Hashtable<String, ComponentFieldInfo>();
+    private final Map<String, String> labelsMap = new Hashtable<String, String>();
+
+    private final Map<String, ComponentDefinition> components = new Hashtable<String, ComponentDefinition>();
 
     /**
-     * @return List of {@link ComponentFieldInfo}
+     * @return List of {@link ComponentDefinition}
      */
-    public final List<ComponentFieldInfo> listComponentFieldInfos() {
-        return new ArrayList<ComponentFieldInfo>(fieldMap.values());
+    public final List<ComponentDefinition> listComponentDefinitions() {
+        return new ArrayList<ComponentDefinition>(components.values());
     }
 
     /**
@@ -48,7 +50,7 @@ public class ContainerInfo {
      * @return Set of field names
      */
     public final Set<String> listFieldNames() {
-        return fieldMap.keySet();
+        return components.keySet();
     }
 
     /**
@@ -56,8 +58,8 @@ public class ContainerInfo {
      *        the field name
      * @return the component field
      */
-    public final ComponentFieldInfo getField(final String name) {
-        return fieldMap.get(name);
+    public final ComponentDefinition getField(final String name) {
+        return components.get(name);
     }
 
     /**
@@ -67,7 +69,7 @@ public class ContainerInfo {
      */
     public static class Builder {
 
-        private final ContainerInfo results = new ContainerInfo();
+        private final ContainerDefinition results = new ContainerDefinition();
 
         /**
          * @param fontInfo
@@ -78,17 +80,17 @@ public class ContainerInfo {
         }
 
         /**
-         * @param field
-         *        the {@link ComponentFieldInfo} to add
+         * @param definition
+         *        the {@link ComponentDefinition} to add
          */
-        public final void addComponentFieldInfo(final ComponentFieldInfo field) {
-            results.fieldMap.put(field.getName(), field);
+        public final void addComponentDefinition(final ComponentDefinition definition) {
+            results.components.put(definition.getName(), definition);
         }
 
         /**
-         * @return the {@link ContainerInfo}
+         * @return the {@link ContainerDefinition}
          */
-        public final ContainerInfo build() {
+        public final ContainerDefinition build() {
             return results;
         }
     }

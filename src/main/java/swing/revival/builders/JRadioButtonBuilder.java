@@ -14,7 +14,7 @@ package swing.revival.builders;
 import javax.swing.JRadioButton;
 
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.metadata.ComponentFieldInfo;
+import swing.revival.metadata.ComponentDefinition;
 
 /**
  *
@@ -28,7 +28,7 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
      * @param field
      *        the field we're building for
      */
-    public JRadioButtonBuilder(final ComponentBuilderContext context, final ComponentFieldInfo field) {
+    public JRadioButtonBuilder(final ComponentBuilderContext context, final ComponentDefinition field) {
         super(context, field);
     }
 

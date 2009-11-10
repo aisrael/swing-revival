@@ -24,8 +24,8 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import swing.revival.builders.SwingAnnotationPostProcessor;
-import swing.revival.metadata.ComponentFieldInfo;
-import swing.revival.metadata.ContainerInfo;
+import swing.revival.metadata.ComponentDefinition;
+import swing.revival.metadata.ContainerDefinition;
 import swing.revival.metadata.FontInfo;
 
 import com.example.ui.ExamplePanel;
@@ -43,12 +43,12 @@ public final class SwingAnnotationPostProcessorInspectorTest {
     @Test
     public void testInspectClass() {
         final SwingAnnotationPostProcessor swapp = new SwingAnnotationPostProcessor();
-        final ContainerInfo swair = swapp.inspect(ExamplePanel.class);
+        final ContainerDefinition swair = swapp.inspect(ExamplePanel.class);
 
         final Set<String> fieldNames = swair.listFieldNames();
         assertEquals(2, fieldNames.size());
 
-        final ComponentFieldInfo usernameField = swair.getField("usernameField");
+        final ComponentDefinition usernameField = swair.getField("usernameField");
         assertNotNull(usernameField);
         assertEquals(JTextField.class, usernameField.getType());
         assertEquals("Username", usernameField.getString("label.text"));
@@ -57,7 +57,7 @@ public final class SwingAnnotationPostProcessorInspectorTest {
         assertEquals(BOLD, fontInfo.getStyle());
         assertNull(fontInfo.getSize());
 
-        final ComponentFieldInfo passwordField = swair.getField("passwordField");
+        final ComponentDefinition passwordField = swair.getField("passwordField");
         assertNotNull(passwordField);
         assertEquals(JPasswordField.class, passwordField.getType());
 

@@ -13,7 +13,11 @@ package swing.revival.context;
 
 import java.awt.Container;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.JComponent;
 
 import swing.revival.builders.FontPostProcessor;
 import swing.revival.builders.LabelsPostProcessor;
@@ -26,6 +30,10 @@ import swing.revival.util.ResourceBundleHelper;
  */
 public class ComponentBuilderContext {
 
+    private final Container container;
+
+    private final Map<String, JComponent> components = new Hashtable<String, JComponent>();
+
     private final List<JComponentFieldPostProcessor> postProcessors = new ArrayList<JComponentFieldPostProcessor>();
 
     private final FontPostProcessor fontPostProcessor;
@@ -37,10 +45,18 @@ public class ComponentBuilderContext {
      *        {@link java.awt.Container}, typically a JPanel or a JFrame
      */
     public ComponentBuilderContext(final Container container) {
+        this.container = container;
         final Class<? extends Container> containerClass = container.getClass();
         resources = ResourceBundleHelper.forClass(containerClass);
         fontPostProcessor = new FontPostProcessor(container.getClass());
-        addPostProcessor(new LabelsPostProcessor(this));
+        addPostProcessor(new LabelsPostProcessor());
+    }
+
+    /**
+     * @return the container
+     */
+    public final Container getContainer() {
+        return container;
     }
 
     /**
@@ -78,6 +94,15 @@ public class ComponentBuilderContext {
      */
     public final ResourceBundleHelper getResources() {
         return resources;
+    }
+
+    /**
+     * @param name
+     *        the component name
+     * @return the {@link JComponent}
+     */
+    public final JComponent getComponentNamed(final String name) {
+        return components.get(name);
     }
 
     /**

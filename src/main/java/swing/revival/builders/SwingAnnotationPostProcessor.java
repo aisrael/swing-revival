@@ -21,6 +21,7 @@ import swing.revival.annotations.Button;
 import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
+import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentBuilderFactoryRegistry;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
@@ -67,16 +68,29 @@ public final class SwingAnnotationPostProcessor {
      *        the {@link Container}-derived object
      */
     public void process(final Container container) {
-        final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
+        final ContainerDefinition containerDefinition = inspect(container.getClass());
+        assemble(container, containerDefinition);
+    }
+
+    /**
+     * @param container
+     *        the Container object
+     * @param definition
+     *        the {@code ContainerDefinition}
+     */
+    private void assemble(final Container container, final ContainerDefinition definition) {
         final ComponentBuilderContext context = new ComponentBuilderContext(container);
-        final ContainerDefinition swair = inspect(container.getClass());
-        for (final ComponentDefinition componentDefinition : swair.listComponentDefinitions()) {
+        final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
+        for (final ComponentDefinition componentDefinition : definition.listComponentDefinitions()) {
             final Class<? extends JComponent> type = componentDefinition.getType();
             final ComponentBuilderFactory<? extends JComponent> factory = componentBuilderFactoryRegistry
                     .getFactory(type);
             final JComponent component = factory.getBuilder(context, componentDefinition).build();
             container.add(component);
             beanWrapper.set(componentDefinition.getField(), component);
+            for (final JComponentFieldPostProcessor postProcessor : context.getPostProcessors()) {
+                postProcessor.postProcess(container, context, componentDefinition, component);
+            }
         }
     }
 
@@ -108,7 +122,7 @@ public final class SwingAnnotationPostProcessor {
 
         private final ResourceBundleHelper helper;
 
-        private final ContainerDefinition.Builder results = new ContainerDefinition.Builder();
+        private final ContainerDefinition.Builder container = new ContainerDefinition.Builder();
 
         /**
          * @param clazz
@@ -122,16 +136,15 @@ public final class SwingAnnotationPostProcessor {
         /**
          * @return {@link ContainerDefinition}
          */
-        @SuppressWarnings("unchecked")
         public final ContainerDefinition inspect() {
             inspectClass();
             for (final FieldWrapper field : clazz.listAllInstanceFields()) {
                 final Class<?> fieldType = field.getType();
                 if (JComponent.class.isAssignableFrom(fieldType)) {
-                    inspectComponentField(field, (Class<? extends JComponent>) fieldType);
+                    inspectComponentField(field);
                 }
             }
-            return results.build();
+            return container.build();
         }
 
         /**
@@ -140,33 +153,33 @@ public final class SwingAnnotationPostProcessor {
         private void inspectClass() {
             final Font fontAnnotation = clazz.getAnnotation(Font.class);
             if (fontAnnotation != null) {
-                results.setDefaultFontInfo(FontInfo.fromAnnotation(fontAnnotation));
+                container.setDefaultFontInfo(FontInfo.fromAnnotation(fontAnnotation));
             }
         }
 
         /**
          * @param field
          *        the {@link FieldWrapper}
-         * @param componentType
-         *        a <code>Class</code> object that extends <code>JComponent</code>
          */
-        private void inspectComponentField(final FieldWrapper field, final Class<? extends JComponent> componentType) {
+        @SuppressWarnings("unchecked")
+        private void inspectComponentField(final FieldWrapper field) {
+            final Class<? extends JComponent> componentType = (Class<? extends JComponent>) field.getType();
             if (componentBuilderFactoryRegistry.hasFactory(componentType)) {
                 final String name = determineFieldName(field);
 
-                final ComponentDefinition definition = new ComponentDefinition(name, field.getField());
+                final ComponentDefinition component = new ComponentDefinition(name, field.getField());
                 final String[] keys = helper.listKeysStartingWith(name);
                 for (final String key : keys) {
                     final String value = helper.getString(key);
                     final String subkey = key.substring(name.length() + 1);
-                    definition.addProperty(subkey, value);
+                    component.addProperty(subkey, value);
                 }
 
                 final FontInfo fontInfo = determineFontInfo(field);
                 if (fontInfo != null) {
-                    definition.setFontInfo(fontInfo);
+                    component.setFontInfo(fontInfo);
                 }
-                results.addComponentDefinition(definition);
+                container.addComponentDefinition(component);
             }
         }
 

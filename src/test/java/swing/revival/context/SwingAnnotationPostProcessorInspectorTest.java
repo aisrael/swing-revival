@@ -45,10 +45,10 @@ public final class SwingAnnotationPostProcessorInspectorTest {
         final SwingAnnotationPostProcessor swapp = new SwingAnnotationPostProcessor();
         final ContainerDefinition swair = swapp.inspect(ExamplePanel.class);
 
-        final Set<String> fieldNames = swair.listFieldNames();
+        final Set<String> fieldNames = swair.listComponentNames();
         assertEquals(2, fieldNames.size());
 
-        final ComponentDefinition usernameField = swair.getField("usernameField");
+        final ComponentDefinition usernameField = swair.getComponentNamed("usernameField");
         assertNotNull(usernameField);
         assertEquals(JTextField.class, usernameField.getType());
         assertEquals("Username", usernameField.getString("label.text"));
@@ -57,7 +57,7 @@ public final class SwingAnnotationPostProcessorInspectorTest {
         assertEquals(BOLD, fontInfo.getStyle());
         assertNull(fontInfo.getSize());
 
-        final ComponentDefinition passwordField = swair.getField("passwordField");
+        final ComponentDefinition passwordField = swair.getComponentNamed("passwordField");
         assertNotNull(passwordField);
         assertEquals(JPasswordField.class, passwordField.getType());
 

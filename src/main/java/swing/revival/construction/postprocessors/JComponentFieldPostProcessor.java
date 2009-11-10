@@ -11,8 +11,11 @@
  */
 package swing.revival.construction.postprocessors;
 
+import java.awt.Container;
+
 import javax.swing.JComponent;
 
+import swing.revival.context.ComponentBuilderContext;
 import swing.revival.metadata.ComponentDefinition;
 
 /**
@@ -22,9 +25,15 @@ import swing.revival.metadata.ComponentDefinition;
 public interface JComponentFieldPostProcessor {
 
     /**
-     * @param fieldInfo
+     * @param container
+     *        the {@link Container}
+     * @param context
+     *        the {@link ComponentBuilderContext}
+     * @param definition
      *        the {@link ComponentDefinition}
-     * @param component the {@link JComponent}F
+     * @param component
+     *        the {@link JComponent}F
      */
-    void postProcess(final ComponentDefinition fieldInfo, final JComponent component);
+    void postProcess(final Container container, final ComponentBuilderContext context,
+            final ComponentDefinition definition, final JComponent component);
 }

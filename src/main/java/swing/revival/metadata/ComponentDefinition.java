@@ -18,6 +18,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 import swing.revival.util.Assert;
 
@@ -136,5 +137,12 @@ public class ComponentDefinition {
      */
     public static ComponentDefinition wrap(final Field field) {
         return new ComponentDefinition(field.getName(), field);
+    }
+
+    /**
+     * @return true if this component definition represents a {@link JLabel}-derived field
+     */
+    public final boolean isLabel() {
+        return JLabel.class.isAssignableFrom(field.getType());
     }
 }

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import swing.revival.util.BidiMap;
+
 /**
  * Results of performing reflection on a Container class looking for Swing Revival annotations, performed by
  * {@link swing.revival.builders.SwingAnnotationPostProcessor.Inspector}.
@@ -28,7 +30,7 @@ public class ContainerDefinition {
 
     private FontInfo defaultFontInfo;
 
-    private final Map<String, String> labelsMap = new Hashtable<String, String>();
+    private final BidiMap<String, String> componentLabelsMap = new BidiMap<String, String>();
 
     private final Map<String, ComponentDefinition> components = new Hashtable<String, ComponentDefinition>();
 
@@ -40,7 +42,7 @@ public class ContainerDefinition {
     }
 
     /**
-     * @return the defaultFontInfo
+     * @return the default {@link FontInfo}
      */
     public final FontInfo getDefaultFontInfo() {
         return defaultFontInfo;
@@ -49,8 +51,21 @@ public class ContainerDefinition {
     /**
      * @return Set of field names
      */
-    public final Set<String> listFieldNames() {
+    public final Set<String> listComponentNames() {
         return components.keySet();
+    }
+
+    /**
+     * @param componentName
+     *        the component name
+     * @return the label definition
+     */
+    public final ComponentDefinition getLabelFor(final String componentName) {
+        if (componentLabelsMap.containsKey(componentName)) {
+            final String labelName = componentLabelsMap.get(componentName);
+            return components.get(labelName);
+        }
+        return null;
     }
 
     /**
@@ -58,7 +73,7 @@ public class ContainerDefinition {
      *        the field name
      * @return the component field
      */
-    public final ComponentDefinition getField(final String name) {
+    public final ComponentDefinition getComponentNamed(final String name) {
         return components.get(name);
     }
 
@@ -69,14 +84,14 @@ public class ContainerDefinition {
      */
     public static class Builder {
 
-        private final ContainerDefinition results = new ContainerDefinition();
+        private final ContainerDefinition container = new ContainerDefinition();
 
         /**
          * @param fontInfo
          *        the default {@link FontInfo}
          */
         public final void setDefaultFontInfo(final FontInfo fontInfo) {
-            results.defaultFontInfo = fontInfo;
+            container.defaultFontInfo = fontInfo;
         }
 
         /**
@@ -84,14 +99,34 @@ public class ContainerDefinition {
          *        the {@link ComponentDefinition} to add
          */
         public final void addComponentDefinition(final ComponentDefinition definition) {
-            results.components.put(definition.getName(), definition);
+            container.components.put(definition.getName(), definition);
+        }
+
+        /**
+         * @param name
+         *        the field name
+         * @return the component field
+         */
+        public final ComponentDefinition getComponentNamed(final String name) {
+            return container.components.get(name);
+        }
+
+        /**
+         * @param componentName
+         *        the component name
+         * @param labelDefinition
+         *        the labelDefinition
+         */
+        public final void addLabelFor(final String componentName, final ComponentDefinition labelDefinition) {
+            addComponentDefinition(labelDefinition);
+            container.componentLabelsMap.put(componentName, labelDefinition.getName());
         }
 
         /**
          * @return the {@link ContainerDefinition}
          */
         public final ContainerDefinition build() {
-            return results;
+            return container;
         }
     }
 }

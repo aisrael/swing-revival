@@ -22,7 +22,7 @@ import swing.revival.context.ComponentBuilderContext;
  *        a type
  * @author Alistair A. Israel
  */
-public interface ComponentFactory<C extends JComponent> {
+public interface ComponentBuilderFactory<C extends JComponent> {
 
     /**
      * @param context

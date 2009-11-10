@@ -26,7 +26,7 @@ import swing.revival.annotations.Border;
 import swing.revival.builders.ComponentBuilder;
 import swing.revival.builders.JLabelFactory;
 import swing.revival.builders.JPasswordFieldFactory;
-import swing.revival.builders.JTextFieldFactory;
+import swing.revival.builders.JTextFieldBuilderFactory;
 import swing.revival.context.ComponentBuilderContext;
 import swing.revival.enums.BorderType;
 import swing.revival.util.BeanWrapper;
@@ -41,7 +41,7 @@ public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final JLabelFactory LABEL_FACTORY = new JLabelFactory();
 
-    private static final JTextFieldFactory TEXT_FIELD_FACTORY = new JTextFieldFactory();
+    private static final JTextFieldBuilderFactory TEXT_FIELD_FACTORY = new JTextFieldBuilderFactory();
 
     private static final JPasswordFieldFactory PASSWORD_FIELD_FACTORY =
             new JPasswordFieldFactory();

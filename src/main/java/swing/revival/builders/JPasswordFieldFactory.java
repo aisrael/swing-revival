@@ -22,12 +22,12 @@ import swing.revival.context.ComponentBuilderContext;
  *
  * @author Alistair A. Israel
  */
-public class JPasswordFieldFactory implements ComponentFactory<JPasswordField> {
+public class JPasswordFieldFactory implements ComponentBuilderFactory<JPasswordField> {
 
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentFactory#build(swing.revival.context.ComponentBuilderContext,
+     * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override

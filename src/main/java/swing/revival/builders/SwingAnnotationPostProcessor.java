@@ -15,34 +15,30 @@ import static swing.revival.util.StringUtils.isNullOrEmpty;
 
 import java.awt.Container;
 
-import javax.swing.AbstractButton;
 import javax.swing.JComponent;
-import javax.swing.JTextField;
 
 import swing.revival.annotations.Button;
 import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
 import swing.revival.context.ComponentBuilderContext;
-import swing.revival.context.ComponentBuilderRegistry;
-import swing.revival.context.ComponentField;
-import swing.revival.context.DefaultComponentBuilderRegistry;
+import swing.revival.context.ComponentBuilderFactoryRegistry;
+import swing.revival.context.ComponentFieldInfo;
+import swing.revival.context.DefaultComponentBuilderFactoryRegistry;
 import swing.revival.context.FontInfo;
 import swing.revival.context.InspectionResult;
-import swing.revival.context.ComponentField.Builder;
+import swing.revival.context.ComponentFieldInfo.Builder;
 import swing.revival.util.ResourceBundleHelper;
 import swing.revival.util.Resources;
 import swing.revival.util.reflect.ClassWrapper;
 import swing.revival.util.reflect.FieldWrapper;
-
-import com.sun.codemodel.internal.JLabel;
 
 /**
  * @author Alistair A. Israel
  */
 public final class SwingAnnotationPostProcessor {
 
-    private ComponentBuilderRegistry componentBuilderRegistry = DefaultComponentBuilderRegistry.getInstance();
+    private ComponentBuilderFactoryRegistry componentBuilderFactoryRegistry = DefaultComponentBuilderFactoryRegistry.getInstance();
 
     /**
      *
@@ -52,18 +48,18 @@ public final class SwingAnnotationPostProcessor {
     }
 
     /**
-     * @return the componentBuilderRegistry
+     * @return the componentBuilderFactoryRegistry
      */
-    public ComponentBuilderRegistry getComponentBuilderRegistry() {
-        return componentBuilderRegistry;
+    public ComponentBuilderFactoryRegistry getComponentBuilderFactoryRegistry() {
+        return componentBuilderFactoryRegistry;
     }
 
     /**
-     * @param componentBuilderRegistry
-     *        the componentBuilderRegistry to set
+     * @param componentBuilderFactoryRegistry
+     *        the componentBuilderFactoryRegistry to set
      */
-    public void setComponentBuilderRegistry(final ComponentBuilderRegistry componentBuilderRegistry) {
-        this.componentBuilderRegistry = componentBuilderRegistry;
+    public void setComponentBuilderFactoryRegistry(final ComponentBuilderFactoryRegistry componentBuilderFactoryRegistry) {
+        this.componentBuilderFactoryRegistry = componentBuilderFactoryRegistry;
     }
 
     /**
@@ -73,8 +69,8 @@ public final class SwingAnnotationPostProcessor {
     public void process(final Container container) {
         final ComponentBuilderContext context = new ComponentBuilderContext((JComponent) container);
         final InspectionResult swair = inspect(container.getClass());
-        for (final ComponentField componentField : swair.listComponentFields()) {
-            final Class<?> type = componentField.getType();
+        for (final ComponentFieldInfo componentFieldInfo : swair.listComponentFieldInfos()) {
+            final Class<?> type = componentFieldInfo.getType();
         }
     }
 
@@ -142,13 +138,26 @@ public final class SwingAnnotationPostProcessor {
          * @param field
          *        the {@link FieldWrapper} to inspect
          */
+        @SuppressWarnings("unchecked")
         private void inspectInstanceField(final FieldWrapper field) {
-            final Class<?> fieldClass = field.getType();
-            if (JTextField.class.isAssignableFrom(fieldClass) || JLabel.class.isAssignableFrom(fieldClass)
-                    || AbstractButton.class.isAssignableFrom(fieldClass)) {
+            final Class<?> fieldType = field.getType();
+            if (JComponent.class.isAssignableFrom(fieldType)) {
+                final Class<? extends JComponent> componentType = (Class<? extends JComponent>) fieldType;
+                inspectComponentField(field, componentType);
+            }
+        }
+
+        /**
+         * @param field
+         *        the {@link FieldWrapper}
+         * @param componentType
+         *        a <code>Class</code> object that extends <code>JComponent</code>
+         */
+        private void inspectComponentField(final FieldWrapper field, final Class<? extends JComponent> componentType) {
+            if (componentBuilderFactoryRegistry.hasFactoryFor(componentType)) {
                 final String name = determineFieldName(field);
 
-                final Builder builder = new ComponentField.Builder(name, field.getField());
+                final ComponentFieldInfo.Builder builder = new ComponentFieldInfo.Builder(name, field.getField());
                 final String[] keys = helper.listKeysStartingWith(name);
                 for (final String key : keys) {
                     final String value = helper.getString(key);
@@ -160,7 +169,7 @@ public final class SwingAnnotationPostProcessor {
                 if (fontInfo != null) {
                     builder.setFontInfo(fontInfo);
                 }
-                results.addComponentField(builder.build());
+                results.addComponentFieldInfo(builder.build());
             }
         }
 

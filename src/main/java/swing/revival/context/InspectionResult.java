@@ -28,16 +28,16 @@ public class InspectionResult {
 
     private FontInfo defaultFontInfo;
 
-    private final List<ComponentField> componentFields = new ArrayList<ComponentField>();
+    private final List<ComponentFieldInfo> componentFieldInfos = new ArrayList<ComponentFieldInfo>();
 
-    private final Map<String, ComponentField> fieldMap =
-            new Hashtable<String, ComponentField>();
+    private final Map<String, ComponentFieldInfo> fieldMap =
+            new Hashtable<String, ComponentFieldInfo>();
 
     /**
-     * @return List of {@link ComponentField}
+     * @return List of {@link ComponentFieldInfo}
      */
-    public final List<ComponentField> listComponentFields() {
-        return this.componentFields;
+    public final List<ComponentFieldInfo> listComponentFieldInfos() {
+        return this.componentFieldInfos;
     }
 
     /**
@@ -59,7 +59,7 @@ public class InspectionResult {
      *        the field name
      * @return the component field
      */
-    public final ComponentField getField(final String name) {
+    public final ComponentFieldInfo getField(final String name) {
         return fieldMap.get(name);
     }
 
@@ -82,10 +82,10 @@ public class InspectionResult {
 
         /**
          * @param field
-         *        the {@link ComponentField} to add
+         *        the {@link ComponentFieldInfo} to add
          */
-        public final void addComponentField(final ComponentField field) {
-            results.componentFields.add(field);
+        public final void addComponentFieldInfo(final ComponentFieldInfo field) {
+            results.componentFieldInfos.add(field);
             results.fieldMap.put(field.getName(), field);
         }
 

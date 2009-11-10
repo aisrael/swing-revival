@@ -22,12 +22,12 @@ import swing.revival.util.StringUtils;
  *
  * @author Alistair A. Israel
  */
-public class JLabelFactory implements ComponentFactory<JLabel> {
+public class JLabelFactory implements ComponentBuilderFactory<JLabel> {
 
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentFactory#build(swing.revival.context.ComponentBuilderContext,
+     * @see swing.revival.builders.ComponentBuilderFactory#build(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override

@@ -11,16 +11,18 @@
  */
 package swing.revival.context;
 
+import static swing.revival.util.ClassUtils.getShortName;
+
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.Map;
 
-import swing.revival.util.ClassUtils;
-
 /**
+ * Holds meta-data about a component field.
+ * 
  * @author Alistair A. Israel
  */
-public class ComponentField {
+public class ComponentFieldInfo {
 
     private final String name;
 
@@ -36,7 +38,7 @@ public class ComponentField {
      * @param field
      *        the actual {@link Field}
      */
-    public ComponentField(final String name, final Field field) {
+    public ComponentFieldInfo(final String name, final Field field) {
         this.name = name;
         this.field = field;
     }
@@ -100,7 +102,7 @@ public class ComponentField {
      */
     @Override
     public final String toString() {
-        return name + " (" + ClassUtils.getShortName(field.getType()) + ")";
+        return name + " (" + getShortName(field.getType()) + ")";
     }
 
     /**
@@ -108,7 +110,7 @@ public class ComponentField {
      */
     public static class Builder {
 
-        private final ComponentField componentField;
+        private final ComponentFieldInfo componentFieldInfo;
 
         /**
          * @param name
@@ -117,7 +119,7 @@ public class ComponentField {
          *        the actual {@link Field}
          */
         public Builder(final String name, final Field field) {
-            componentField = new ComponentField(name, field);
+            componentFieldInfo = new ComponentFieldInfo(name, field);
         }
 
         /**
@@ -125,7 +127,7 @@ public class ComponentField {
          *        the {@link FontInfo} to set
          */
         public final void setFontInfo(final FontInfo fontInfo) {
-            componentField.fontInfo = fontInfo;
+            componentFieldInfo.fontInfo = fontInfo;
         }
 
         /**
@@ -135,14 +137,14 @@ public class ComponentField {
          *        the value
          */
         public final void addProperty(final String key, final String value) {
-            componentField.properties.put(key, value);
+            componentFieldInfo.properties.put(key, value);
         }
 
         /**
-         * @return the {@link ComponentField}
+         * @return the {@link ComponentFieldInfo}
          */
-        public final ComponentField build() {
-            return componentField;
+        public final ComponentFieldInfo build() {
+            return componentFieldInfo;
         }
     }
 }

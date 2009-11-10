@@ -45,7 +45,7 @@ public final class SwingAnnotationPostProcessorInspectorTest {
         final Set<String> fieldNames = swair.listFieldNames();
         assertEquals(2, fieldNames.size());
 
-        final ComponentField usernameField = swair.getField("usernameField");
+        final ComponentFieldInfo usernameField = swair.getField("usernameField");
         assertNotNull(usernameField);
         assertEquals(JTextField.class, usernameField.getType());
         assertEquals("Username", usernameField.getString("label.text"));
@@ -54,7 +54,7 @@ public final class SwingAnnotationPostProcessorInspectorTest {
         assertEquals(BOLD, fontInfo.getStyle());
         assertNull(fontInfo.getSize());
 
-        final ComponentField passwordField = swair.getField("passwordField");
+        final ComponentFieldInfo passwordField = swair.getField("passwordField");
         assertNotNull(passwordField);
         assertEquals(JPasswordField.class, passwordField.getType());
 

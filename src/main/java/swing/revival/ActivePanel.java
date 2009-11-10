@@ -79,7 +79,7 @@ public class ActivePanel extends GroupLayoutJPanel {
                 final Class<?> type = field.getType();
                 if (Action.class.isAssignableFrom(type) && value != null) {
                     final Action action = (Action) value;
-                    actionPostProcessor.process(field, action);
+                    actionPostProcessor.postProcess(field, action);
                     final AbstractButton button =
                             createButtonForActionField(context, field, action);
                     if (button != null) {

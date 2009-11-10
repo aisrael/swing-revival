@@ -26,7 +26,7 @@ public final class SyntaticSugar {
 
     /**
      * Returns obj if obj is not null, or val.
-     * 
+     *
      * @param <T>
      *        a type
      * @param obj
@@ -41,7 +41,7 @@ public final class SyntaticSugar {
 
     /**
      * Returns obj if obj is not null, or val.
-     * 
+     *
      * @param <T>
      *        a type
      * @param obj
@@ -61,7 +61,7 @@ public final class SyntaticSugar {
 
     /**
      * Returns the first non-null expression among its arguments.
-     * 
+     *
      * @param <T>
      *        a type (can be Object)
      * @param args

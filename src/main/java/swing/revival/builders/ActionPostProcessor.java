@@ -28,8 +28,7 @@ import swing.revival.annotations.RadioButton;
 import swing.revival.context.ComponentBuilderContext;
 
 /**
- * Initializes a pre-constructed {@link Action} object based on its field
- * annotations.
+ * Initializes a pre-constructed {@link Action} object based on its field annotations.
  *
  * @author Alistair A. Israel
  */
@@ -48,8 +47,7 @@ public class ActionPostProcessor extends ComponentBuilderContext.Aware {
     private static final Map<String, String[]> KEY_MAP = new Hashtable<String, String[]>();
     static {
         KEY_MAP.put(NAME, new String[] { NAME, "name", "text" });
-        KEY_MAP.put(SHORT_DESCRIPTION, new String[] { SHORT_DESCRIPTION, "shortDescription",
-                "toolTipText" });
+        KEY_MAP.put(SHORT_DESCRIPTION, new String[] { SHORT_DESCRIPTION, "shortDescription", "toolTipText" });
     }
 
     /**
@@ -58,11 +56,8 @@ public class ActionPostProcessor extends ComponentBuilderContext.Aware {
      * @param action
      *        the {@link Action} to post-process
      */
-    public final void process(final Field field, final Action action) {
-        String name = determineNameFromAnnotation(field);
-        if (isNullOrEmpty(name)) {
-            name = chomp(field.getName(), "Action");
-        }
+    public final void postProcess(final Field field, final Action action) {
+        final String name = determineName(field);
         for (final Map.Entry<String, String[]> keyMapEntry : KEY_MAP.entrySet()) {
             final String propertyKey = keyMapEntry.getKey();
 
@@ -71,10 +66,25 @@ public class ActionPostProcessor extends ComponentBuilderContext.Aware {
             if (value != null) {
                 action.putValue(propertyKey, value);
             } else {
-                LOGGER.warning("Unable to find resource for \"" + name + "." + propertyKey
-                        + "\"");
+                LOGGER.warning("Unable to find resource for \"" + name + "." + propertyKey + "\"");
             }
         }
+    }
+
+    /**
+     * @param field
+     *        the {@link Field}
+     * @return the name
+     */
+    private String determineName(final Field field) {
+        final String nameFromAnnotation = determineNameFromAnnotation(field);
+        final String name;
+        if (isNullOrEmpty(nameFromAnnotation)) {
+            name = chomp(field.getName(), "Action");
+        } else {
+            name = nameFromAnnotation;
+        }
+        return name;
     }
 
     /**

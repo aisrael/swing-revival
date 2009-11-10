@@ -12,14 +12,20 @@
 package swing.revival.context;
 
 import java.awt.Container;
+import java.util.ArrayList;
+import java.util.List;
 
 import swing.revival.builders.FontPostProcessor;
+import swing.revival.builders.LabelsPostProcessor;
+import swing.revival.construction.postprocessors.JComponentFieldPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
 
 /**
  * @author Alistair A. Israel
  */
 public class ComponentBuilderContext {
+
+    private final List<JComponentFieldPostProcessor> postProcessors = new ArrayList<JComponentFieldPostProcessor>();
 
     private final FontPostProcessor fontPostProcessor;
 
@@ -33,6 +39,22 @@ public class ComponentBuilderContext {
         final Class<? extends Container> containerClass = container.getClass();
         resources = ResourceBundleHelper.forClass(containerClass);
         fontPostProcessor = new FontPostProcessor(container.getClass());
+        addPostProcessor(new LabelsPostProcessor(this));
+    }
+
+    /**
+     * @return the postProcessors
+     */
+    public final List<JComponentFieldPostProcessor> getPostProcessors() {
+        return postProcessors;
+    }
+
+    /**
+     * @param postProcessor
+     *        the {@link JComponentFieldPostProcessor} to add
+     */
+    public final void addPostProcessor(final JComponentFieldPostProcessor postProcessor) {
+        postProcessors.add(postProcessor);
     }
 
     /**

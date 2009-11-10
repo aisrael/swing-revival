@@ -28,15 +28,13 @@ public class InspectionResult {
 
     private FontInfo defaultFontInfo;
 
-    private final List<ComponentFieldInfo> componentFieldInfos = new ArrayList<ComponentFieldInfo>();
-
     private final Map<String, ComponentFieldInfo> fieldMap = new Hashtable<String, ComponentFieldInfo>();
 
     /**
      * @return List of {@link ComponentFieldInfo}
      */
     public final List<ComponentFieldInfo> listComponentFieldInfos() {
-        return this.componentFieldInfos;
+        return new ArrayList<ComponentFieldInfo>(fieldMap.values());
     }
 
     /**
@@ -84,7 +82,6 @@ public class InspectionResult {
          *        the {@link ComponentFieldInfo} to add
          */
         public final void addComponentFieldInfo(final ComponentFieldInfo field) {
-            results.componentFieldInfos.add(field);
             results.fieldMap.put(field.getName(), field);
         }
 

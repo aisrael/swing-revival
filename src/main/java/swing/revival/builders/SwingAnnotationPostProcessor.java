@@ -45,7 +45,6 @@ public final class SwingAnnotationPostProcessor {
      *
      */
     public SwingAnnotationPostProcessor() {
-
     }
 
     /**

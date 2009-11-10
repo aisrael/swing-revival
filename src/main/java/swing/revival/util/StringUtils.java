@@ -42,6 +42,20 @@ public final class StringUtils {
     }
 
     /**
+     * @param s
+     *        the string to check
+     * @param ifNullOrEmpty
+     *        the string to return if the first string is <code>null</code> or empty
+     * @return <code>s</code>, or <code>ifNullOrEmpty</code> if <code>s</code> is <code>null</code> or empty
+     */
+    public static String ifNullOrEmpty(final String s, final String ifNullOrEmpty) {
+        if (isNullOrEmpty(s)) {
+            return ifNullOrEmpty;
+        }
+        return s;
+    }
+
+    /**
      * Remove the given prefix from the given string, if present.
      *
      * @param prefix

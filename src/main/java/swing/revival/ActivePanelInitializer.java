@@ -35,6 +35,7 @@ import swing.revival.util.BeanWrapper;
 /**
  * @author Alistair A. Israel
  */
+@Deprecated
 public class ActivePanelInitializer extends BeanWrapper.Support<ActivePanel> {
 
     private static final Logger LOGGER = Logger.getLogger(ActivePanel.class.getName());

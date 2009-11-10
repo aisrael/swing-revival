@@ -5,7 +5,7 @@
   <groupId>swing-revival</groupId>
   <artifactId>swing-revival</artifactId>
   <name>Swing Revival Toolkit</name>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
   <description>An annotation-based Swing toolkit.</description>
   <url>http://github.com/AlistairIsrael/swing-revival</url>
   <inceptionYear>2009</inceptionYear>

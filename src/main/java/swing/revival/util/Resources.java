@@ -52,7 +52,7 @@ public final class Resources {
         String name = withoutPackageName;
         ResourceBundle bundle = findLongOrShort(packageName, name);
         if (bundle != null) {
-            return new ResourceBundleHelper(bundle, "");
+            return new ResourceBundleHelper(bundle);
         }
         if (clazz.isMemberClass()) {
             int x = name.lastIndexOf('$');

@@ -24,6 +24,7 @@ import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
 import swing.revival.builders.ActionPostProcessor;
 import swing.revival.builders.SwingAnnotationPostProcessor;
+import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.InspectionResult;
 import swing.revival.util.BeanWrapper;
 

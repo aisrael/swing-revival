@@ -27,6 +27,7 @@ import swing.revival.builders.ComponentBuilder;
 import swing.revival.builders.JLabelFactory;
 import swing.revival.builders.JPasswordFieldFactory;
 import swing.revival.builders.JTextFieldFactory;
+import swing.revival.context.ComponentBuilderContext;
 import swing.revival.enums.BorderType;
 import swing.revival.util.BeanWrapper;
 

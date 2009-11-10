@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 
 import javax.swing.Action;
 
-import swing.revival.ComponentBuilderContext;
 import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
+import swing.revival.context.ComponentBuilderContext;
 
 /**
  * Initializes a pre-constructed {@link Action} object based on its field

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
-import swing.revival.ComponentBuilderContext;
+import swing.revival.context.ComponentBuilderContext;
 
 /**
  * @param <C>

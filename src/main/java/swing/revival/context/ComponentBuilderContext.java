@@ -9,7 +9,7 @@
  *
  * Created Sep 30, 2009
  */
-package swing.revival;
+package swing.revival.context;
 
 import java.awt.Font;
 
@@ -87,7 +87,7 @@ public class ComponentBuilderContext {
 
         /**
          * @return the {@link FontPostProcessor}
-         * @see swing.revival.ComponentBuilderContext#getFontPostProcessor()
+         * @see swing.revival.context.ComponentBuilderContext#getFontPostProcessor()
          */
         public final FontPostProcessor getFontPostProcessor() {
             return context.getFontPostProcessor();
@@ -95,7 +95,7 @@ public class ComponentBuilderContext {
 
         /**
          * @return the defaultFont
-         * @see swing.revival.ComponentBuilderContext#getDefaultFont()
+         * @see swing.revival.context.ComponentBuilderContext#getDefaultFont()
          */
         public final Font getDefaultFont() {
             return context.getDefaultFont();

@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 
 import javax.swing.JComponent;
 
-import swing.revival.ComponentBuilderContext;
+import swing.revival.context.ComponentBuilderContext;
 
 /**
  * @param <C>

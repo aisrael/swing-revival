@@ -21,11 +21,11 @@ import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-import swing.revival.ComponentBuilderContext;
 import swing.revival.annotations.Button;
 import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
+import swing.revival.context.ComponentBuilderContext;
 import swing.revival.context.ComponentField;
 import swing.revival.context.FontInfo;
 import swing.revival.context.InspectionResult;

@@ -15,8 +15,8 @@ import java.lang.reflect.Field;
 
 import javax.swing.JPasswordField;
 
-import swing.revival.ComponentBuilderContext;
 import swing.revival.annotations.TextField;
+import swing.revival.context.ComponentBuilderContext;
 
 /**
  *
@@ -27,7 +27,7 @@ public class JPasswordFieldFactory implements ComponentFactory<JPasswordField> {
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentFactory#build(swing.revival.ComponentBuilderContext,
+     * @see swing.revival.builders.ComponentFactory#build(swing.revival.context.ComponentBuilderContext,
      *      java.lang.reflect.Field)
      */
     @Override

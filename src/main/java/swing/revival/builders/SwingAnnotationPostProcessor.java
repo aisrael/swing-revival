@@ -21,7 +21,7 @@ import swing.revival.annotations.Button;
 import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
-import swing.revival.construction.postprocessors.AssemblyPostProcessor;
+import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 import swing.revival.context.AssemblyContext;
 import swing.revival.context.ComponentBuilderFactoryRegistry;
 import swing.revival.context.DefaultComponentBuilderFactoryRegistry;

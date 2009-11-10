@@ -9,7 +9,7 @@
  *
  * Created Nov 10, 2009
  */
-package swing.revival.construction.postprocessors;
+package swing.revival.assembly.postprocessors;
 
 import javax.swing.JComponent;
 

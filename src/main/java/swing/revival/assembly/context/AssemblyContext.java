@@ -22,6 +22,7 @@ import javax.swing.JComponent;
 import swing.revival.assembly.builders.FontPostProcessor;
 import swing.revival.assembly.inspectors.ComponentInspector;
 import swing.revival.assembly.inspectors.ContainerInspector;
+import swing.revival.assembly.model.ContainerContext;
 import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 import swing.revival.assembly.postprocessors.LabelsPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
@@ -31,7 +32,7 @@ import swing.revival.util.ResourceBundleHelper;
  */
 public class AssemblyContext {
 
-    private final Container container;
+    private final ContainerContext containerContext;
 
     private final Map<String, JComponent> components = new Hashtable<String, JComponent>();
 
@@ -41,16 +42,12 @@ public class AssemblyContext {
 
     private final List<AssemblyPostProcessor> postProcessors = new ArrayList<AssemblyPostProcessor>();
 
-    private final ResourceBundleHelper resources;
-
     /**
      * @param container
      *        {@link java.awt.Container}, typically a JPanel or a JFrame
      */
     public AssemblyContext(final Container container) {
-        this.container = container;
-        final Class<? extends Container> containerClass = container.getClass();
-        resources = ResourceBundleHelper.forClass(containerClass);
+        this.containerContext = new ContainerContext(container);
 
         final FontPostProcessor fontPostProcessor = new FontPostProcessor();
         containerInspectors.add(fontPostProcessor);
@@ -64,7 +61,7 @@ public class AssemblyContext {
      * @return the container
      */
     public final Container getContainer() {
-        return container;
+        return containerContext.getContainer();
     }
 
     /**
@@ -100,7 +97,7 @@ public class AssemblyContext {
      * @return the resources
      */
     public final ResourceBundleHelper getResources() {
-        return resources;
+        return containerContext.getResources();
     }
 
     /**
@@ -144,7 +141,7 @@ public class AssemblyContext {
          * @see ResourceBundleHelper#containsKey(java.lang.String)
          */
         public final boolean containsResourceKey(final String key) {
-            return context.resources.containsKey(key);
+            return context.containerContext.getResources().containsKey(key);
         }
 
         /**
@@ -155,7 +152,7 @@ public class AssemblyContext {
          * @see ResourceBundleHelper#getString(java.lang.String)
          */
         public final String getResourceString(final String key) {
-            return context.resources.getString(key);
+            return context.containerContext.getResources().getString(key);
         }
 
     }

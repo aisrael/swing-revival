@@ -13,8 +13,8 @@ package swing.revival.builders;
 
 import javax.swing.JLabel;
 
+import swing.revival.assembly.model.ComponentDefinition;
 import swing.revival.context.AssemblyContext;
-import swing.revival.metadata.ComponentDefinition;
 import swing.revival.util.StringUtils;
 
 /**

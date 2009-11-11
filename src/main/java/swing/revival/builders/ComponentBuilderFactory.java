@@ -13,8 +13,8 @@ package swing.revival.builders;
 
 import javax.swing.JComponent;
 
+import swing.revival.assembly.model.ComponentDefinition;
 import swing.revival.context.AssemblyContext;
-import swing.revival.metadata.ComponentDefinition;
 
 /**
  * @param <C>

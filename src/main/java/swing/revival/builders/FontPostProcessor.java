@@ -15,8 +15,8 @@ import static swing.revival.util.SyntaticSugar.ifNull;
 
 import javax.swing.JComponent;
 
-import swing.revival.metadata.ComponentDefinition;
-import swing.revival.metadata.FontInfo;
+import swing.revival.assembly.model.ComponentDefinition;
+import swing.revival.assembly.model.FontInfo;
 
 /**
  * @author Alistair A. Israel

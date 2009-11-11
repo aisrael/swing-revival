@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.metadata;
+package swing.revival.assembly.model;
 
 import static java.awt.Font.PLAIN;
 import swing.revival.annotations.Font;

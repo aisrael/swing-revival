@@ -13,7 +13,7 @@ package swing.revival.context;
 
 import javax.swing.JComponent;
 
-import swing.revival.builders.ComponentBuilderFactory;
+import swing.revival.assembly.builders.ComponentBuilderFactory;
 
 /**
  * @author Alistair A. Israel

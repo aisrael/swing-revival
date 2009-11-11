@@ -9,7 +9,7 @@
  *
  * Created Sep 30, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
 import static javax.swing.Action.NAME;
 import static javax.swing.Action.SHORT_DESCRIPTION;

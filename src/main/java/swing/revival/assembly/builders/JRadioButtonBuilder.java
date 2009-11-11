@@ -9,7 +9,7 @@
  *
  * Created Sep 30, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
 import javax.swing.JRadioButton;
 
@@ -35,7 +35,7 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#constructComponent()
+     * @see swing.revival.assembly.builders.ComponentBuilder#constructComponent()
      */
     @Override
     protected final JRadioButton constructComponent() {
@@ -45,7 +45,7 @@ public class JRadioButtonBuilder extends ComponentBuilder<JRadioButton> {
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#getBaseName()
+     * @see swing.revival.assembly.builders.ComponentBuilder#getBaseName()
      */
     @Override
     public final String getBaseName() {

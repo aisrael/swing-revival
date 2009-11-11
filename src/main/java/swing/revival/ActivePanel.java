@@ -22,9 +22,9 @@ import javax.swing.JRadioButton;
 
 import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
+import swing.revival.assembly.builders.ActionPostProcessor;
+import swing.revival.assembly.builders.SwingAnnotationPostProcessor;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.builders.ActionPostProcessor;
-import swing.revival.builders.SwingAnnotationPostProcessor;
 import swing.revival.context.AssemblyContext;
 import swing.revival.util.BeanWrapper;
 

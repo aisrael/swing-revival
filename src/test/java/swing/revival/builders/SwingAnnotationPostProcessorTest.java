@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
+import swing.revival.assembly.builders.SwingAnnotationPostProcessor;
+
 import abbot.finder.BasicFinder;
 import abbot.finder.ComponentFinder;
 import abbot.finder.matchers.NameMatcher;

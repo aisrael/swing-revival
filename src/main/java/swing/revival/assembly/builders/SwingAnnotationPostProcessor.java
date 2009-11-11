@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
 import static swing.revival.util.StringUtils.isNullOrEmpty;
 

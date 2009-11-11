@@ -9,7 +9,7 @@
  *
  * Created Nov 10, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
 import javax.swing.JLabel;
 
@@ -35,7 +35,7 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#constructComponent()
+     * @see swing.revival.assembly.builders.ComponentBuilder#constructComponent()
      */
     @Override
     protected final JLabel constructComponent() {
@@ -53,7 +53,7 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#getBaseName()
+     * @see swing.revival.assembly.builders.ComponentBuilder#getBaseName()
      */
     @Override
     public final String getBaseName() {
@@ -72,7 +72,7 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
+         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override

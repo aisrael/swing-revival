@@ -23,10 +23,10 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
+import swing.revival.assembly.builders.SwingAnnotationPostProcessor;
 import swing.revival.assembly.model.ComponentDefinition;
 import swing.revival.assembly.model.ContainerDefinition;
 import swing.revival.assembly.model.FontInfo;
-import swing.revival.builders.SwingAnnotationPostProcessor;
 
 import com.example.ui.ExamplePanel;
 

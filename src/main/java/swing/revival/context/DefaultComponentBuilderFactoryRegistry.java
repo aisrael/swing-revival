@@ -20,10 +20,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import swing.revival.SwingRevivalException;
-import swing.revival.builders.ComponentBuilderFactory;
-import swing.revival.builders.JLabelBuilder;
-import swing.revival.builders.JPasswordFieldBuilder;
-import swing.revival.builders.JTextFieldBuilder;
+import swing.revival.assembly.builders.ComponentBuilderFactory;
+import swing.revival.assembly.builders.JLabelBuilder;
+import swing.revival.assembly.builders.JPasswordFieldBuilder;
+import swing.revival.assembly.builders.JTextFieldBuilder;
 
 /**
  * @author Alistair A. Israel

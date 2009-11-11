@@ -19,10 +19,10 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 
+import swing.revival.assembly.builders.FontPostProcessor;
 import swing.revival.assembly.model.FontInfo;
 import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 import swing.revival.assembly.postprocessors.LabelsPostProcessor;
-import swing.revival.builders.FontPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
 
 /**
@@ -83,7 +83,7 @@ public class AssemblyContext {
 
     /**
      * @return the default {@link FontInfo}
-     * @see swing.revival.builders.FontPostProcessor#getDefaultFontInfo()
+     * @see swing.revival.assembly.builders.FontPostProcessor#getDefaultFontInfo()
      */
     public final FontInfo getDefaultFontInfo() {
         return fontPostProcessor.getDefaultFontInfo();

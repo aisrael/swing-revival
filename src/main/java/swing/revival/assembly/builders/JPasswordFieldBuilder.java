@@ -7,11 +7,11 @@
  * This software is made available under the terms of the MIT License.
  * See LICENSE.txt.
  *
- * Created Sep 30, 2009
+ * Created Nov 10, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 import swing.revival.annotations.TextField;
 import swing.revival.assembly.model.ComponentDefinition;
@@ -19,9 +19,8 @@ import swing.revival.context.AssemblyContext;
 
 /**
  * @author Alistair A. Israel
- * @since 0.1
  */
-public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
+public class JPasswordFieldBuilder extends ComponentBuilder<JPasswordField> {
 
     /**
      * @param context
@@ -29,17 +28,17 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
      * @param fieldInfo
      *        the field we're building for
      */
-    public JTextFieldBuilder(final AssemblyContext context, final ComponentDefinition fieldInfo) {
+    public JPasswordFieldBuilder(final AssemblyContext context, final ComponentDefinition fieldInfo) {
         super(context, fieldInfo);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#build()
+     * @see swing.revival.assembly.builders.ComponentBuilder#build()
      */
     @Override
-    protected final JTextField constructComponent() {
+    protected final JPasswordField constructComponent() {
         final TextField textFieldAnnotation = getFieldInfo().getField().getAnnotation(TextField.class);
         int columns = -1;
         if (textFieldAnnotation != null) {
@@ -47,22 +46,22 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
         }
 
         if (columns > 0) {
-            return new JTextField(columns);
+            return new JPasswordField(columns);
         } else {
-            return new JTextField();
+            return new JPasswordField();
         }
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.builders.ComponentBuilder#getBaseName()
+     * @see swing.revival.assembly.builders.ComponentBuilder#getBaseName()
      */
     @Override
     public final String getBaseName() {
         final String name = getFieldInfo().getName();
-        if (name.endsWith("TextField")) {
-            return name.substring(0, name.length() - "TextField".length());
+        if (name.endsWith("PasswordField")) {
+            return name.substring(0, name.length() - "PasswordField".length());
         }
         return name;
     }
@@ -70,18 +69,18 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
     /**
      *
      */
-    public static class Factory implements ComponentBuilderFactory<JTextField> {
+    public static class Factory implements ComponentBuilderFactory<JPasswordField> {
 
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
+         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override
-        public final ComponentBuilder<JTextField> getBuilder(final AssemblyContext context,
+        public final ComponentBuilder<JPasswordField> getBuilder(final AssemblyContext context,
                 final ComponentDefinition fieldInfo) {
-            return new JTextFieldBuilder(context, fieldInfo);
+            return new JPasswordFieldBuilder(context, fieldInfo);
         }
 
     }

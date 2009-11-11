@@ -21,10 +21,10 @@ import swing.revival.util.BidiMap;
 
 /**
  * Results of performing reflection on a Container class looking for Swing Revival annotations, performed by
- * {@link swing.revival.builders.SwingAnnotationPostProcessor.Inspector}.
+ * {@link swing.revival.assembly.builders.SwingAnnotationPostProcessor.Inspector}.
  *
  * @author Alistair A. Israel
- * @see swing.revival.builders.SwingAnnotationPostProcessor.Inspector
+ * @see swing.revival.assembly.builders.SwingAnnotationPostProcessor.Inspector
  */
 public class ContainerDefinition {
 

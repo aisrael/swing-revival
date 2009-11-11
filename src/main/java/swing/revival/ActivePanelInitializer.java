@@ -23,11 +23,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import swing.revival.annotations.Border;
+import swing.revival.assembly.builders.ComponentBuilder;
+import swing.revival.assembly.builders.JLabelBuilder;
+import swing.revival.assembly.builders.JPasswordFieldBuilder;
+import swing.revival.assembly.builders.JTextFieldBuilder;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.builders.ComponentBuilder;
-import swing.revival.builders.JLabelBuilder;
-import swing.revival.builders.JPasswordFieldBuilder;
-import swing.revival.builders.JTextFieldBuilder;
 import swing.revival.context.AssemblyContext;
 import swing.revival.enums.BorderType;
 import swing.revival.util.BeanWrapper;

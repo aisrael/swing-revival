@@ -13,8 +13,8 @@ package swing.revival.assembly.builders;
 
 import javax.swing.JRadioButton;
 
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 
 /**
  *

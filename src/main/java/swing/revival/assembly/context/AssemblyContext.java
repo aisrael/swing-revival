@@ -9,7 +9,7 @@
  *
  * Created Sep 30, 2009
  */
-package swing.revival.context;
+package swing.revival.assembly.context;
 
 import java.awt.Container;
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class AssemblyContext {
 
         /**
          * @return the {@link FontPostProcessor}
-         * @see swing.revival.context.AssemblyContext#getFontPostProcessor()
+         * @see swing.revival.assembly.context.AssemblyContext#getFontPostProcessor()
          */
         public final FontPostProcessor getFontPostProcessor() {
             return context.getFontPostProcessor();
@@ -139,7 +139,7 @@ public class AssemblyContext {
 
         /**
          * @return the default FontInfo
-         * @see swing.revival.context.AssemblyContext#getDefaultFontInfo()
+         * @see swing.revival.assembly.context.AssemblyContext#getDefaultFontInfo()
          */
         public final FontInfo getDefaultFontInfo() {
             return context.getDefaultFontInfo();

@@ -13,8 +13,8 @@ package swing.revival.assembly.postprocessors;
 
 import javax.swing.JComponent;
 
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 
 /**
  * @author Alistair A. Israel

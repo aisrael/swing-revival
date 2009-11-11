@@ -13,8 +13,8 @@ package swing.revival.assembly.builders;
 
 import javax.swing.JLabel;
 
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 import swing.revival.util.StringUtils;
 
 /**
@@ -72,7 +72,7 @@ public class JLabelBuilder extends ComponentBuilder<JLabel> {
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
+         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.assembly.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override

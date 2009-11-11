@@ -9,7 +9,7 @@
  *
  * Created Nov 10, 2009
  */
-package swing.revival.context;
+package swing.revival.assembly.context;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -87,7 +87,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.context.ComponentBuilderFactoryRegistry#hasFactory(java.lang.Class)
+     * @see swing.revival.assembly.context.ComponentBuilderFactoryRegistry#hasFactory(java.lang.Class)
      */
     @Override
     public boolean hasFactory(final Class<? extends JComponent> type) {
@@ -97,7 +97,7 @@ public final class DefaultComponentBuilderFactoryRegistry implements ComponentBu
     /**
      * {@inheritDoc}
      *
-     * @see swing.revival.context.ComponentBuilderFactoryRegistry#getFactory(java.lang.Class)
+     * @see swing.revival.assembly.context.ComponentBuilderFactoryRegistry#getFactory(java.lang.Class)
      */
     @Override
     @SuppressWarnings("unchecked")

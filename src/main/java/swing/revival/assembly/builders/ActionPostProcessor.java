@@ -25,7 +25,7 @@ import javax.swing.Action;
 
 import swing.revival.annotations.Button;
 import swing.revival.annotations.RadioButton;
-import swing.revival.context.AssemblyContext;
+import swing.revival.assembly.context.AssemblyContext;
 
 /**
  * Initializes a pre-constructed {@link Action} object based on its field annotations.

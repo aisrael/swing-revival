@@ -14,8 +14,8 @@ package swing.revival.assembly.builders;
 import javax.swing.JPasswordField;
 
 import swing.revival.annotations.TextField;
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 
 /**
  * @author Alistair A. Israel
@@ -74,7 +74,7 @@ public class JPasswordFieldBuilder extends ComponentBuilder<JPasswordField> {
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
+         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.assembly.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override

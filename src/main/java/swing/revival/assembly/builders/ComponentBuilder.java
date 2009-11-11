@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 
 /**
  * @param <C>

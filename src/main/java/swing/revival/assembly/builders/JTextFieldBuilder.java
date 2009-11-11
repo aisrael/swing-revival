@@ -14,8 +14,8 @@ package swing.revival.assembly.builders;
 import javax.swing.JTextField;
 
 import swing.revival.annotations.TextField;
+import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
-import swing.revival.context.AssemblyContext;
 
 /**
  * @author Alistair A. Israel
@@ -75,7 +75,7 @@ public class JTextFieldBuilder extends ComponentBuilder<JTextField> {
         /**
          * {@inheritDoc}
          *
-         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.context.AssemblyContext,
+         * @see swing.revival.assembly.builders.ComponentBuilderFactory#getBuilder(swing.revival.assembly.context.AssemblyContext,
          *      java.lang.reflect.Field)
          */
         @Override

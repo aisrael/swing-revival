@@ -133,7 +133,6 @@ public class ActivePanel extends GroupLayoutJPanel {
             final String name = (String) action.getValue(Action.NAME);
             button.setName(name);
             final ComponentDefinition actionFieldInfo = ComponentDefinition.wrap(actionField);
-            context.getFontPostProcessor().setFontOn(actionFieldInfo, button);
         }
         return button;
     }

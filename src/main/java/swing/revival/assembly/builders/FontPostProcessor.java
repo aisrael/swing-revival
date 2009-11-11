@@ -13,45 +13,65 @@ package swing.revival.assembly.builders;
 
 import static swing.revival.util.SyntaticSugar.ifNull;
 
+import java.lang.reflect.Field;
+
 import javax.swing.JComponent;
 
+import swing.revival.annotations.Font;
+import swing.revival.assembly.context.AssemblyContext;
+import swing.revival.assembly.inspectors.ComponentInspector;
+import swing.revival.assembly.inspectors.ContainerInspector;
 import swing.revival.assembly.model.ComponentDefinition;
+import swing.revival.assembly.model.ContainerDefinition;
 import swing.revival.assembly.model.FontInfo;
+import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 
 /**
  * @author Alistair A. Israel
  */
-public class FontPostProcessor {
+public class FontPostProcessor implements ContainerInspector, ComponentInspector, AssemblyPostProcessor {
 
-    private final FontInfo defaultFontInfo;
+    private FontInfo defaultFontInfo;
 
     /**
-     * @param clazz
-     *        the component class
+     * {@inheritDoc}
+     *
+     * @see swing.revival.assembly.inspectors.ContainerInspector#inspect(swing.revival.assembly.context.AssemblyContext,
+     *      swing.revival.assembly.model.ContainerDefinition.Builder)
      */
-    public FontPostProcessor(final Class<?> clazz) {
-        if (clazz.isAnnotationPresent(swing.revival.annotations.Font.class)) {
-            defaultFontInfo = FontInfo.fromAnnotation(clazz.getAnnotation(swing.revival.annotations.Font.class));
-        } else {
-            defaultFontInfo = null;
+    @Override
+    public final void inspect(final AssemblyContext context,
+            final ContainerDefinition.Builder containerDefinitionBuilder) {
+        final Font fontAnnotation = containerDefinitionBuilder.getContainerClass().getAnnotation(Font.class);
+        if (fontAnnotation != null) {
+            defaultFontInfo = FontInfo.fromAnnotation(fontAnnotation);
+            containerDefinitionBuilder.setDefaultFontInfo(defaultFontInfo);
         }
     }
 
     /**
-     * @return the defaultFont
+     * {@inheritDoc}
+     *
+     * @see ComponentInspector#inspect(ComponentDefinition)
      */
-    public final FontInfo getDefaultFontInfo() {
-        return defaultFontInfo;
+    @Override
+    public final void inspect(final ComponentDefinition definition) {
+        final Field field = definition.getField();
+        if (field.isAnnotationPresent(Font.class)) {
+            final FontInfo fontInfo = FontInfo.fromAnnotation(field.getAnnotation(Font.class));
+            definition.setFontInfo(fontInfo);
+        }
     }
 
     /**
-     * @param fieldInfo
-     *        the {@link ComponentDefinition} we're post-processing for
-     * @param component
-     *        the component to set the font on
+     * {@inheritDoc}
+     *
+     * @see AssemblyPostProcessor#postProcess(AssemblyContext, ComponentDefinition, JComponent)
      */
-    public final void setFontOn(final ComponentDefinition fieldInfo, final JComponent component) {
-        final FontInfo fontInfo = ifNull(fieldInfo.getFontInfo(), defaultFontInfo);
+    @Override
+    public final void postProcess(final AssemblyContext context, final ComponentDefinition definition,
+            final JComponent component) {
+        final FontInfo fontInfo = ifNull(definition.getFontInfo(), defaultFontInfo);
         if (fontInfo != null) {
             final java.awt.Font font = createFont(fontInfo, component);
             if (font != null) {

@@ -11,6 +11,7 @@
  */
 package swing.revival.assembly.model;
 
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -28,11 +29,28 @@ import swing.revival.util.BidiMap;
  */
 public class ContainerDefinition {
 
+    private final Class<? extends Container> containerClass;
+
     private FontInfo defaultFontInfo;
 
     private final BidiMap<String, String> componentLabelsMap = new BidiMap<String, String>();
 
     private final Map<String, ComponentDefinition> components = new Hashtable<String, ComponentDefinition>();
+
+    /**
+     * @param containerClass
+     *        the {@link Container}-derived class we're inspecting
+     */
+    public ContainerDefinition(final Class<? extends Container> containerClass) {
+        this.containerClass = containerClass;
+    }
+
+    /**
+     * @return the containerClass
+     */
+    public final Class<? extends Container> getContainerClass() {
+        return containerClass;
+    }
 
     /**
      * @return List of {@link ComponentDefinition}
@@ -84,7 +102,22 @@ public class ContainerDefinition {
      */
     public static class Builder {
 
-        private final ContainerDefinition container = new ContainerDefinition();
+        private final ContainerDefinition container;
+
+        /**
+         * @param containerClass
+         *        the {@link Container}-derived class
+         */
+        public Builder(final Class<? extends Container> containerClass) {
+            container = new ContainerDefinition(containerClass);
+        }
+
+        /**
+         * @return the {@link Container}-derived class
+         */
+        public final Class<? extends Container> getContainerClass() {
+            return container.containerClass;
+        }
 
         /**
          * @param fontInfo

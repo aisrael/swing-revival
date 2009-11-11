@@ -20,7 +20,7 @@ import swing.revival.util.ClassUtils;
 
 /**
  * If Java were more dynamic, we wouldn't need wrappers and decorators.
- * 
+ *
  * @author Alistair A. Israel
  * @since 0.1
  */
@@ -50,7 +50,7 @@ public class ClassWrapper {
     /**
      * Returns the underlying <code>Class</code>'s annotation for the specified type if such an annotation is present,
      * else <code>null</code>.
-     * 
+     *
      * @param <A>
      *        the annotation type
      * @param annotationClass
@@ -66,7 +66,7 @@ public class ClassWrapper {
     /**
      * Returns all annotations present on the underlying <code>Class</code>. (Returns an array of length zero if the
      * <code>Field</code> element has no annotations.)
-     * 
+     *
      * @return all annotations present on the underlying <code>Class</code>
      * @see java.lang.Class#getAnnotations()
      */
@@ -77,7 +77,7 @@ public class ClassWrapper {
     /**
      * Returns true if an annotation for the specified type is present on the underlying <code>Class</code>, else
      * <code>false</code>. This method is designed primarily for convenient access to marker annotations.
-     * 
+     *
      * @param annotationClass
      *        the Class object corresponding to the annotation type
      * @return <code>true</code> true if an annotation for the specified annotation type is present on the underlying

@@ -69,7 +69,6 @@ public abstract class ComponentBuilder<C extends JComponent> extends AssemblyCon
         final String name = getFieldInfo().getName();
         LOGGER.finest("Setting component name to \"" + name + "\"...");
         component.setName(name);
-        getFontPostProcessor().setFontOn(getFieldInfo(), component);
         setToolTipTextOn(component);
         return component;
     }

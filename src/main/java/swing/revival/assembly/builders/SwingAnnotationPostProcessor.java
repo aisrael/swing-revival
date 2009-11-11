@@ -18,15 +18,15 @@ import java.awt.Container;
 import javax.swing.JComponent;
 
 import swing.revival.annotations.Button;
-import swing.revival.annotations.Font;
 import swing.revival.annotations.RadioButton;
 import swing.revival.annotations.TextField;
 import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.context.ComponentBuilderFactoryRegistry;
 import swing.revival.assembly.context.DefaultComponentBuilderFactoryRegistry;
+import swing.revival.assembly.inspectors.ComponentInspector;
+import swing.revival.assembly.inspectors.ContainerInspector;
 import swing.revival.assembly.model.ComponentDefinition;
 import swing.revival.assembly.model.ContainerDefinition;
-import swing.revival.assembly.model.FontInfo;
 import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 import swing.revival.util.BeanWrapper;
 import swing.revival.util.ResourceBundleHelper;
@@ -36,17 +36,12 @@ import swing.revival.util.reflect.FieldWrapper;
 
 /**
  * @author Alistair A. Israel
+ * @since 0.1
  */
 public final class SwingAnnotationPostProcessor {
 
     private ComponentBuilderFactoryRegistry componentBuilderFactoryRegistry = DefaultComponentBuilderFactoryRegistry
             .getInstance();
-
-    /**
-     *
-     */
-    public SwingAnnotationPostProcessor() {
-    }
 
     /**
      * @return the componentBuilderFactoryRegistry
@@ -68,18 +63,20 @@ public final class SwingAnnotationPostProcessor {
      *        the {@link Container}-derived object
      */
     public void process(final Container container) {
-        final ContainerDefinition containerDefinition = inspect(container.getClass());
-        assemble(container, containerDefinition);
+        final AssemblyContext context = new AssemblyContext(container);
+        final ContainerDefinition containerDefinition = inspect(context, container.getClass());
+        assemble(context, container, containerDefinition);
     }
 
     /**
+     * @param context
+     *        AssemblyContext
      * @param container
      *        the Container object
      * @param definition
      *        the {@code ContainerDefinition}
      */
-    private void assemble(final Container container, final ContainerDefinition definition) {
-        final AssemblyContext context = new AssemblyContext(container);
+    private void assemble(final AssemblyContext context, final Container container, final ContainerDefinition definition) {
         final BeanWrapper<Container> beanWrapper = new BeanWrapper<Container>(container);
         for (final ComponentDefinition componentDefinition : definition.listComponentDefinitions()) {
             final Class<? extends JComponent> type = componentDefinition.getType();
@@ -103,12 +100,14 @@ public final class SwingAnnotationPostProcessor {
     }
 
     /**
+     * @param context
+     *        the {@link AssemblyContext}
      * @param clazz
      *        {@link Container} class
      * @return {@link ContainerDefinition}
      */
-    public ContainerDefinition inspect(final Class<? extends Container> clazz) {
-        return new Inspector(clazz).inspect();
+    public ContainerDefinition inspect(final AssemblyContext context, final Class<? extends Container> clazz) {
+        return new Inspector(context, clazz).inspect();
     }
 
     /**
@@ -116,19 +115,23 @@ public final class SwingAnnotationPostProcessor {
      *
      * @author Alistair A. Israel
      */
-    public class Inspector {
+    public class Inspector extends AssemblyContext.Aware {
 
         private final ClassWrapper clazz;
 
         private final ResourceBundleHelper helper;
 
-        private final ContainerDefinition.Builder container = new ContainerDefinition.Builder();
+        private final ContainerDefinition.Builder container;
 
         /**
+         * @param context
+         *        the {@link AssemblyContext}
          * @param clazz
          *        the {@link Container} subclass
          */
-        public Inspector(final Class<? extends Container> clazz) {
+        public Inspector(final AssemblyContext context, final Class<? extends Container> clazz) {
+            super(context);
+            container = new ContainerDefinition.Builder(clazz);
             this.clazz = new ClassWrapper(clazz);
             this.helper = Resources.find(clazz);
         }
@@ -151,9 +154,8 @@ public final class SwingAnnotationPostProcessor {
          *
          */
         private void inspectClass() {
-            final Font fontAnnotation = clazz.getAnnotation(Font.class);
-            if (fontAnnotation != null) {
-                container.setDefaultFontInfo(FontInfo.fromAnnotation(fontAnnotation));
+            for (final ContainerInspector inspector : getContext().getContainerInspectors()) {
+                inspector.inspect(getContext(), container);
             }
         }
 
@@ -175,10 +177,10 @@ public final class SwingAnnotationPostProcessor {
                     component.addProperty(subkey, value);
                 }
 
-                final FontInfo fontInfo = determineFontInfo(field);
-                if (fontInfo != null) {
-                    component.setFontInfo(fontInfo);
+                for (final ComponentInspector inspector : getContext().getComponentInspectors()) {
+                    inspector.inspect(component);
                 }
+
                 container.addComponentDefinition(component);
             }
         }
@@ -202,19 +204,6 @@ public final class SwingAnnotationPostProcessor {
             }
             return name;
         }
-
-        /**
-         * @param field
-         *        the {@link FieldWrapper}
-         * @return {@link FontInfo}
-         */
-        private FontInfo determineFontInfo(final FieldWrapper field) {
-            if (field.isAnnotationPresent(Font.class)) {
-                return FontInfo.fromAnnotation(field.getAnnotation(Font.class));
-            }
-            return null;
-        }
-
     }
 
 }

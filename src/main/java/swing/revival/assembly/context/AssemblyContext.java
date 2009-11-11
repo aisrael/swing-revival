@@ -20,7 +20,8 @@ import java.util.Map;
 import javax.swing.JComponent;
 
 import swing.revival.assembly.builders.FontPostProcessor;
-import swing.revival.assembly.model.FontInfo;
+import swing.revival.assembly.inspectors.ComponentInspector;
+import swing.revival.assembly.inspectors.ContainerInspector;
 import swing.revival.assembly.postprocessors.AssemblyPostProcessor;
 import swing.revival.assembly.postprocessors.LabelsPostProcessor;
 import swing.revival.util.ResourceBundleHelper;
@@ -34,9 +35,11 @@ public class AssemblyContext {
 
     private final Map<String, JComponent> components = new Hashtable<String, JComponent>();
 
-    private final List<AssemblyPostProcessor> postProcessors = new ArrayList<AssemblyPostProcessor>();
+    private final List<ContainerInspector> containerInspectors = new ArrayList<ContainerInspector>();
 
-    private final FontPostProcessor fontPostProcessor;
+    private final List<ComponentInspector> componentInspectors = new ArrayList<ComponentInspector>();
+
+    private final List<AssemblyPostProcessor> postProcessors = new ArrayList<AssemblyPostProcessor>();
 
     private final ResourceBundleHelper resources;
 
@@ -48,7 +51,12 @@ public class AssemblyContext {
         this.container = container;
         final Class<? extends Container> containerClass = container.getClass();
         resources = ResourceBundleHelper.forClass(containerClass);
-        fontPostProcessor = new FontPostProcessor(container.getClass());
+
+        final FontPostProcessor fontPostProcessor = new FontPostProcessor();
+        containerInspectors.add(fontPostProcessor);
+        componentInspectors.add(fontPostProcessor);
+        addPostProcessor(fontPostProcessor);
+
         addPostProcessor(new LabelsPostProcessor());
     }
 
@@ -57,6 +65,20 @@ public class AssemblyContext {
      */
     public final Container getContainer() {
         return container;
+    }
+
+    /**
+     * @return the containerInspectors
+     */
+    public final List<ContainerInspector> getContainerInspectors() {
+        return containerInspectors;
+    }
+
+    /**
+     * @return the componentInspectors
+     */
+    public final List<ComponentInspector> getComponentInspectors() {
+        return componentInspectors;
     }
 
     /**
@@ -72,21 +94,6 @@ public class AssemblyContext {
      */
     public final void addPostProcessor(final AssemblyPostProcessor postProcessor) {
         postProcessors.add(postProcessor);
-    }
-
-    /**
-     * @return the {@link FontPostProcessor}
-     */
-    public final FontPostProcessor getFontPostProcessor() {
-        return fontPostProcessor;
-    }
-
-    /**
-     * @return the default {@link FontInfo}
-     * @see swing.revival.assembly.builders.FontPostProcessor#getDefaultFontInfo()
-     */
-    public final FontInfo getDefaultFontInfo() {
-        return fontPostProcessor.getDefaultFontInfo();
     }
 
     /**
@@ -127,22 +134,6 @@ public class AssemblyContext {
          */
         public final AssemblyContext getContext() {
             return context;
-        }
-
-        /**
-         * @return the {@link FontPostProcessor}
-         * @see swing.revival.assembly.context.AssemblyContext#getFontPostProcessor()
-         */
-        public final FontPostProcessor getFontPostProcessor() {
-            return context.getFontPostProcessor();
-        }
-
-        /**
-         * @return the default FontInfo
-         * @see swing.revival.assembly.context.AssemblyContext#getDefaultFontInfo()
-         */
-        public final FontInfo getDefaultFontInfo() {
-            return context.getDefaultFontInfo();
         }
 
         /**

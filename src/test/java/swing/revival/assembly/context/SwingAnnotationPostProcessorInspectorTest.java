@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.context;
+package swing.revival.assembly.context;
 
 import static java.awt.Font.BOLD;
 import static org.junit.Assert.assertEquals;
@@ -24,7 +24,6 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import swing.revival.assembly.builders.SwingAnnotationPostProcessor;
-import swing.revival.assembly.context.AssemblyContext;
 import swing.revival.assembly.model.ComponentDefinition;
 import swing.revival.assembly.model.ContainerDefinition;
 import swing.revival.assembly.model.FontInfo;

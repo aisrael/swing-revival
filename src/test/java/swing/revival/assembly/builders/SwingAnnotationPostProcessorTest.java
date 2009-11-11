@@ -9,7 +9,7 @@
  *
  * Created Oct 8, 2009
  */
-package swing.revival.builders;
+package swing.revival.assembly.builders;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,8 +20,6 @@ import java.awt.Component;
 import javax.swing.JTextField;
 
 import org.junit.Test;
-
-import swing.revival.assembly.builders.SwingAnnotationPostProcessor;
 
 import abbot.finder.BasicFinder;
 import abbot.finder.ComponentFinder;
